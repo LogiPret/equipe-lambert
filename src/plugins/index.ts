@@ -80,6 +80,47 @@ export const plugins: Plugin[] = [
         })
       },
     },
+    formSubmissionOverrides: {
+      hooks: {
+        afterChange: [
+          async ({ doc, req, operation }: any) => {
+            // Only process new submissions (create operation) for contact form
+            if (operation === 'create' && doc.form && typeof doc.form === 'object' && doc.form.title === 'Contact Form') {
+              try {
+                const { insertContactSubmission } = await import('../lib/supabase')
+                
+                // Extract form data from submission
+                const formData: any = {}
+                if (doc.submissionData && Array.isArray(doc.submissionData)) {
+                  doc.submissionData.forEach((field: any) => {
+                    formData[field.field] = field.value
+                  })
+                }
+
+                // Map the form data to Supabase format
+                const supabaseData = {
+                  prenom: formData.prenom || '',
+                  nom: formData.nom || '',
+                  email: formData.email || '',
+                  phone: formData.phone || '',
+                  type: formData.type || '', // Add the type field
+                }
+
+                // Only send to Supabase if we have the required fields
+                if (supabaseData.prenom && supabaseData.nom && supabaseData.email) {
+                  await insertContactSubmission(supabaseData)
+                  req.payload.logger.info('Contact form submission sent to Supabase successfully')
+                }
+              } catch (error) {
+                req.payload.logger.error('Failed to send contact form submission to Supabase:', error)
+                // Don't throw error to avoid breaking the main form submission
+              }
+            }
+            return doc
+          },
+        ],
+      },
+    },
   }),
   searchPlugin({
     collections: ['posts'],
