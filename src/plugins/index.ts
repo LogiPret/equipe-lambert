@@ -84,36 +84,58 @@ export const plugins: Plugin[] = [
       hooks: {
         afterChange: [
           async ({ doc, req, operation }: any) => {
-            // Only process new submissions (create operation) for contact form
-            if (operation === 'create' && doc.form && typeof doc.form === 'object' && doc.form.title === 'Contact Form') {
-              try {
-                const { insertContactSubmission } = await import('../lib/supabase')
-                
-                // Extract form data from submission
-                const formData: any = {}
-                if (doc.submissionData && Array.isArray(doc.submissionData)) {
-                  doc.submissionData.forEach((field: any) => {
-                    formData[field.field] = field.value
-                  })
-                }
+            // Only process new submissions (create operation) for contact forms
+            if (operation === 'create' && doc.form && typeof doc.form === 'object') {
+              const formTitle = doc.form.title
 
-                // Map the form data to Supabase format
-                const supabaseData = {
-                  prenom: formData.prenom || '',
-                  nom: formData.nom || '',
-                  email: formData.email || '',
-                  phone: formData.phone || '',
-                  type: formData.type || '', // Add the type field
-                }
+              // Check if it's one of our contact forms
+              if (
+                formTitle === 'Formulaire Vendre' ||
+                formTitle === 'Formulaire Acheter' ||
+                formTitle === 'Contact Form'
+              ) {
+                try {
+                  const { insertContactSubmission } = await import('../lib/supabase')
+                  
+                  // Extract form data from submission
+                  const formData: any = {}
+                  if (doc.submissionData && Array.isArray(doc.submissionData)) {
+                    doc.submissionData.forEach((field: any) => {
+                      const fieldName = field.field || field.name
+                      const fieldValue = field.value
+                      
+                      if (fieldName && fieldValue !== undefined) {
+                        formData[fieldName] = fieldValue
+                      }
+                    })
+                  }
 
-                // Only send to Supabase if we have the required fields
-                if (supabaseData.prenom && supabaseData.nom && supabaseData.email) {
-                  await insertContactSubmission(supabaseData)
-                  req.payload.logger.info('Contact form submission sent to Supabase successfully')
+                  // Determine type based on form title
+                  let type = 'CONTACT'
+                  if (formTitle === 'Formulaire Vendre') {
+                    type = 'VENDRE'
+                  } else if (formTitle === 'Formulaire Acheter') {
+                    type = 'ACHETER'
+                  }
+
+                  // Map the form data to Supabase format
+                  const supabaseData = {
+                    prenom: formData.prenom || '',
+                    nom: formData.nom || '',
+                    email: formData.email || formData.Email || '', // Handle both cases
+                    phone: formData.phone || '',
+                    type: type,
+                  }
+
+                  // Only send to Supabase if we have the required fields
+                  if (supabaseData.prenom && supabaseData.nom && supabaseData.email) {
+                    await insertContactSubmission(supabaseData)
+                    req.payload.logger.info(`${type} form submission sent to Supabase successfully`)
+                  }
+                } catch (error: any) {
+                  req.payload.logger.error('Failed to send form submission to Supabase:', error)
+                  // Don't throw error to avoid breaking the main form submission
                 }
-              } catch (error) {
-                req.payload.logger.error('Failed to send contact form submission to Supabase:', error)
-                // Don't throw error to avoid breaking the main form submission
               }
             }
             return doc
