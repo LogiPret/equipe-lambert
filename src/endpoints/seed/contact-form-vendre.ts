@@ -1,6 +1,6 @@
 import { RequiredDataFromCollectionSlug } from 'payload'
 
-export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
+export const contactFormVendre: RequiredDataFromCollectionSlug<'forms'> = {
   confirmationMessage: {
     root: {
       type: 'root',
@@ -14,7 +14,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
               format: 0,
               mode: 'normal',
               style: '',
-              text: 'The contact form has been submitted successfully.',
+              text: 'Votre demande de vente a été soumise avec succès.',
               version: 1,
             },
           ],
@@ -50,7 +50,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
                   format: 0,
                   mode: 'normal',
                   style: '',
-                  text: 'Your contact form submission was successfully received.',
+                  text: 'Votre demande de vente a été reçue avec succès.',
                   version: 1,
                 },
               ],
@@ -67,7 +67,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
           version: 1,
         },
       },
-      subject: "You've received a new message.",
+      subject: 'Vous avez reçu une nouvelle demande de vente.',
     },
   ],
   fields: [
@@ -105,7 +105,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
     },
   ],
   redirect: undefined,
-  submitButtonLabel: 'Submit',
-  title: 'Contact Form',
+  submitButtonLabel: 'Envoyer ma demande de vente',
+  title: 'Formulaire Vendre',
   updatedAt: '2023-01-12T21:47:41.374Z',
 }
