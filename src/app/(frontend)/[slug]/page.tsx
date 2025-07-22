@@ -65,8 +65,11 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const { hero, layout } = page
 
+  // Remove all padding for now - will add back selectively later
+  const articleClass = ''
+
   return (
-    <article className="pt-16 pb-24">
+    <article className={articleClass}>
       <PageClient />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />

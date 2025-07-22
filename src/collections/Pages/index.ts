@@ -7,6 +7,20 @@ import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+
+// Real Estate Custom Blocks
+import { HeroBlock } from '../../blocks/HeroBlock/config'
+import { StatsBlock } from '../../blocks/StatsBlock/config'
+import { ServicesBlock } from '../../blocks/ServicesBlock/config'
+import { TeamBlock } from '../../blocks/TeamBlock/config'
+import { PropertiesBlock } from '../../blocks/PropertiesBlock/config'
+import { TestimonialsBlock } from '../../blocks/TestimonialsBlock/config'
+import { CTABannerBlock } from '../../blocks/CTABannerBlock/config'
+import { ContactBlock } from '../../blocks/ContactBlock/config'
+import { HeaderBlock } from '../../blocks/HeaderBlock/config'
+import { FooterBlock } from '../../blocks/FooterBlock/config'
+import { MapSectionBlock } from '../../blocks/MapSectionBlock/config'
+
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -75,7 +89,25 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+                // Real Estate Custom Blocks
+                HeroBlock,
+                StatsBlock,
+                ServicesBlock,
+                TeamBlock,
+                PropertiesBlock,
+                TestimonialsBlock,
+                CTABannerBlock,
+                ContactBlock,
+                HeaderBlock,
+                FooterBlock,
+                MapSectionBlock,
+              ],
               required: true,
               admin: {
                 initCollapsed: true,
