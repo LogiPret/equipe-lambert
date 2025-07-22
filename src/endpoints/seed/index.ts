@@ -9,12 +9,14 @@ import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
+import { videoScripts } from './video-scripts-simple'
 
 const collections: CollectionSlug[] = [
   'categories',
   'media',
   'pages',
   'posts',
+  'video-scripts',
   'forms',
   'form-submissions',
   'search',
@@ -256,6 +258,23 @@ export const seed = async ({
       relatedPosts: [post1Doc.id, post2Doc.id],
     },
   })
+
+  payload.logger.info(`— Seeding video scripts...`)
+
+  // Create all 31 video scripts
+  for (const scriptData of videoScripts) {
+    await payload.create({
+      collection: 'video-scripts',
+      depth: 0,
+      context: {
+        disableRevalidate: true,
+      },
+      data: {
+        ...scriptData,
+        slug: `script-${scriptData.scriptNumber}`,
+      },
+    })
+  }
 
   payload.logger.info(`— Seeding contact form...`)
 
