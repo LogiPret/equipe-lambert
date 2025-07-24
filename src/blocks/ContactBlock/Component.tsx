@@ -12,7 +12,6 @@ interface ContactInfo {
   icon: 'phone' | 'mail' | 'location'
   title: string
   primary: string
-  secondary?: string
   description: string
 }
 
@@ -267,7 +266,6 @@ export default function ContactBlock({
                       <div>
                         <p className="font-bold text-gray-800 text-lg">{info.title}</p>
                         <p className="text-gray-600 text-lg">{info.primary}</p>
-                        {info.secondary && <p className="text-gray-600">{info.secondary}</p>}
                         <p className="text-sm text-[#0f3046] mt-2">{info.description}</p>
                       </div>
                     </div>
