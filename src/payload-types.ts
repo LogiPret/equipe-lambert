@@ -191,7 +191,330 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | {
+        badgeText: string;
+        badgeIcon?: string | null;
+        title: string;
+        subtitle?: string | null;
+        description?: string | null;
+        primaryButton: {
+          text: string;
+          icon?: string | null;
+          link?: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+        };
+        secondaryButton?: {
+          text?: string | null;
+          link?: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+        };
+        heroImage: number | Media;
+        backgroundImage?: (number | null) | Media;
+        statsBoxNumber?: string | null;
+        statsBoxText?: string | null;
+        statsBoxDescription?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'hero';
+      }
+    | {
+        stats: {
+          number: number;
+          /**
+           * e.g., +, %, h, etc.
+           */
+          suffix?: string | null;
+          label: string;
+          description: string;
+          id?: string | null;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'stats';
+      }
+    | {
+        title: string;
+        subtitle: string;
+        services: {
+          icon: 'home' | 'building';
+          title: string;
+          subtitle: string;
+          description: string;
+          image: number | Media;
+          features: {
+            text: string;
+            id?: string | null;
+          }[];
+          id?: string | null;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'services';
+      }
+    | {
+        title: string;
+        subtitle: string;
+        members: {
+          name: string;
+          role: string;
+          speciality: string;
+          image: number | Media;
+          experience: string;
+          id?: string | null;
+        }[];
+        advantages: {
+          title: string;
+          subtitle: string;
+          items: {
+            icon: 'handshake' | 'target' | 'shield';
+            title: string;
+            description: string;
+            id?: string | null;
+          }[];
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'team';
+      }
+    | {
+        title: string;
+        subtitle: string;
+        properties: {
+          image: number | Media;
+          price: string;
+          address: string;
+          beds: number;
+          baths: number;
+          sqft: string;
+          type: 'maison' | 'condo' | 'townhouse' | 'loft';
+          status: 'a_vendre' | 'vendu' | 'option_achat';
+          id?: string | null;
+        }[];
+        showAllButton: {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+          };
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'properties';
+      }
+    | {
+        title: string;
+        subtitle: string;
+        testimonials: {
+          name: string;
+          location: string;
+          rating: number;
+          image: number | Media;
+          text: string;
+          id?: string | null;
+        }[];
+        stats?:
+          | {
+              rating: string;
+              label: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'testimonials';
+      }
+    | {
+        backgroundColor: 'gradient_blue' | 'dark_blue' | 'navy';
+        title: string;
+        subtitle?: string | null;
+        button: {
+          text: string;
+          icon?: ('dollar_sign' | 'key' | 'phone' | 'mail') | null;
+          variant?: ('primary' | 'secondary') | null;
+          link?: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: ('default' | 'outline') | null;
+          };
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'ctaBanner';
+      }
+    | {
+        title: string;
+        subtitle: string;
+        contactInfo: {
+          icon: 'phone' | 'mail' | 'location';
+          title: string;
+          primary: string;
+          description?: string | null;
+          id?: string | null;
+        }[];
+        officeImage: {
+          image: number | Media;
+          description: string;
+        };
+        form: {
+          title: string;
+          formFields: {
+            fieldType: 'text' | 'email' | 'tel' | 'number' | 'textarea' | 'select' | 'checkbox';
+            /**
+             * Unique identifier for this field (e.g., firstName, email, message)
+             */
+            name: string;
+            /**
+             * Display label for the field
+             */
+            label: string;
+            placeholder?: string | null;
+            required?: boolean | null;
+            width?: ('full' | 'half') | null;
+            options?:
+              | {
+                  label: string;
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            rows?: number | null;
+            id?: string | null;
+          }[];
+          submitButton: {
+            text: string;
+            loadingText?: string | null;
+          };
+          /**
+           * Text that appears next to the checkbox (e.g., "I agree to the terms and conditions")
+           */
+          checkboxText?: string | null;
+          /**
+           * Message displayed after successful form submission
+           */
+          successMessage?: string | null;
+          disclaimer: string;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'contact';
+      }
+    | {
+        logo: {
+          title: string;
+          subtitle: string;
+        };
+        navigation: {
+          label: string;
+          href: string;
+          id?: string | null;
+        }[];
+        contactButton: {
+          text: string;
+          phone: string;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'header';
+      }
+    | {
+        logo: {
+          title: string;
+          subtitle: string;
+          description: string;
+        };
+        sections: {
+          title: string;
+          links: {
+            label: string;
+            href: string;
+            id?: string | null;
+          }[];
+          id?: string | null;
+        }[];
+        contact: {
+          phone: string;
+          phoneDescription: string;
+          email: string;
+          emailDescription: string;
+          address: string;
+          addressLine2: string;
+          addressDescription: string;
+        };
+        copyright: string;
+        legalLinks?:
+          | {
+              label: string;
+              href: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'footer';
+      }
+    | MapSectionBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -736,6 +1059,45 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapSectionBlock".
+ */
+export interface MapSectionBlock {
+  title: string;
+  subtitle: string;
+  properties?:
+    | {
+        id: number;
+        address: string;
+        price: string;
+        status: 'À vendre' | 'Vendu';
+        type: 'Maison' | 'Condo' | 'Duplex' | 'Triplex' | 'Commercial';
+      }[]
+    | null;
+  serviceAreas?:
+    | {
+        name: string;
+        status: string;
+        /**
+         * Optional: CSS class for badge color
+         */
+        badgeColor?: string | null;
+        /**
+         * Optional: CSS class for background color
+         */
+        bgColor?: string | null;
+        /**
+         * Optional: CSS class for border color
+         */
+        borderColor?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mapSectionBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1025,6 +1387,333 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        hero?:
+          | T
+          | {
+              badgeText?: T;
+              badgeIcon?: T;
+              title?: T;
+              subtitle?: T;
+              description?: T;
+              primaryButton?:
+                | T
+                | {
+                    text?: T;
+                    icon?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          appearance?: T;
+                        };
+                  };
+              secondaryButton?:
+                | T
+                | {
+                    text?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          appearance?: T;
+                        };
+                  };
+              heroImage?: T;
+              backgroundImage?: T;
+              statsBoxNumber?: T;
+              statsBoxText?: T;
+              statsBoxDescription?: T;
+              id?: T;
+              blockName?: T;
+            };
+        stats?:
+          | T
+          | {
+              stats?:
+                | T
+                | {
+                    number?: T;
+                    suffix?: T;
+                    label?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        services?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              services?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    subtitle?: T;
+                    description?: T;
+                    image?: T;
+                    features?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        team?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              members?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    speciality?: T;
+                    image?: T;
+                    experience?: T;
+                    id?: T;
+                  };
+              advantages?:
+                | T
+                | {
+                    title?: T;
+                    subtitle?: T;
+                    items?:
+                      | T
+                      | {
+                          icon?: T;
+                          title?: T;
+                          description?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        properties?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              properties?:
+                | T
+                | {
+                    image?: T;
+                    price?: T;
+                    address?: T;
+                    beds?: T;
+                    baths?: T;
+                    sqft?: T;
+                    type?: T;
+                    status?: T;
+                    id?: T;
+                  };
+              showAllButton?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        testimonials?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              testimonials?:
+                | T
+                | {
+                    name?: T;
+                    location?: T;
+                    rating?: T;
+                    image?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              stats?:
+                | T
+                | {
+                    rating?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        ctaBanner?:
+          | T
+          | {
+              backgroundColor?: T;
+              title?: T;
+              subtitle?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    icon?: T;
+                    variant?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          appearance?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        contact?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              contactInfo?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    primary?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              officeImage?:
+                | T
+                | {
+                    image?: T;
+                    description?: T;
+                  };
+              form?:
+                | T
+                | {
+                    title?: T;
+                    formFields?:
+                      | T
+                      | {
+                          fieldType?: T;
+                          name?: T;
+                          label?: T;
+                          placeholder?: T;
+                          required?: T;
+                          width?: T;
+                          options?:
+                            | T
+                            | {
+                                label?: T;
+                                value?: T;
+                                id?: T;
+                              };
+                          rows?: T;
+                          id?: T;
+                        };
+                    submitButton?:
+                      | T
+                      | {
+                          text?: T;
+                          loadingText?: T;
+                        };
+                    checkboxText?: T;
+                    successMessage?: T;
+                    disclaimer?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        header?:
+          | T
+          | {
+              logo?:
+                | T
+                | {
+                    title?: T;
+                    subtitle?: T;
+                  };
+              navigation?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              contactButton?:
+                | T
+                | {
+                    text?: T;
+                    phone?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        footer?:
+          | T
+          | {
+              logo?:
+                | T
+                | {
+                    title?: T;
+                    subtitle?: T;
+                    description?: T;
+                  };
+              sections?:
+                | T
+                | {
+                    title?: T;
+                    links?:
+                      | T
+                      | {
+                          label?: T;
+                          href?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              contact?:
+                | T
+                | {
+                    phone?: T;
+                    phoneDescription?: T;
+                    email?: T;
+                    emailDescription?: T;
+                    address?: T;
+                    addressLine2?: T;
+                    addressDescription?: T;
+                  };
+              copyright?: T;
+              legalLinks?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        mapSectionBlock?: T | MapSectionBlockSelect<T>;
       };
   meta?:
     | T
@@ -1121,6 +1810,35 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapSectionBlock_select".
+ */
+export interface MapSectionBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  properties?:
+    | T
+    | {
+        id?: T;
+        address?: T;
+        price?: T;
+        status?: T;
+        type?: T;
+      };
+  serviceAreas?:
+    | T
+    | {
+        name?: T;
+        status?: T;
+        badgeColor?: T;
+        bgColor?: T;
+        borderColor?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

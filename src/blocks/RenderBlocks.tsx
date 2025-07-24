@@ -8,12 +8,37 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 
+// Real Estate Custom Blocks
+import HeroBlock from '@/blocks/HeroBlock/Component'
+import StatsBlock from '@/blocks/StatsBlock/Component'
+import ServicesBlock from '@/blocks/ServicesBlock/Component'
+import TeamBlock from '@/blocks/TeamBlock/Component'
+import PropertiesBlock from '@/blocks/PropertiesBlock/Component'
+import TestimonialsBlock from '@/blocks/TestimonialsBlock/Component'
+import CTABannerBlock from '@/blocks/CTABannerBlock/Component'
+import ContactBlock from '@/blocks/ContactBlock/Component'
+import HeaderBlock from '@/blocks/HeaderBlock/Component'
+import FooterBlock from '@/blocks/FooterBlock/Component'
+import MapSectionBlock from '@/blocks/MapSectionBlock/Component'
+
 const blockComponents = {
   archive: ArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
+  // Real Estate Custom Blocks
+  hero: HeroBlock,
+  stats: StatsBlock,
+  services: ServicesBlock,
+  team: TeamBlock,
+  properties: PropertiesBlock,
+  testimonials: TestimonialsBlock,
+  ctaBanner: CTABannerBlock,
+  contact: ContactBlock,
+  header: HeaderBlock,
+  footer: FooterBlock,
+  mapSectionBlock: MapSectionBlock,
 }
 
 export const RenderBlocks: React.FC<{
@@ -33,8 +58,9 @@ export const RenderBlocks: React.FC<{
             const Block = blockComponents[blockType]
 
             if (Block) {
+              // Remove all spacing for now - will add back selectively later
               return (
-                <div className="my-16" key={index}>
+                <div key={index}>
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>
