@@ -16,20 +16,16 @@ export const FooterBlock: Block = {
           name: 'title',
           type: 'text',
           required: true,
-          defaultValue: 'Équipe Lambert',
         },
         {
           name: 'subtitle',
           type: 'text',
           required: true,
-          defaultValue: 'COURTIERS IMMOBILIERS AGRÉÉS',
         },
         {
           name: 'description',
           type: 'textarea',
           required: true,
-          defaultValue:
-            'Votre équipe de confiance pour tous vos projets immobiliers dans la grande région de Montréal. Excellence, collaboration, résultats.',
         },
       ],
     },
@@ -112,7 +108,6 @@ export const FooterBlock: Block = {
       name: 'copyright',
       type: 'text',
       required: true,
-      defaultValue: '© 2024 Équipe Lambert. Tous droits réservés.',
     },
     {
       name: 'legalLinks',

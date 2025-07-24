@@ -31,62 +31,14 @@ export default function PropertyMap({ properties }: PropertyMapProps) {
   const mapInstanceRef = useRef<any>(null)
   const markersRef = useRef<any[]>([])
 
-  const propertyLocations: PropertyLocation[] = [
-    {
-      lat: 45.5152,
-      lng: -73.5795,
-      title: '123 Rue Saint-Denis',
-      price: '$875,000',
-      status: 'À vendre',
-    },
-    {
-      lat: 45.5088,
-      lng: -73.5878,
-      title: '456 Avenue du Parc',
-      price: '$650,000',
-      status: 'À vendre',
-    },
-    {
-      lat: 46.8139,
-      lng: -71.208,
-      title: '789 Boulevard René-Lévesque',
-      price: '$725,000',
-      status: 'Vendu',
-    },
-    {
-      lat: 45.5048,
-      lng: -73.5772,
-      title: '321 Rue Sherbrooke',
-      price: '$950,000',
-      status: 'À vendre',
-    },
-    {
-      lat: 46.9334,
-      lng: -71.3102,
-      title: '555 Chemin du Lac',
-      price: '$1,200,000',
-      status: 'À vendre',
-    },
-    {
-      lat: 45.5017,
-      lng: -73.5673,
-      title: '888 Rue de la Commune',
-      price: '$580,000',
-      status: 'À vendre',
-    },
-  ]
-
-  const focusProperty = (index: number) => {
-    if (mapInstanceRef.current && propertyLocations[index]) {
-      const location = propertyLocations[index]
-      mapInstanceRef.current.setView([location.lat, location.lng], 15)
-
-      // Open the popup for this marker
-      if (markersRef.current[index]) {
-        markersRef.current[index].openPopup()
-      }
-    }
-  }
+  // Use actual properties from props or empty array if none provided
+  const propertyLocations: PropertyLocation[] = (properties || []).map((property) => ({
+    lat: 45.5152 + (Math.random() - 0.5) * 0.1, // Random coordinates around Montreal for demo
+    lng: -73.5795 + (Math.random() - 0.5) * 0.1,
+    title: property.address,
+    price: property.price,
+    status: property.status,
+  }))
 
   useEffect(() => {
     const initMap = () => {
@@ -138,7 +90,7 @@ export default function PropertyMap({ properties }: PropertyMapProps) {
       })
 
       // Add property markers
-      markersRef.current = propertyLocations.map((location, index) => {
+      markersRef.current = propertyLocations.map((location) => {
         const marker = window.L.marker([location.lat, location.lng], {
           icon: location.status === 'À vendre' ? availableIcon : soldIcon,
         }).addTo(map)
@@ -159,23 +111,8 @@ export default function PropertyMap({ properties }: PropertyMapProps) {
         return marker
       })
 
-      // Add service area circles
-      const serviceAreas = [
-        { center: [45.5017, -73.5673], radius: 30000, name: 'Montréal', color: '#0f3046' },
-        { center: [45.6066, -73.7124], radius: 18000, name: 'Laval', color: '#059669' },
-        { center: [45.5312, -73.5185], radius: 22000, name: 'Longueuil', color: '#DC2626' },
-      ]
-
-      serviceAreas.forEach((area) => {
-        window.L.circle(area.center, {
-          color: area.color,
-          fillColor: area.color,
-          fillOpacity: 0.08,
-          weight: 2,
-          opacity: 0.4,
-          radius: area.radius,
-        }).addTo(map)
-      })
+      // Service area circles have been removed to focus on property markers
+      // This creates a cleaner map view focused on individual properties
     }
 
     // Load Leaflet CSS and JS
@@ -206,7 +143,7 @@ export default function PropertyMap({ properties }: PropertyMapProps) {
         mapInstanceRef.current = null
       }
     }
-  }, [])
+  }, [propertyLocations])
 
-  return <div ref={mapRef} className="w-full h-96 bg-gray-100 rounded-lg"></div>
+  return <div ref={mapRef} className="w-full h-full min-h-[500px] bg-gray-100"></div>
 }

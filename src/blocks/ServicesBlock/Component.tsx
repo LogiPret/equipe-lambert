@@ -94,7 +94,7 @@ export default function ServicesBlock({ title, subtitle, services }: ServicesBlo
           </div>
         </ScrollAnimation>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto mb-16">
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {services.map((service, index) => {
             const IconComponent = iconMap[service.icon]
             const imageUrl =

@@ -95,7 +95,7 @@ export default function TestimonialsBlock({
           </div>
         </ScrollAnimation>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {testimonials.map((testimonial, index) => {
             const imageUrl =
               typeof testimonial.image === 'object' ? testimonial.image.url : '/placeholder.svg'
@@ -106,7 +106,7 @@ export default function TestimonialsBlock({
 
             return (
               <ScrollAnimation key={index} animation="slideUp" delay={index * 300}>
-                <Card className="bg-white/10 border border-blue-300/30 hover:border-blue-300/60 transition-all duration-500 backdrop-blur-sm">
+                <Card className="bg-white/10 border border-blue-300/30 hover:border-blue-300/60 transition-all duration-500 backdrop-blur-sm h-full">
                   <CardContent className="p-8">
                     <div className="flex items-center mb-6">
                       <Image
@@ -114,7 +114,7 @@ export default function TestimonialsBlock({
                         alt={imageAlt}
                         width={60}
                         height={60}
-                        className="w-15 h-15 rounded-full mr-4 border-2 border-blue-300"
+                        className="w-16 h-16 rounded-full mr-4 border-2 border-blue-300"
                       />
                       <div>
                         <div className="flex items-center mb-2">

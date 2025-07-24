@@ -1,4 +1,5 @@
 import { Block } from 'payload'
+import { link } from '@/fields/link'
 
 export const PropertiesBlock: Block = {
   slug: 'properties',
@@ -11,13 +12,11 @@ export const PropertiesBlock: Block = {
       name: 'title',
       type: 'text',
       required: true,
-      defaultValue: "Portfolio d'équipe",
     },
     {
       name: 'subtitle',
       type: 'textarea',
       required: true,
-      defaultValue: "Découvrez notre sélection de propriétés d'exception gérées par notre équipe",
     },
     {
       name: 'properties',
@@ -107,11 +106,9 @@ export const PropertiesBlock: Block = {
       name: 'showAllButton',
       type: 'group',
       fields: [
-        {
-          name: 'text',
-          type: 'text',
-          defaultValue: "Voir toutes nos propriétés d'équipe",
-        },
+        link({
+          appearances: false,
+        }),
       ],
     },
   ],

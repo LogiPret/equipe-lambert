@@ -1,7 +1,6 @@
 'use client'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Phone, Mail, Handshake, Target, Shield } from 'lucide-react'
+import { Handshake, Target, Shield } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import type { Media } from '@/payload-types'
@@ -102,7 +101,7 @@ export default function TeamBlock({ title, subtitle, members, advantages }: Team
           </div>
         </ScrollAnimation>
 
-        <div className="flex flex-wrap justify-center gap-6 mb-16">
+        <div className="flex flex-wrap justify-center gap-8 mb-16">
           {members.map((member, index) => {
             const imageUrl =
               typeof member.image === 'object' ? member.image.url : '/placeholder.svg'
@@ -111,39 +110,25 @@ export default function TeamBlock({ title, subtitle, members, advantages }: Team
 
             return (
               <ScrollAnimation key={index} animation="slideUp" delay={300 + index * 200}>
-                <Card className="border border-gray-200 hover:shadow-xl transition-all duration-500 bg-gradient-to-br from-white to-blue-50 hover:border-[#2d5f7f] w-auto max-w-xs">
-                  <CardContent className="p-4 text-center">
-                    <div className="relative mb-4 md:mb-6 w-[250px] h-[250px] mx-auto">
+                <Card className="border border-gray-200 hover:shadow-xl transition-all duration-500 bg-gradient-to-br from-white to-blue-50 hover:border-[#2d5f7f] w-full max-w-sm">
+                  <CardContent className="p-6 text-center">
+                    <div className="relative mb-6 w-[300px] h-[300px] mx-auto">
                       <Image
                         src={imageUrl || '/placeholder.svg'}
                         alt={imageAlt}
-                        width={250}
-                        height={250}
-                        className="shadow-lg object-cover w-full h-full aspect-square"
+                        width={300}
+                        height={300}
+                        className="shadow-lg object-cover w-full h-full aspect-square rounded-lg"
                       />
                       <div className="absolute bottom-2 left-2 bg-white text-gray-800 p-2 shadow-xl text-xs">
                         <div className="font-bold text-[#0f3046]">{member.experience}</div>
                       </div>
                     </div>
-                    <h3 className="text-2xl font-serif font-bold text-gray-800 mb-2">
+                    <h3 className="text-3xl font-serif font-bold text-gray-800 mb-3">
                       {member.name}
                     </h3>
-                    <p className="text-[#0f3046] font-semibold mb-1">{member.role}</p>
-                    <p className="text-gray-600 mb-6">{member.speciality}</p>
-                    <div className="flex justify-center gap-3">
-                      <Button size="sm" className="bg-[#0f3046] hover:bg-[#2d5f7f] text-white">
-                        <Phone className="h-4 w-4 mr-2" />
-                        Appeler
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="border-[#0f3046] text-[#0f3046] hover:bg-[#0f3046] hover:text-white bg-white"
-                      >
-                        <Mail className="h-4 w-4 mr-2" />
-                        Email
-                      </Button>
-                    </div>
+                    <p className="text-[#0f3046] font-semibold mb-2 text-lg">{member.role}</p>
+                    <p className="text-gray-600 mb-8 text-base">{member.speciality}</p>
                   </CardContent>
                 </Card>
               </ScrollAnimation>

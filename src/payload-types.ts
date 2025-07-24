@@ -328,8 +328,22 @@ export interface Page {
           status: 'a_vendre' | 'vendu' | 'option_achat';
           id?: string | null;
         }[];
-        showAllButton?: {
-          text?: string | null;
+        showAllButton: {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+          };
         };
         id?: string | null;
         blockName?: string | null;
@@ -395,8 +409,7 @@ export interface Page {
           icon: 'phone' | 'mail' | 'location';
           title: string;
           primary: string;
-          secondary?: string | null;
-          description: string;
+          description?: string | null;
           id?: string | null;
         }[];
         officeImage: {
@@ -405,6 +418,41 @@ export interface Page {
         };
         form: {
           title: string;
+          formFields: {
+            fieldType: 'text' | 'email' | 'tel' | 'number' | 'textarea' | 'select' | 'checkbox';
+            /**
+             * Unique identifier for this field (e.g., firstName, email, message)
+             */
+            name: string;
+            /**
+             * Display label for the field
+             */
+            label: string;
+            placeholder?: string | null;
+            required?: boolean | null;
+            width?: ('full' | 'half') | null;
+            options?:
+              | {
+                  label: string;
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            rows?: number | null;
+            id?: string | null;
+          }[];
+          submitButton: {
+            text: string;
+            loadingText?: string | null;
+          };
+          /**
+           * Text that appears next to the checkbox (e.g., "I agree to the terms and conditions")
+           */
+          checkboxText?: string | null;
+          /**
+           * Message displayed after successful form submission
+           */
+          successMessage?: string | null;
           disclaimer: string;
         };
         id?: string | null;
@@ -1476,7 +1524,15 @@ export interface PagesSelect<T extends boolean = true> {
               showAllButton?:
                 | T
                 | {
-                    text?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                        };
                   };
               id?: T;
               blockName?: T;
@@ -1542,7 +1598,6 @@ export interface PagesSelect<T extends boolean = true> {
                     icon?: T;
                     title?: T;
                     primary?: T;
-                    secondary?: T;
                     description?: T;
                     id?: T;
                   };
@@ -1556,6 +1611,33 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     title?: T;
+                    formFields?:
+                      | T
+                      | {
+                          fieldType?: T;
+                          name?: T;
+                          label?: T;
+                          placeholder?: T;
+                          required?: T;
+                          width?: T;
+                          options?:
+                            | T
+                            | {
+                                label?: T;
+                                value?: T;
+                                id?: T;
+                              };
+                          rows?: T;
+                          id?: T;
+                        };
+                    submitButton?:
+                      | T
+                      | {
+                          text?: T;
+                          loadingText?: T;
+                        };
+                    checkboxText?: T;
+                    successMessage?: T;
                     disclaimer?: T;
                   };
               id?: T;

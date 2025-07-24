@@ -121,10 +121,10 @@ export default function StatsBlock({ stats }: StatsBlockProps) {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-center gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <ScrollAnimation key={index} animation="scaleIn" delay={200 + index * 200}>
-              <div className="text-center text-[#0f3046] p-8 border border-gray-200 bg-gradient-to-br from-gray-50 to-blue-50 hover:shadow-lg transition-shadow w-64 h-48 flex flex-col justify-center">
+              <div className="text-center text-[#0f3046] p-8 border border-gray-200 bg-gradient-to-br from-gray-50 to-blue-50 hover:shadow-lg transition-shadow h-48 flex flex-col justify-center">
                 <CounterAnimation end={stat.number} suffix={stat.suffix || ''} />
                 <div className="text-gray-600 font-medium text-lg">{stat.label}</div>
                 <div className="text-sm text-[#0f3046] mt-2">{stat.description}</div>

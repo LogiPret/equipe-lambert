@@ -1,5 +1,4 @@
 'use client'
-import { Button } from '@/components/ui/button'
 import { CMSLink } from '@/components/Link'
 import { Award, Search } from 'lucide-react'
 import Image from 'next/image'
@@ -17,7 +16,7 @@ interface ButtonLink {
 
 interface HeroBlockProps {
   badgeText?: string
-  badgeIcon?: string
+  _badgeIcon?: string
   title: string
   subtitle?: string
   description?: string
@@ -39,7 +38,7 @@ interface HeroBlockProps {
 
 export default function HeroBlock({
   badgeText = "ÉQUIPE D'EXCELLENCE DEPUIS 2008",
-  badgeIcon,
+  _badgeIcon,
   title,
   subtitle,
   description,

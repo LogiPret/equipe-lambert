@@ -82,12 +82,7 @@ function ScrollAnimation({
   )
 }
 
-export default function MapSectionBlock({
-  title,
-  subtitle,
-  properties,
-  serviceAreas,
-}: MapSectionBlockProps) {
+export default function MapSectionBlock({ title, subtitle, properties }: MapSectionBlockProps) {
   const focusProperty = (index: number) => {
     // This function will be handled by the PropertyMap component
     console.log(`Focus property at index: ${index}`)
@@ -104,84 +99,15 @@ export default function MapSectionBlock({
           </div>
         </ScrollAnimation>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <Card className="overflow-hidden shadow-lg">
+        <div className="grid lg:grid-cols-2 gap-8">
+          <div>
+            <Card className="overflow-hidden shadow-lg h-full">
               <PropertyMap properties={properties} />
             </Card>
           </div>
 
           <div className="space-y-6">
-            <ScrollAnimation animation="slideLeft" delay={300}>
-              <Card className="shadow-lg">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                    <div className="w-3 h-3 bg-[#0f3046] rounded-full mr-3"></div>
-                    Secteurs desservis
-                  </h3>
-                  <div className="space-y-3">
-                    {serviceAreas.map((area, index) => (
-                      <div
-                        key={index}
-                        className={`flex items-center justify-between p-3 rounded-lg border ${
-                          area.bgColor || 'bg-gray-50'
-                        } ${area.borderColor || 'border-gray-200'}`}
-                      >
-                        <span className="font-medium text-gray-800">{area.name}</span>
-                        <Badge
-                          className={area.badgeColor || 'bg-[#0f3046]'}
-                          variant={area.badgeColor ? 'default' : 'default'}
-                        >
-                          {area.status}
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </ScrollAnimation>
-
-            <ScrollAnimation animation="slideLeft" delay={600}>
-              <Card className="shadow-lg">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                    <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                    Propriétés disponibles
-                  </h3>
-                  <div className="space-y-3">
-                    {properties.slice(0, 4).map((property, index) => (
-                      <div
-                        key={property.id}
-                        className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer border border-gray-200 hover:border-[#2d5f7f]"
-                        onClick={() => focusProperty(index)}
-                      >
-                        <div
-                          className={`w-3 h-3 rounded-full ${
-                            property.status === 'À vendre' ? 'bg-green-500' : 'bg-gray-400'
-                          }`}
-                        ></div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-gray-800 truncate">
-                            {property.address.split(',')[0]}
-                          </p>
-                          <p className="text-sm text-[#0f3046] font-semibold">{property.price}</p>
-                        </div>
-                        <Badge variant="outline" className="text-xs">
-                          {property.type}
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 text-center">
-                    <button className="text-[#0f3046] hover:text-[#2d5f7f] font-medium text-sm">
-                      Voir toutes les propriétés →
-                    </button>
-                  </div>
-                </CardContent>
-              </Card>
-            </ScrollAnimation>
-
-            <ScrollAnimation animation="slideLeft" delay={900}>
+            <ScrollAnimation animation="slideLeft" delay={500}>
               <Card className="shadow-lg bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200">
                 <CardContent className="p-6">
                   <div className="flex items-center mb-3">
@@ -215,6 +141,45 @@ export default function MapSectionBlock({
                       <div className="w-3 h-3 bg-gray-400 rounded-full mr-2"></div>
                       <span>Vendu</span>
                     </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </ScrollAnimation>
+            <ScrollAnimation animation="slideLeft" delay={300}>
+              <Card className="shadow-lg bg-white">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                    Propriétés disponibles
+                  </h3>
+                  <div className="space-y-3">
+                    {(properties || []).slice(0, 4).map((property, index) => (
+                      <div
+                        key={property.id}
+                        className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer border border-gray-200 hover:border-[#2d5f7f]"
+                        onClick={() => focusProperty(index)}
+                      >
+                        <div
+                          className={`w-3 h-3 rounded-full ${
+                            property.status === 'À vendre' ? 'bg-green-500' : 'bg-gray-400'
+                          }`}
+                        ></div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-gray-800 truncate">
+                            {property.address.split(',')[0]}
+                          </p>
+                          <p className="text-sm text-[#0f3046] font-semibold">{property.price}</p>
+                        </div>
+                        <Badge variant="outline" className="text-xs text-[#0f3046]">
+                          {property.type}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 text-center">
+                    <button className="text-[#0f3046] hover:text-[#2d5f7f] font-medium text-sm">
+                      Voir toutes les propriétés →
+                    </button>
                   </div>
                 </CardContent>
               </Card>

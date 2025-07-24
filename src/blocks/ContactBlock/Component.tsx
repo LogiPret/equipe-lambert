@@ -16,6 +16,20 @@ interface ContactInfo {
   description: string
 }
 
+interface FormField {
+  fieldType: 'text' | 'email' | 'tel' | 'number' | 'textarea' | 'select' | 'checkbox'
+  name: string
+  label: string
+  placeholder?: string
+  required: boolean
+  width: 'full' | 'half'
+  options?: Array<{
+    label: string
+    value: string
+  }>
+  rows?: number
+}
+
 interface ContactBlockProps {
   title: string
   subtitle: string
@@ -26,6 +40,13 @@ interface ContactBlockProps {
   }
   form: {
     title: string
+    formFields: FormField[]
+    submitButton: {
+      text: string
+      loadingText: string
+    }
+    checkboxText?: string
+    successMessage?: string
     disclaimer: string
   }
 }
@@ -93,6 +114,82 @@ const iconMap = {
   location: MapPin,
 }
 
+function renderFormField(
+  field: FormField,
+  index: number,
+  onFieldChange: (name: string, value: string) => void,
+) {
+  const baseClassName =
+    'border border-gray-300 focus:border-[#0f3046] focus:ring-1 focus:ring-[#0f3046] p-4 text-lg bg-white text-gray-900 rounded-md'
+  const widthClassName = field.width === 'half' ? 'md:col-span-1' : 'md:col-span-2'
+
+  const fieldId = `field-${field.name}-${index}`
+  const isRequired = field.required
+  const placeholder = field.placeholder + (isRequired ? ' *' : '')
+
+  switch (field.fieldType) {
+    case 'text':
+    case 'email':
+    case 'tel':
+    case 'number':
+      return (
+        <div key={fieldId} className={widthClassName}>
+          <Input
+            id={fieldId}
+            name={field.name}
+            type={field.fieldType}
+            placeholder={placeholder}
+            required={isRequired}
+            className={baseClassName}
+            onChange={(e) => onFieldChange(field.name, e.target.value)}
+          />
+        </div>
+      )
+
+    case 'textarea':
+      return (
+        <div key={fieldId} className="md:col-span-2">
+          <Textarea
+            id={fieldId}
+            name={field.name}
+            placeholder={placeholder}
+            required={isRequired}
+            rows={field.rows || 4}
+            className={baseClassName}
+            onChange={(e) => onFieldChange(field.name, e.target.value)}
+          />
+        </div>
+      )
+
+    case 'select':
+      return (
+        <div key={fieldId} className={widthClassName}>
+          <select
+            id={fieldId}
+            name={field.name}
+            required={isRequired}
+            className={`${baseClassName} w-full text-gray-900 appearance-none`}
+            style={{ minWidth: '100%' }}
+            onChange={(e) => onFieldChange(field.name, e.target.value)}
+          >
+            <option value="" className="text-gray-500">
+              {field.label}
+              {isRequired ? ' *' : ''}
+            </option>
+            {field.options?.map((option, optIndex) => (
+              <option key={optIndex} value={option.value} className="text-gray-900">
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      )
+
+    default:
+      return null
+  }
+}
+
 export default function ContactBlock({
   title,
   subtitle,
@@ -100,10 +197,50 @@ export default function ContactBlock({
   officeImage,
   form,
 }: ContactBlockProps) {
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false)
+  const [formData, setFormData] = useState<Record<string, string>>({})
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const imageUrl =
     typeof officeImage.image === 'object' ? officeImage.image.url : '/placeholder.svg'
   const imageAlt =
     typeof officeImage.image === 'object' ? officeImage.image.alt || 'Office' : 'Office'
+
+  // Filter out checkbox fields since we handle the checkbox separately
+  const formFields = form.formFields.filter((field) => field.fieldType !== 'checkbox')
+
+  // Check if all required fields are filled
+  const isFormValid = formFields.every((field) => {
+    if (!field.required) return true
+    const value = formData[field.name]
+    return value && value.trim() !== ''
+  })
+
+  // Button should be enabled only when form is valid AND checkbox is checked
+  const isSubmitEnabled = isFormValid && isCheckboxChecked && !isSubmitting
+
+  // Handle form field changes
+  const handleFieldChange = (name: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!isSubmitEnabled) return
+
+    setIsSubmitting(true)
+
+    // Simulate form submission (replace with actual API call)
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+
+    setIsSubmitted(true)
+    setIsSubmitting(false)
+  }
 
   return (
     <section id="contact" className="py-24 bg-gray-100">
@@ -115,14 +252,9 @@ export default function ContactBlock({
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">{subtitle}</p>
           </div>
         </ScrollAnimation>
-
-        <div className="grid lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16">
           <ScrollAnimation animation="slideRight" delay={300}>
             <div>
-              <h3 className="text-3xl font-serif font-bold text-gray-800 mb-8">
-                Rencontrez l&apos;équipe
-              </h3>
-
               <div className="space-y-6 mb-10">
                 {contactInfo.map((info, index) => {
                   const IconComponent = iconMap[info.icon]
@@ -160,60 +292,75 @@ export default function ContactBlock({
             <Card className="border border-gray-300 shadow-xl bg-white hover:border-[#2d5f7f] transition-colors">
               <CardContent className="p-10">
                 <h3 className="text-2xl font-serif font-bold text-gray-800 mb-8">{form.title}</h3>
-                <form className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <Input
-                      placeholder="Prénom *"
-                      className="border border-gray-300 focus:border-[#0f3046] p-4 text-lg"
-                    />
-                    <Input
-                      placeholder="Nom *"
-                      className="border border-gray-300 focus:border-[#0f3046] p-4 text-lg"
-                    />
+
+                {isSubmitted ? (
+                  // Success message
+                  <div className="text-center py-12">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
+                      <svg
+                        className="w-8 h-8 text-green-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </div>
+                    <h4 className="text-xl font-semibold text-gray-800 mb-4">Message Sent!</h4>
+                    <p className="text-gray-600 leading-relaxed">
+                      {form.successMessage ||
+                        'Thank you for your message! We will get back to you soon.'}
+                    </p>
                   </div>
-                  <Input
-                    placeholder="Email *"
-                    type="email"
-                    className="border border-gray-300 focus:border-[#0f3046] p-4 text-lg"
-                  />
-                  <Input
-                    placeholder="Téléphone *"
-                    type="tel"
-                    className="border border-gray-300 focus:border-[#0f3046] p-4 text-lg"
-                  />
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <select className="border border-gray-300 focus:border-[#0f3046] p-4 text-lg bg-white rounded-md">
-                      <option>Type de projet *</option>
-                      <option>Achat résidentiel</option>
-                      <option>Vente résidentiel</option>
-                      <option>Investissement commercial</option>
-                      <option>Évaluation d&apos;équipe</option>
-                    </select>
-                    <select className="border border-gray-300 focus:border-[#0f3046] p-4 text-lg bg-white rounded-md">
-                      <option>Membre d&apos;équipe préféré</option>
-                      <option>David Lambert (Résidentiel)</option>
-                      <option>Sarah Dubois (Condos)</option>
-                      <option>Marc Tremblay (Commercial)</option>
-                      <option>Indifférent</option>
-                    </select>
-                  </div>
-                  <Textarea
-                    placeholder="Décrivez votre projet immobilier en détail..."
-                    rows={4}
-                    className="border border-gray-300 focus:border-[#0f3046] p-4 text-lg"
-                  />
-                  <div className="flex items-center space-x-2">
-                    <input type="checkbox" id="consent" className="w-4 h-4" />
-                    <label htmlFor="consent" className="text-sm text-gray-600">
-                      J&apos;accepte d&apos;être contacté par l&apos;Équipe Lambert concernant ma
-                      demande *
-                    </label>
-                  </div>
-                  <Button className="w-full bg-[#0f3046] hover:bg-[#1a4a66] text-white py-4 font-medium text-lg">
-                    Demander une consultation d&apos;équipe gratuite
-                  </Button>
-                </form>
-                <p className="text-xs text-gray-500 mt-4 text-center">{form.disclaimer}</p>
+                ) : (
+                  <form className="space-y-6" onSubmit={handleSubmit}>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {formFields.map((field, index) =>
+                        renderFormField(field, index, handleFieldChange),
+                      )}
+                    </div>
+
+                    {/* Simple checkbox with admin-configured text */}
+                    <div className="flex items-start space-x-3">
+                      <input
+                        id="agreement-checkbox"
+                        name="agreement"
+                        type="checkbox"
+                        required
+                        checked={isCheckboxChecked}
+                        onChange={(e) => setIsCheckboxChecked(e.target.checked)}
+                        className="w-5 h-5 mt-0.5 text-[#0f3046] bg-white border-2 border-gray-300 rounded focus:ring-[#0f3046] focus:ring-2"
+                      />
+                      <label
+                        htmlFor="agreement-checkbox"
+                        className="text-sm text-gray-700 leading-relaxed"
+                      >
+                        {form.checkboxText || 'I agree to the terms and conditions'} *
+                      </label>
+                    </div>
+
+                    <Button
+                      type="submit"
+                      disabled={!isSubmitEnabled}
+                      className={`w-full py-4 font-medium text-lg transition-colors ${
+                        !isSubmitEnabled
+                          ? 'bg-gray-400 cursor-not-allowed text-gray-200'
+                          : 'bg-[#0f3046] hover:bg-[#1a4a66] text-white'
+                      }`}
+                    >
+                      {isSubmitting ? form.submitButton.loadingText : form.submitButton.text}
+                    </Button>
+                  </form>
+                )}
+
+                {!isSubmitted && (
+                  <p className="text-xs text-gray-500 mt-4 text-center">{form.disclaimer}</p>
+                )}
               </CardContent>
             </Card>
           </ScrollAnimation>

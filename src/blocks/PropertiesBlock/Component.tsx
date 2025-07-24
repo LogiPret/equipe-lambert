@@ -2,10 +2,11 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { MapPin, Heart, Camera, Bed, Bath, Square } from 'lucide-react'
+import { CMSLink } from '@/components/Link'
+import { MapPin, Camera, Bed, Bath, Square } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import type { Media } from '@/payload-types'
+import type { Media, Page, Post } from '@/payload-types'
 
 interface Property {
   image: Media
@@ -18,12 +19,23 @@ interface Property {
   status: 'a_vendre' | 'vendu' | 'option_achat'
 }
 
+interface ButtonLink {
+  type?: 'custom' | 'reference' | null
+  reference?: {
+    relationTo: 'pages' | 'posts'
+    value: Page | Post | string | number
+  } | null
+  url?: string | null
+  newTab?: boolean | null
+}
+
 interface PropertiesBlockProps {
   title: string
   subtitle: string
   properties: Property[]
   showAllButton?: {
     text: string
+    link?: ButtonLink
   }
 }
 
@@ -142,15 +154,8 @@ export default function PropertiesBlock({
                         {statusLabels[property.status]}
                       </Badge>
                     </div>
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 hover:bg-white"
-                    >
-                      <Heart className="h-4 w-4" />
-                    </Button>
                     <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Button size="sm" className="bg-[#0f3046] hover:bg-[#1a4a66] text-white">
+                      <Button size="sm" className="bg-[#0f3046] hover:bg-[#2d5f7f] text-white">
                         <Camera className="h-4 w-4 mr-2" />
                         Visite virtuelle
                       </Button>
@@ -191,12 +196,23 @@ export default function PropertiesBlock({
         {showAllButton && (
           <ScrollAnimation animation="fadeIn" delay={1000}>
             <div className="text-center mt-16">
-              <Button
-                size="lg"
-                className="bg-[#0f3046] hover:bg-[#1a4a66] text-white px-8 py-4 font-medium text-lg"
-              >
-                {showAllButton.text}
-              </Button>
+              {showAllButton.link ? (
+                <CMSLink
+                  {...showAllButton.link}
+                  appearance="default"
+                  size="lg"
+                  className="bg-[#0f3046] hover:bg-[#2d5f7f] text-white px-8 py-4 font-medium text-lg"
+                >
+                  {showAllButton.text}
+                </CMSLink>
+              ) : (
+                <Button
+                  size="lg"
+                  className="bg-[#0f3046] hover:bg-[#2d5f7f] text-white px-8 py-4 font-medium text-lg"
+                >
+                  {showAllButton.text}
+                </Button>
+              )}
             </div>
           </ScrollAnimation>
         )}

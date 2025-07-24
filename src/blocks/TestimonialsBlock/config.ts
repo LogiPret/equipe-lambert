@@ -11,14 +11,11 @@ export const TestimonialsBlock: Block = {
       name: 'title',
       type: 'text',
       required: true,
-      defaultValue: 'Témoignages clients',
     },
     {
       name: 'subtitle',
       type: 'textarea',
       required: true,
-      defaultValue:
-        'La confiance de nos clients envers notre équipe est le fondement de notre réputation',
     },
     {
       name: 'testimonials',

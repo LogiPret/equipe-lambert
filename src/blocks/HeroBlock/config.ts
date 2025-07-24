@@ -12,7 +12,6 @@ export const HeroBlock: Block = {
       name: 'badgeText',
       type: 'text',
       required: true,
-      defaultValue: "ÉQUIPE D'EXCELLENCE DEPUIS 2008",
     },
     {
       name: 'badgeIcon',

@@ -50,7 +50,7 @@ export const TeamBlock: Block = {
         },
       ],
       minRows: 1,
-      maxRows: 3,
+      maxRows: 10,
     },
     {
       name: 'advantages',
