@@ -7,6 +7,7 @@ import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { Button } from '../../blocks/Button/config'
 
 // Real Estate Custom Blocks
 import { HeroBlock } from '../../blocks/HeroBlock/config'
@@ -95,6 +96,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 MediaBlock,
                 Archive,
                 FormBlock,
+                Button,
                 // Real Estate Custom Blocks
                 HeroBlock,
                 StatsBlock,

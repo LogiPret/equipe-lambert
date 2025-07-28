@@ -20,6 +20,7 @@ import ContactBlock from '@/blocks/ContactBlock/Component'
 import HeaderBlock from '@/blocks/HeaderBlock/Component'
 import FooterBlock from '@/blocks/FooterBlock/Component'
 import MapSectionBlock from '@/blocks/MapSectionBlock/Component'
+import ButtonBlock from '@/blocks/Button/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -39,6 +40,7 @@ const blockComponents = {
   header: HeaderBlock,
   footer: FooterBlock,
   mapSectionBlock: MapSectionBlock,
+  button: ButtonBlock,
 }
 
 export const RenderBlocks: React.FC<{
