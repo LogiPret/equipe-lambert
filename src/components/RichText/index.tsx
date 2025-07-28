@@ -12,19 +12,37 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
+import { ButtonBlock } from '@/blocks/Button/Component'
 
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
+
+// Local type definition for ButtonBlock until payload-types is regenerated
+interface ButtonBlockProps {
+  text: string
+  link: {
+    type?: 'custom' | 'reference' | null
+    newTab?: boolean | null
+    reference?: {
+      relationTo: 'pages' | 'posts'
+      value: any
+    } | null
+    url?: string | null
+    appearance?: 'default' | 'outline'
+  }
+}
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/utilities/ui'
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
+  | SerializedBlockNode<
+      CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps | ButtonBlockProps
+    >
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
@@ -52,6 +70,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     ),
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
+    button: ({ node }: { node: SerializedBlockNode<ButtonBlockProps> }) => (
+      <ButtonBlock {...node.fields} />
+    ),
   },
 })
 

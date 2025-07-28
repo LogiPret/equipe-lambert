@@ -198,6 +198,30 @@ export interface Page {
     | ArchiveBlock
     | FormBlock
     | {
+        text: string;
+        link?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'button';
+      }
+    | {
         badgeText: string;
         badgeIcon?: string | null;
         title: string;
@@ -1387,6 +1411,22 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        button?:
+          | T
+          | {
+              text?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         hero?:
           | T
           | {
