@@ -21,6 +21,7 @@ import HeaderBlock from '@/blocks/HeaderBlock/Component'
 import FooterBlock from '@/blocks/FooterBlock/Component'
 import MapSectionBlock from '@/blocks/MapSectionBlock/Component'
 import ButtonBlock from '@/blocks/Button/Component'
+import BlogCarouselBlock from '@/blocks/BlogCarouselBlock/ServerComponent'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -41,6 +42,7 @@ const blockComponents = {
   footer: FooterBlock,
   mapSectionBlock: MapSectionBlock,
   button: ButtonBlock,
+  blogCarousel: BlogCarouselBlock,
 }
 
 export const RenderBlocks: React.FC<{

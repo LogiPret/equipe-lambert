@@ -538,6 +538,15 @@ export interface Page {
         blockType: 'footer';
       }
     | MapSectionBlock
+    | {
+        title: string;
+        subtitle: string;
+        collection: 'posts';
+        postsLimit?: number | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'blogCarousel';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -1754,6 +1763,16 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         mapSectionBlock?: T | MapSectionBlockSelect<T>;
+        blogCarousel?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              collection?: T;
+              postsLimit?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
