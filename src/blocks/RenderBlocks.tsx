@@ -10,19 +10,20 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 
 // Real Estate Custom Blocks
 import HeroBlock from '@/blocks/HeroBlock/Component'
-import StatsBlock from '@/blocks/StatsBlock/Component'
-import ServicesBlock from '@/blocks/ServicesBlock/Component'
-import TeamBlock from '@/blocks/TeamBlock/Component'
-import PropertiesBlock from '@/blocks/PropertiesBlock/Component'
-import TestimonialsBlock from '@/blocks/TestimonialsBlock/Component'
+import StatsBlock from '@/blocks/HomePageBlocks/StatsBlock/Component'
+import ServicesBlock from '@/blocks/HomePageBlocks/ServicesBlock/Component'
+import TeamBlock from '@/blocks/HomePageBlocks/TeamBlock/Component'
+import PropertiesBlock from '@/blocks/HomePageBlocks/PropertiesBlock/Component'
+import TestimonialsBlock from '@/blocks/HomePageBlocks/TestimonialsBlock/Component'
 import CTABannerBlock from '@/blocks/CTABannerBlock/Component'
-import ContactBlock from '@/blocks/ContactBlock/Component'
+import ContactBlock from '@/blocks/HomePageBlocks/ContactBlock/Component'
 import HeaderBlock from '@/blocks/HeaderBlock/Component'
 import FooterBlock from '@/blocks/FooterBlock/Component'
-import MapSectionBlock from '@/blocks/MapSectionBlock/Component'
+import MapSectionBlock from '@/blocks/HomePageBlocks/MapSectionBlock/Component'
 import ButtonBlock from '@/blocks/Button/Component'
-import BlogCarouselBlock from '@/blocks/BlogCarouselBlock/ServerComponent'
-import VendreHeroBlock from '@/blocks/VendreHeroBlock/Component'
+import BlogCarouselBlock from '@/blocks/HomePageBlocks/BlogCarouselBlock/ServerComponent'
+import VendreHeroBlock from '@/blocks/LandingVendreBlocks/VendreHeroBlock/Component'
+import WhyChooseUsBlock from '@/blocks/LandingVendreBlocks/WhyChooseUsBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -45,6 +46,7 @@ const blockComponents = {
   button: ButtonBlock,
   blogCarousel: BlogCarouselBlock,
   vendreHero: VendreHeroBlock,
+  whyChooseUs: WhyChooseUsBlock,
 }
 
 export const RenderBlocks: React.FC<{

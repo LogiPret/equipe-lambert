@@ -11,18 +11,19 @@ import { Button } from '../../blocks/Button/config'
 
 // Real Estate Custom Blocks
 import { HeroBlock } from '../../blocks/HeroBlock/config'
-import { StatsBlock } from '../../blocks/StatsBlock/config'
-import { ServicesBlock } from '../../blocks/ServicesBlock/config'
-import { TeamBlock } from '../../blocks/TeamBlock/config'
-import { PropertiesBlock } from '../../blocks/PropertiesBlock/config'
-import { TestimonialsBlock } from '../../blocks/TestimonialsBlock/config'
+import { StatsBlock } from '../../blocks/HomePageBlocks/StatsBlock/config'
+import { ServicesBlock } from '../../blocks/HomePageBlocks/ServicesBlock/config'
+import { TeamBlock } from '../../blocks/HomePageBlocks/TeamBlock/config'
+import { PropertiesBlock } from '../../blocks/HomePageBlocks/PropertiesBlock/config'
+import { TestimonialsBlock } from '../../blocks/HomePageBlocks/TestimonialsBlock/config'
 import { CTABannerBlock } from '../../blocks/CTABannerBlock/config'
-import { ContactBlock } from '../../blocks/ContactBlock/config'
+import { ContactBlock } from '../../blocks/HomePageBlocks/ContactBlock/config'
 import { HeaderBlock } from '../../blocks/HeaderBlock/config'
 import { FooterBlock } from '../../blocks/FooterBlock/config'
-import { MapSectionBlock } from '../../blocks/MapSectionBlock/config'
-import { BlogCarouselBlock } from '../../blocks/BlogCarouselBlock/config'
-import { VendreHeroBlock } from '../../blocks/VendreHeroBlock/config'
+import { MapSectionBlock } from '../../blocks/HomePageBlocks/MapSectionBlock/config'
+import { BlogCarouselBlock } from '../../blocks/HomePageBlocks/BlogCarouselBlock/config'
+import { VendreHeroBlock } from '../../blocks/LandingVendreBlocks/VendreHeroBlock/config'
+import { WhyChooseUsBlock } from '../../blocks/LandingVendreBlocks/WhyChooseUsBlock/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -113,6 +114,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 MapSectionBlock,
                 BlogCarouselBlock,
                 VendreHeroBlock,
+                WhyChooseUsBlock,
               ],
               required: true,
               admin: {

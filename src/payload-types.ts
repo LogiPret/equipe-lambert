@@ -583,6 +583,45 @@ export interface Page {
         blockName?: string | null;
         blockType: 'vendreHero';
       }
+    | {
+        title: string;
+        subtitle: string;
+        choices?:
+          | {
+              icon: 'trendingUp' | 'clock' | 'shield' | 'target' | 'award' | 'users';
+              iconColor:
+                | 'text-blue-600'
+                | 'text-green-600'
+                | 'text-orange-600'
+                | 'text-purple-600'
+                | 'text-red-600'
+                | 'text-white';
+              bgColor:
+                | 'bg-blue-100'
+                | 'bg-green-100'
+                | 'bg-orange-100'
+                | 'bg-purple-100'
+                | 'bg-red-100'
+                | 'bg-gray-100';
+              title: string;
+              description: string;
+              statValue: string;
+              statLabel: string;
+              statColor:
+                | 'text-blue-600'
+                | 'text-green-600'
+                | 'text-orange-600'
+                | 'text-purple-600'
+                | 'text-red-600'
+                | 'text-gray-600';
+              statBgColor: 'bg-blue-50' | 'bg-green-50' | 'bg-orange-50' | 'bg-purple-50' | 'bg-red-50' | 'bg-gray-50';
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'whyChooseUs';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -1845,6 +1884,28 @@ export interface PagesSelect<T extends boolean = true> {
                     id?: T;
                   };
               backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        whyChooseUs?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              choices?:
+                | T
+                | {
+                    icon?: T;
+                    iconColor?: T;
+                    bgColor?: T;
+                    title?: T;
+                    description?: T;
+                    statValue?: T;
+                    statLabel?: T;
+                    statColor?: T;
+                    statBgColor?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
