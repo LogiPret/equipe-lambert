@@ -22,6 +22,7 @@ import { HeaderBlock } from '../../blocks/HeaderBlock/config'
 import { FooterBlock } from '../../blocks/FooterBlock/config'
 import { MapSectionBlock } from '../../blocks/MapSectionBlock/config'
 import { BlogCarouselBlock } from '../../blocks/BlogCarouselBlock/config'
+import { VendreHeroBlock } from '../../blocks/VendreHeroBlock/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -111,6 +112,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 FooterBlock,
                 MapSectionBlock,
                 BlogCarouselBlock,
+                VendreHeroBlock,
               ],
               required: true,
               admin: {

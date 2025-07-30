@@ -547,6 +547,42 @@ export interface Page {
         blockName?: string | null;
         blockType: 'blogCarousel';
       }
+    | {
+        badgeText: string;
+        title: string;
+        subtitle?: string | null;
+        description: string;
+        stats?:
+          | {
+              value: string;
+              label: string;
+              id?: string | null;
+            }[]
+          | null;
+        primaryButtonText: string;
+        secondaryButtonText: string;
+        formTitle: string;
+        formFields: {
+          addressPlaceholder: string;
+          firstNamePlaceholder: string;
+          lastNamePlaceholder: string;
+          phonePlaceholder: string;
+          emailPlaceholder: string;
+          timeframePlaceholder: string;
+          submitButtonText: string;
+          disclaimerText: string;
+        };
+        timeframeOptions?:
+          | {
+              option: string;
+              id?: string | null;
+            }[]
+          | null;
+        backgroundImage?: (number | null) | Media;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'vendreHero';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -1770,6 +1806,45 @@ export interface PagesSelect<T extends boolean = true> {
               subtitle?: T;
               collection?: T;
               postsLimit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        vendreHero?:
+          | T
+          | {
+              badgeText?: T;
+              title?: T;
+              subtitle?: T;
+              description?: T;
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              primaryButtonText?: T;
+              secondaryButtonText?: T;
+              formTitle?: T;
+              formFields?:
+                | T
+                | {
+                    addressPlaceholder?: T;
+                    firstNamePlaceholder?: T;
+                    lastNamePlaceholder?: T;
+                    phonePlaceholder?: T;
+                    emailPlaceholder?: T;
+                    timeframePlaceholder?: T;
+                    submitButtonText?: T;
+                    disclaimerText?: T;
+                  };
+              timeframeOptions?:
+                | T
+                | {
+                    option?: T;
+                    id?: T;
+                  };
+              backgroundImage?: T;
               id?: T;
               blockName?: T;
             };

@@ -22,6 +22,7 @@ import FooterBlock from '@/blocks/FooterBlock/Component'
 import MapSectionBlock from '@/blocks/MapSectionBlock/Component'
 import ButtonBlock from '@/blocks/Button/Component'
 import BlogCarouselBlock from '@/blocks/BlogCarouselBlock/ServerComponent'
+import VendreHeroBlock from '@/blocks/VendreHeroBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -43,6 +44,7 @@ const blockComponents = {
   mapSectionBlock: MapSectionBlock,
   button: ButtonBlock,
   blogCarousel: BlogCarouselBlock,
+  vendreHero: VendreHeroBlock,
 }
 
 export const RenderBlocks: React.FC<{

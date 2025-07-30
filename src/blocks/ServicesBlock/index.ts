@@ -1,1 +1,0 @@
-export { ServicesBlock } from './config'
