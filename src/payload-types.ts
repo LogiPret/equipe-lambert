@@ -622,6 +622,33 @@ export interface Page {
         blockName?: string | null;
         blockType: 'whyChooseUs';
       }
+    | {
+        title: string;
+        subtitle: string;
+        steps?:
+          | {
+              icon:
+                | 'home'
+                | 'search'
+                | 'camera'
+                | 'users'
+                | 'dollarSign'
+                | 'key'
+                | 'calendar'
+                | 'checkCircle'
+                | 'star'
+                | 'target'
+                | 'clipboardList'
+                | 'handshake';
+              title: string;
+              description: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'sellingProcess';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -1904,6 +1931,22 @@ export interface PagesSelect<T extends boolean = true> {
                     statLabel?: T;
                     statColor?: T;
                     statBgColor?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        sellingProcess?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              steps?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
                     id?: T;
                   };
               id?: T;

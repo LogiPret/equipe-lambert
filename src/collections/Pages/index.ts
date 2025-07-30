@@ -24,6 +24,7 @@ import { MapSectionBlock } from '../../blocks/HomePageBlocks/MapSectionBlock/con
 import { BlogCarouselBlock } from '../../blocks/HomePageBlocks/BlogCarouselBlock/config'
 import { VendreHeroBlock } from '../../blocks/LandingVendreBlocks/VendreHeroBlock/config'
 import { WhyChooseUsBlock } from '../../blocks/LandingVendreBlocks/WhyChooseUsBlock/config'
+import { SellingProcessBlock } from '../../blocks/SellingProcessBlock/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -115,6 +116,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 BlogCarouselBlock,
                 VendreHeroBlock,
                 WhyChooseUsBlock,
+                SellingProcessBlock,
               ],
               required: true,
               admin: {

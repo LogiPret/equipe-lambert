@@ -24,6 +24,7 @@ import ButtonBlock from '@/blocks/Button/Component'
 import BlogCarouselBlock from '@/blocks/HomePageBlocks/BlogCarouselBlock/ServerComponent'
 import VendreHeroBlock from '@/blocks/LandingVendreBlocks/VendreHeroBlock/Component'
 import WhyChooseUsBlock from '@/blocks/LandingVendreBlocks/WhyChooseUsBlock/Component'
+import SellingProcessBlock from '@/blocks/SellingProcessBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -47,6 +48,7 @@ const blockComponents = {
   blogCarousel: BlogCarouselBlock,
   vendreHero: VendreHeroBlock,
   whyChooseUs: WhyChooseUsBlock,
+  sellingProcess: SellingProcessBlock,
 }
 
 export const RenderBlocks: React.FC<{

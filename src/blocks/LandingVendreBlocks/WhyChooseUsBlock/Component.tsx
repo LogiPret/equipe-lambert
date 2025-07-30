@@ -1,5 +1,4 @@
 import React from 'react'
-import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { TrendingUp, Clock, Shield, Target, Award, Users } from 'lucide-react'
 import { ScrollAnimation } from '@/components/scroll-animations'
@@ -31,48 +30,7 @@ const iconMap = {
   users: Users,
 }
 
-export default function WhyChooseUsBlock({
-  title = 'Pourquoi nous choisir',
-  subtitle = "Notre expertise et notre engagement envers l'excellence font de nous le partenaire idéal pour la vente de votre propriété.",
-  choices = [
-    {
-      icon: 'trendingUp',
-      iconColor: 'text-blue-600',
-      bgColor: 'bg-blue-100',
-      title: 'Résultats Exceptionnels',
-      description:
-        'Notre taux de vente de 95% témoigne de notre expertise et de notre engagement envers nos clients.',
-      statValue: '95%',
-      statLabel: 'Taux de vente',
-      statColor: 'text-blue-600',
-      statBgColor: 'bg-blue-50',
-    },
-    {
-      icon: 'clock',
-      iconColor: 'text-green-600',
-      bgColor: 'bg-green-100',
-      title: 'Vente Rapide',
-      description:
-        'Grâce à notre réseau et notre stratégie marketing, nous vendons en moyenne en 21 jours.',
-      statValue: '21 jours',
-      statLabel: 'Délai moyen',
-      statColor: 'text-green-600',
-      statBgColor: 'bg-green-50',
-    },
-    {
-      icon: 'shield',
-      iconColor: 'text-orange-600',
-      bgColor: 'bg-orange-100',
-      title: 'Sécurité Garantie',
-      description:
-        "Transactions sécurisées et accompagnement juridique complet pour votre tranquillité d'esprit.",
-      statValue: '100%',
-      statLabel: 'Sécurisé',
-      statColor: 'text-orange-600',
-      statBgColor: 'bg-orange-50',
-    },
-  ],
-}: WhyChooseUsBlockProps) {
+export default function WhyChooseUsBlock({ title, subtitle, choices }: WhyChooseUsBlockProps) {
   const validChoices = Array.isArray(choices) ? choices : []
 
   return (
