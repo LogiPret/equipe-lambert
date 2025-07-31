@@ -1,6 +1,6 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-vercel-postgres'
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload: _payload, req: _req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_pages_blocks_hero_primary_button_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_pages_blocks_hero_primary_button_link_appearance" AS ENUM('default', 'outline');
@@ -934,7 +934,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_pages_v_blocks_map_section_block_path_idx" ON "_pages_v_blocks_map_section_block" USING btree ("_path");`)
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+export async function down({ db, payload: _payload, req: _req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
    DROP TABLE "pages_blocks_hero" CASCADE;
   DROP TABLE "pages_blocks_stats_stats" CASCADE;

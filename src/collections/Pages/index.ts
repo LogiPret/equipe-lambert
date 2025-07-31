@@ -17,6 +17,7 @@ import { TeamBlock } from '../../blocks/HomePageBlocks/TeamBlock/config'
 import { PropertiesBlock } from '../../blocks/HomePageBlocks/PropertiesBlock/config'
 import { TestimonialsBlock } from '../../blocks/HomePageBlocks/TestimonialsBlock/config'
 import { CTABannerBlock } from '../../blocks/CTABannerBlock/config'
+import { BannerCTAScrollBlock } from '../../blocks/BannerCTAScrollBlock/config'
 import { ContactBlock } from '../../blocks/HomePageBlocks/ContactBlock/config'
 import { HeaderBlock } from '../../blocks/HeaderBlock/config'
 import { FooterBlock } from '../../blocks/FooterBlock/config'
@@ -24,7 +25,9 @@ import { MapSectionBlock } from '../../blocks/HomePageBlocks/MapSectionBlock/con
 import { BlogCarouselBlock } from '../../blocks/HomePageBlocks/BlogCarouselBlock/config'
 import { VendreHeroBlock } from '../../blocks/LandingVendreBlocks/VendreHeroBlock/config'
 import { WhyChooseUsBlock } from '../../blocks/LandingVendreBlocks/WhyChooseUsBlock/config'
-import { SellingProcessBlock } from '../../blocks/SellingProcessBlock/config'
+import { SellingProcessBlock } from '../../blocks/LandingVendreBlocks/SellingProcessBlock/config'
+import { VendreCTABlock } from '../../blocks/LandingVendreBlocks/VendreCTABlock/config'
+import { EvaluationGratuiteBlock } from '@/blocks/LandingVendreBlocks/EvaluationGratuiteBlock/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -109,6 +112,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 PropertiesBlock,
                 TestimonialsBlock,
                 CTABannerBlock,
+                BannerCTAScrollBlock,
                 ContactBlock,
                 HeaderBlock,
                 FooterBlock,
@@ -117,6 +121,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 VendreHeroBlock,
                 WhyChooseUsBlock,
                 SellingProcessBlock,
+                VendreCTABlock,
+                EvaluationGratuiteBlock,
               ],
               required: true,
               admin: {

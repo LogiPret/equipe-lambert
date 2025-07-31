@@ -55,16 +55,222 @@ export const VendreHeroBlock: Block = {
       ],
     },
     {
-      name: 'primaryButtonText',
-      type: 'text',
+      name: 'primaryButton',
+      type: 'group',
       required: true,
-      defaultValue: 'Évaluation gratuite',
+      fields: [
+        {
+          name: 'text',
+          type: 'text',
+          required: true,
+          defaultValue: 'Évaluation gratuite',
+        },
+        {
+          name: 'actionType',
+          type: 'select',
+          required: true,
+          defaultValue: 'scroll',
+          options: [
+            {
+              label: 'Scroll to Block',
+              value: 'scroll',
+            },
+            {
+              label: 'Link to Page',
+              value: 'link',
+            },
+          ],
+          admin: {
+            description:
+              'Choose whether this button scrolls to a block on the same page or links to another page.',
+          },
+        },
+        {
+          name: 'scrollTarget',
+          type: 'text',
+          admin: {
+            condition: (data, siblingData) => siblingData.actionType === 'scroll',
+            components: {
+              Field: '@/components/admin/BlockTargetField#BlockTargetField',
+            },
+            description: 'Select the block to scroll to from the available blocks on this page.',
+          },
+        },
+        {
+          name: 'link',
+          type: 'group',
+          admin: {
+            condition: (data, siblingData) => siblingData.actionType === 'link',
+            hideGutter: true,
+          },
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'type',
+                  type: 'radio',
+                  admin: {
+                    layout: 'horizontal',
+                    width: '50%',
+                  },
+                  defaultValue: 'reference',
+                  options: [
+                    {
+                      label: 'Internal link',
+                      value: 'reference',
+                    },
+                    {
+                      label: 'Custom URL',
+                      value: 'custom',
+                    },
+                  ],
+                },
+                {
+                  name: 'newTab',
+                  type: 'checkbox',
+                  admin: {
+                    style: {
+                      alignSelf: 'flex-end',
+                    },
+                    width: '50%',
+                  },
+                  label: 'Open in new tab',
+                },
+              ],
+            },
+            {
+              name: 'reference',
+              type: 'relationship',
+              admin: {
+                condition: (data, siblingData) => siblingData?.type === 'reference',
+              },
+              label: 'Document to link to',
+              maxDepth: 1,
+              relationTo: ['pages'],
+              required: true,
+            },
+            {
+              name: 'url',
+              type: 'text',
+              admin: {
+                condition: (data, siblingData) => siblingData?.type === 'custom',
+              },
+              label: 'Custom URL',
+              required: true,
+            },
+          ],
+        },
+      ],
     },
     {
-      name: 'secondaryButtonText',
-      type: 'text',
+      name: 'secondaryButton',
+      type: 'group',
       required: true,
-      defaultValue: 'En savoir plus',
+      fields: [
+        {
+          name: 'text',
+          type: 'text',
+          required: true,
+          defaultValue: 'En savoir plus',
+        },
+        {
+          name: 'actionType',
+          type: 'select',
+          required: true,
+          defaultValue: 'scroll',
+          options: [
+            {
+              label: 'Scroll to Block',
+              value: 'scroll',
+            },
+            {
+              label: 'Link to Page',
+              value: 'link',
+            },
+          ],
+          admin: {
+            description:
+              'Choose whether this button scrolls to a block on the same page or links to another page.',
+          },
+        },
+        {
+          name: 'scrollTarget',
+          type: 'text',
+          admin: {
+            condition: (data, siblingData) => siblingData.actionType === 'scroll',
+            components: {
+              Field: '@/components/admin/BlockTargetField#BlockTargetField',
+            },
+            description: 'Select the block to scroll to from the available blocks on this page.',
+          },
+        },
+        {
+          name: 'link',
+          type: 'group',
+          admin: {
+            condition: (data, siblingData) => siblingData.actionType === 'link',
+            hideGutter: true,
+          },
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'type',
+                  type: 'radio',
+                  admin: {
+                    layout: 'horizontal',
+                    width: '50%',
+                  },
+                  defaultValue: 'reference',
+                  options: [
+                    {
+                      label: 'Internal link',
+                      value: 'reference',
+                    },
+                    {
+                      label: 'Custom URL',
+                      value: 'custom',
+                    },
+                  ],
+                },
+                {
+                  name: 'newTab',
+                  type: 'checkbox',
+                  admin: {
+                    style: {
+                      alignSelf: 'flex-end',
+                    },
+                    width: '50%',
+                  },
+                  label: 'Open in new tab',
+                },
+              ],
+            },
+            {
+              name: 'reference',
+              type: 'relationship',
+              admin: {
+                condition: (data, siblingData) => siblingData?.type === 'reference',
+              },
+              label: 'Document to link to',
+              maxDepth: 1,
+              relationTo: ['pages'],
+              required: true,
+            },
+            {
+              name: 'url',
+              type: 'text',
+              admin: {
+                condition: (data, siblingData) => siblingData?.type === 'custom',
+              },
+              label: 'Custom URL',
+              required: true,
+            },
+          ],
+        },
+      ],
     },
     {
       name: 'formTitle',

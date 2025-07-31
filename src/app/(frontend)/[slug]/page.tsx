@@ -10,6 +10,7 @@ import { homeStatic } from '@/endpoints/seed/home-static'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
+import { BlockIDHelper } from '@/components/BlockIDHelper'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -78,6 +79,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <RenderHero {...hero} />
       <RenderBlocks blocks={layout} />
+      <BlockIDHelper isDraft={draft} />
     </article>
   )
 }

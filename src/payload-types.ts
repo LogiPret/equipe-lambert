@@ -427,6 +427,23 @@ export interface Page {
         blockType: 'ctaBanner';
       }
     | {
+        backgroundColor: 'gradient_blue' | 'dark_blue' | 'navy';
+        title: string;
+        subtitle?: string | null;
+        button: {
+          text: string;
+          icon?: ('dollar_sign' | 'key' | 'phone' | 'mail') | null;
+          variant?: ('primary' | 'secondary') | null;
+          /**
+           * Enter the block ID to scroll to. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, vendreCTA-3, contact-4, etc. The format is "blockType-index" where index starts at 0.
+           */
+          scrollTarget: string;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'bannerCTAScroll';
+      }
+    | {
         title: string;
         subtitle: string;
         contactInfo: {
@@ -559,8 +576,46 @@ export interface Page {
               id?: string | null;
             }[]
           | null;
-        primaryButtonText: string;
-        secondaryButtonText: string;
+        primaryButton: {
+          text: string;
+          /**
+           * Choose whether this button scrolls to a block on the same page or links to another page.
+           */
+          actionType: 'scroll' | 'link';
+          /**
+           * Select the block to scroll to from the available blocks on this page.
+           */
+          scrollTarget?: string | null;
+          link?: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+          };
+        };
+        secondaryButton: {
+          text: string;
+          /**
+           * Choose whether this button scrolls to a block on the same page or links to another page.
+           */
+          actionType: 'scroll' | 'link';
+          /**
+           * Select the block to scroll to from the available blocks on this page.
+           */
+          scrollTarget?: string | null;
+          link?: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+          };
+        };
         formTitle: string;
         formFields: {
           addressPlaceholder: string;
@@ -648,6 +703,52 @@ export interface Page {
         id?: string | null;
         blockName?: string | null;
         blockType: 'sellingProcess';
+      }
+    | {
+        title: string;
+        subtitle: string;
+        primaryButtonText: string;
+        /**
+         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
+         */
+        primaryButtonTarget?: string | null;
+        secondaryButtonText: string;
+        /**
+         * Enter the block ID to scroll to when the secondary button is clicked, or leave empty to use phone number. Format: "blockType-index"
+         */
+        secondaryButtonTarget?: string | null;
+        /**
+         * Phone number to call when secondary button is clicked (only used if no target section is selected)
+         */
+        phoneNumber?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'vendreCTA';
+      }
+    | {
+        title: string;
+        description: string;
+        closingStatement: string;
+        ctaText: string;
+        /**
+         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
+         */
+        ctaTarget?: string | null;
+        benefitsTitle: string;
+        benefits: {
+          text: string;
+          id?: string | null;
+        }[];
+        deliverablesTitle: string;
+        deliverables: {
+          icon: 'home' | 'trendingUp' | 'users';
+          title: string;
+          description: string;
+          id?: string | null;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'evaluationGratuite';
       }
   )[];
   meta?: {
@@ -1738,6 +1839,23 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        bannerCTAScroll?:
+          | T
+          | {
+              backgroundColor?: T;
+              title?: T;
+              subtitle?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    icon?: T;
+                    variant?: T;
+                    scrollTarget?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         contact?:
           | T
           | {
@@ -1889,8 +2007,36 @@ export interface PagesSelect<T extends boolean = true> {
                     label?: T;
                     id?: T;
                   };
-              primaryButtonText?: T;
-              secondaryButtonText?: T;
+              primaryButton?:
+                | T
+                | {
+                    text?: T;
+                    actionType?: T;
+                    scrollTarget?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                        };
+                  };
+              secondaryButton?:
+                | T
+                | {
+                    text?: T;
+                    actionType?: T;
+                    scrollTarget?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                        };
+                  };
               formTitle?: T;
               formFields?:
                 | T
@@ -1942,6 +2088,46 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               subtitle?: T;
               steps?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        vendreCTA?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              primaryButtonText?: T;
+              primaryButtonTarget?: T;
+              secondaryButtonText?: T;
+              secondaryButtonTarget?: T;
+              phoneNumber?: T;
+              id?: T;
+              blockName?: T;
+            };
+        evaluationGratuite?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              closingStatement?: T;
+              ctaText?: T;
+              ctaTarget?: T;
+              benefitsTitle?: T;
+              benefits?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              deliverablesTitle?: T;
+              deliverables?:
                 | T
                 | {
                     icon?: T;

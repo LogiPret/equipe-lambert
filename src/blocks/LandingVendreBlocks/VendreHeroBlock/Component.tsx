@@ -13,14 +13,31 @@ interface Stat {
   label: string
 }
 
+interface LinkData {
+  type?: 'reference' | 'custom'
+  reference?: {
+    value: string | number
+    relationTo: string
+  }
+  url?: string
+  newTab?: boolean
+}
+
+interface ButtonData {
+  text: string
+  actionType: 'scroll' | 'link'
+  scrollTarget?: string
+  link?: LinkData
+}
+
 interface VendreHeroBlockProps {
   badgeText: string
   title: string
   subtitle?: string
   description?: string
   stats: Stat[]
-  primaryButtonText: string
-  secondaryButtonText: string
+  primaryButton: ButtonData
+  secondaryButton: ButtonData
   formTitle: string
   formFields?: {
     addressPlaceholder: string
@@ -42,8 +59,8 @@ export default function VendreHeroBlock({
   subtitle,
   description,
   stats,
-  primaryButtonText,
-  secondaryButtonText,
+  primaryButton,
+  secondaryButton,
   formTitle,
   formFields,
   timeframeOptions,
@@ -59,6 +76,45 @@ export default function VendreHeroBlock({
 
   // Convert description to HTML string
   const descriptionHTML = description || ''
+
+  // Scroll to block functionality
+  const scrollToBlock = (blockId: string) => {
+    const element = document.getElementById(blockId)
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    } else {
+      console.warn(`Block with ID "${blockId}" not found`)
+    }
+  }
+
+  // Handle button clicks
+  const handleButtonClick = (button: ButtonData) => {
+    if (button.actionType === 'scroll' && button.scrollTarget) {
+      scrollToBlock(button.scrollTarget)
+    } else if (button.actionType === 'link' && button.link) {
+      const { link } = button
+      let href = ''
+
+      if (link.type === 'custom' && link.url) {
+        href = link.url
+      } else if (link.type === 'reference' && link.reference) {
+        // For reference links, we would need to construct the URL
+        // This depends on your routing structure
+        href = `/${link.reference.value}`
+      }
+
+      if (href) {
+        if (link.newTab) {
+          window.open(href, '_blank')
+        } else {
+          window.location.href = href
+        }
+      }
+    }
+  }
 
   return (
     <section className="relative bg-gradient-to-br from-[#0f3046] via-[#1a4a66] to-[#2d5f7f] text-white py-24 overflow-hidden">
@@ -114,16 +170,18 @@ export default function VendreHeroBlock({
                 <Button
                   size="lg"
                   className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 font-medium text-lg"
+                  onClick={() => handleButtonClick(primaryButton)}
                 >
                   <Target className="h-5 w-5 mr-3" />
-                  {primaryButtonText}
+                  {primaryButton.text}
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
                   className="border-2 border-white text-white hover:bg-white hover:text-[#0f3046] bg-transparent px-8 py-4 font-medium text-lg"
+                  onClick={() => handleButtonClick(secondaryButton)}
                 >
-                  {secondaryButtonText}
+                  {secondaryButton.text}
                 </Button>
               </div>
             </ScrollAnimation>
