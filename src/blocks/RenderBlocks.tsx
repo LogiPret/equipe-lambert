@@ -23,11 +23,11 @@ import FooterBlock from '@/blocks/FooterBlock/Component'
 import MapSectionBlock from '@/blocks/HomePageBlocks/MapSectionBlock/Component'
 import ButtonBlock from '@/blocks/Button/Component'
 import BlogCarouselBlock from '@/blocks/HomePageBlocks/BlogCarouselBlock/ServerComponent'
-import VendreHeroBlock from '@/blocks/LandingVendreBlocks/VendreHeroBlock/Component'
 import WhyChooseUsBlock from '@/blocks/LandingVendreBlocks/WhyChooseUsBlock/Component'
-import SellingProcessBlock from '@/blocks/LandingVendreBlocks/SellingProcessBlock/Component'
+import LandingProcessBlock from '@/blocks/LandingVendreBlocks/LandingProcessBlock/Component'
 import { VendreCTABlockComponent } from '@/blocks/LandingVendreBlocks/VendreCTABlock/Component'
 import EvaluationGratuiteBlock from './LandingVendreBlocks/EvaluationGratuiteBlock/Component'
+import LandingHeroBlock from '@/blocks/LandingHeroBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -35,7 +35,6 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
-  // Real Estate Custom Blocks
   hero: HeroBlock,
   stats: StatsBlock,
   services: ServicesBlock,
@@ -50,11 +49,12 @@ const blockComponents = {
   mapSectionBlock: MapSectionBlock,
   button: ButtonBlock,
   blogCarousel: BlogCarouselBlock,
-  vendreHero: VendreHeroBlock,
   whyChooseUs: WhyChooseUsBlock,
-  sellingProcess: SellingProcessBlock,
+  landingProcess: LandingProcessBlock,
+  vendreWhyChooseUs: WhyChooseUsBlock,
   vendreCTA: VendreCTABlockComponent,
   evaluationGratuite: EvaluationGratuiteBlock,
+  landingHero: LandingHeroBlock,
 }
 
 export const RenderBlocks: React.FC<{

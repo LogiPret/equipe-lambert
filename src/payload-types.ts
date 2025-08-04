@@ -565,9 +565,119 @@ export interface Page {
         blockType: 'blogCarousel';
       }
     | {
-        badgeText: string;
         title: string;
+        subtitle: string;
+        choices?:
+          | {
+              icon: 'trendingUp' | 'clock' | 'shield' | 'target' | 'award' | 'users' | 'bell';
+              /**
+               * This color will be used for icons, backgrounds, and statistics in different shades.
+               */
+              color: 'green' | 'blue' | 'red' | 'yellow' | 'purple' | 'pink' | 'indigo' | 'emerald' | 'teal' | 'cyan';
+              title: string;
+              description: string;
+              statValue: string;
+              statLabel: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'whyChooseUs';
+      }
+    | {
+        title: string;
+        subtitle: string;
+        steps?:
+          | {
+              icon:
+                | 'home'
+                | 'search'
+                | 'camera'
+                | 'users'
+                | 'dollarSign'
+                | 'key'
+                | 'calendar'
+                | 'checkCircle'
+                | 'star'
+                | 'target'
+                | 'clipboardList'
+                | 'handshake';
+              title: string;
+              description: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'landingProcess';
+      }
+    | {
+        title: string;
+        subtitle: string;
+        primaryButtonText: string;
+        /**
+         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
+         */
+        primaryButtonTarget?: string | null;
+        secondaryButtonText: string;
+        /**
+         * Enter the block ID to scroll to when the secondary button is clicked, or leave empty to use phone number. Format: "blockType-index"
+         */
+        secondaryButtonTarget?: string | null;
+        /**
+         * Phone number to call when secondary button is clicked (only used if no target section is selected)
+         */
+        phoneNumber?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'vendreCTA';
+      }
+    | {
+        title: string;
+        description: string;
+        closingStatement: string;
+        ctaText: string;
+        /**
+         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
+         */
+        ctaTarget?: string | null;
+        benefitsTitle: string;
+        benefits: {
+          text: string;
+          id?: string | null;
+        }[];
+        deliverablesTitle: string;
+        deliverables: {
+          icon: 'home' | 'trendingUp' | 'users';
+          title: string;
+          description: string;
+          id?: string | null;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'evaluationGratuite';
+      }
+    | {
+        /**
+         * Select the rendering mode (vendre or acheter) - changes form fields and styling
+         */
+        mode: 'vendre' | 'acheter';
+        /**
+         * Badge text will automatically adjust based on mode: "VENDEZ VOTRE PROPRIÉTÉ" for vendre mode, "ACCÈS PRIVILÉGIÉ AUX NOUVEAUTÉS" for acheter mode
+         */
+        badgeText: string;
+        /**
+         * Title will automatically adjust based on mode: "Vendez votre propriété" for vendre mode, "Trouvez la propriété" for acheter mode
+         */
+        title: string;
+        /**
+         * Subtitle will automatically adjust based on mode: "rapidement et au meilleur prix" for vendre mode, "de vos rêves" for acheter mode
+         */
         subtitle?: string | null;
+        /**
+         * Description will automatically adjust based on the selected mode
+         */
         description: string;
         stats?:
           | {
@@ -617,138 +727,55 @@ export interface Page {
           };
         };
         formTitle: string;
-        formFields: {
-          addressPlaceholder: string;
-          firstNamePlaceholder: string;
-          lastNamePlaceholder: string;
-          phonePlaceholder: string;
-          emailPlaceholder: string;
-          timeframePlaceholder: string;
-          submitButtonText: string;
-          disclaimerText: string;
+        formFields?: {
+          /**
+           * Placeholder for the property address field (Vendre mode only)
+           */
+          addressPlaceholder?: string | null;
+          /**
+           * Placeholder for the sale timeframe field (Vendre mode only)
+           */
+          timeframePlaceholder?: string | null;
+          /**
+           * Placeholder for the property type field (Acheter mode only)
+           */
+          propertyTypePlaceholder?: string | null;
+          /**
+           * Placeholder for the city field (Acheter mode only)
+           */
+          cityPlaceholder?: string | null;
+          firstNamePlaceholder?: string | null;
+          lastNamePlaceholder?: string | null;
+          phonePlaceholder?: string | null;
+          emailPlaceholder?: string | null;
+          submitButtonText?: string | null;
+          disclaimerText?: string | null;
         };
+        /**
+         * Available timeframe options for sale (Vendre mode only)
+         */
         timeframeOptions?:
           | {
               option: string;
               id?: string | null;
             }[]
           | null;
+        /**
+         * Available property type options (Acheter mode only)
+         */
+        propertyTypeOptions?:
+          | {
+              option: string;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Optional background image for the hero section
+         */
         backgroundImage?: (number | null) | Media;
         id?: string | null;
         blockName?: string | null;
-        blockType: 'vendreHero';
-      }
-    | {
-        title: string;
-        subtitle: string;
-        choices?:
-          | {
-              icon: 'trendingUp' | 'clock' | 'shield' | 'target' | 'award' | 'users';
-              iconColor:
-                | 'text-blue-600'
-                | 'text-green-600'
-                | 'text-orange-600'
-                | 'text-purple-600'
-                | 'text-red-600'
-                | 'text-white';
-              bgColor:
-                | 'bg-blue-100'
-                | 'bg-green-100'
-                | 'bg-orange-100'
-                | 'bg-purple-100'
-                | 'bg-red-100'
-                | 'bg-gray-100';
-              title: string;
-              description: string;
-              statValue: string;
-              statLabel: string;
-              statColor:
-                | 'text-blue-600'
-                | 'text-green-600'
-                | 'text-orange-600'
-                | 'text-purple-600'
-                | 'text-red-600'
-                | 'text-gray-600';
-              statBgColor: 'bg-blue-50' | 'bg-green-50' | 'bg-orange-50' | 'bg-purple-50' | 'bg-red-50' | 'bg-gray-50';
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'whyChooseUs';
-      }
-    | {
-        title: string;
-        subtitle: string;
-        steps?:
-          | {
-              icon:
-                | 'home'
-                | 'search'
-                | 'camera'
-                | 'users'
-                | 'dollarSign'
-                | 'key'
-                | 'calendar'
-                | 'checkCircle'
-                | 'star'
-                | 'target'
-                | 'clipboardList'
-                | 'handshake';
-              title: string;
-              description: string;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'sellingProcess';
-      }
-    | {
-        title: string;
-        subtitle: string;
-        primaryButtonText: string;
-        /**
-         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
-         */
-        primaryButtonTarget?: string | null;
-        secondaryButtonText: string;
-        /**
-         * Enter the block ID to scroll to when the secondary button is clicked, or leave empty to use phone number. Format: "blockType-index"
-         */
-        secondaryButtonTarget?: string | null;
-        /**
-         * Phone number to call when secondary button is clicked (only used if no target section is selected)
-         */
-        phoneNumber?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'vendreCTA';
-      }
-    | {
-        title: string;
-        description: string;
-        closingStatement: string;
-        ctaText: string;
-        /**
-         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
-         */
-        ctaTarget?: string | null;
-        benefitsTitle: string;
-        benefits: {
-          text: string;
-          id?: string | null;
-        }[];
-        deliverablesTitle: string;
-        deliverables: {
-          icon: 'home' | 'trendingUp' | 'users';
-          title: string;
-          description: string;
-          id?: string | null;
-        }[];
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'evaluationGratuite';
+        blockType: 'landingHero';
       }
   )[];
   meta?: {
@@ -1993,73 +2020,6 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        vendreHero?:
-          | T
-          | {
-              badgeText?: T;
-              title?: T;
-              subtitle?: T;
-              description?: T;
-              stats?:
-                | T
-                | {
-                    value?: T;
-                    label?: T;
-                    id?: T;
-                  };
-              primaryButton?:
-                | T
-                | {
-                    text?: T;
-                    actionType?: T;
-                    scrollTarget?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                        };
-                  };
-              secondaryButton?:
-                | T
-                | {
-                    text?: T;
-                    actionType?: T;
-                    scrollTarget?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                        };
-                  };
-              formTitle?: T;
-              formFields?:
-                | T
-                | {
-                    addressPlaceholder?: T;
-                    firstNamePlaceholder?: T;
-                    lastNamePlaceholder?: T;
-                    phonePlaceholder?: T;
-                    emailPlaceholder?: T;
-                    timeframePlaceholder?: T;
-                    submitButtonText?: T;
-                    disclaimerText?: T;
-                  };
-              timeframeOptions?:
-                | T
-                | {
-                    option?: T;
-                    id?: T;
-                  };
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
         whyChooseUs?:
           | T
           | {
@@ -2069,20 +2029,17 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     icon?: T;
-                    iconColor?: T;
-                    bgColor?: T;
+                    color?: T;
                     title?: T;
                     description?: T;
                     statValue?: T;
                     statLabel?: T;
-                    statColor?: T;
-                    statBgColor?: T;
                     id?: T;
                   };
               id?: T;
               blockName?: T;
             };
-        sellingProcess?:
+        landingProcess?:
           | T
           | {
               title?: T;
@@ -2135,6 +2092,82 @@ export interface PagesSelect<T extends boolean = true> {
                     description?: T;
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        landingHero?:
+          | T
+          | {
+              mode?: T;
+              badgeText?: T;
+              title?: T;
+              subtitle?: T;
+              description?: T;
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              primaryButton?:
+                | T
+                | {
+                    text?: T;
+                    actionType?: T;
+                    scrollTarget?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                        };
+                  };
+              secondaryButton?:
+                | T
+                | {
+                    text?: T;
+                    actionType?: T;
+                    scrollTarget?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                        };
+                  };
+              formTitle?: T;
+              formFields?:
+                | T
+                | {
+                    addressPlaceholder?: T;
+                    timeframePlaceholder?: T;
+                    propertyTypePlaceholder?: T;
+                    cityPlaceholder?: T;
+                    firstNamePlaceholder?: T;
+                    lastNamePlaceholder?: T;
+                    phonePlaceholder?: T;
+                    emailPlaceholder?: T;
+                    submitButtonText?: T;
+                    disclaimerText?: T;
+                  };
+              timeframeOptions?:
+                | T
+                | {
+                    option?: T;
+                    id?: T;
+                  };
+              propertyTypeOptions?:
+                | T
+                | {
+                    option?: T;
+                    id?: T;
+                  };
+              backgroundImage?: T;
               id?: T;
               blockName?: T;
             };

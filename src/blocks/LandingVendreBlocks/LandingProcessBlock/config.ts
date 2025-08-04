@@ -1,10 +1,10 @@
 import type { Block } from 'payload'
 
-export const SellingProcessBlock: Block = {
-  slug: 'sellingProcess',
+export const LandingProcessBlock: Block = {
+  slug: 'landingProcess',
   labels: {
-    singular: 'Selling Process Section',
-    plural: 'Selling Process Sections',
+    singular: 'Landing Process Section',
+    plural: 'Landing Process Sections',
   },
   fields: [
     {

@@ -33,7 +33,9 @@ export interface ContactFormData {
   phone: string
   type: string
   vendre_address?: string // Property address for selling forms
-  vendre_delais?: string // New optional field for selling timeframe
+  vendre_delais?: string // Selling timeframe for selling forms
+  acheter_propertyType?: string // Property type for buying forms
+  acheter_city?: string // Preferred city for buying forms
   created_at?: string
 }
 
@@ -54,8 +56,10 @@ export async function insertContactSubmission(data: ContactFormData) {
           email: data.email,
           phone: data.phone,
           type: data.type,
-          vendre_address: data.vendre_address || null, // Include property address
-          vendre_delais: data.vendre_delais || null, // Include the new field
+          vendre_address: data.vendre_address || null, // Include property address for selling
+          vendre_delais: data.vendre_delais || null, // Include selling timeframe
+          acheter_propertyType: data.acheter_propertyType || null, // Include property type for buying
+          acheter_city: data.acheter_city || null, // Include preferred city for buying
           created_at: new Date().toISOString(),
         },
       ])

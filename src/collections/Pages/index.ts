@@ -23,11 +23,11 @@ import { HeaderBlock } from '../../blocks/HeaderBlock/config'
 import { FooterBlock } from '../../blocks/FooterBlock/config'
 import { MapSectionBlock } from '../../blocks/HomePageBlocks/MapSectionBlock/config'
 import { BlogCarouselBlock } from '../../blocks/HomePageBlocks/BlogCarouselBlock/config'
-import { VendreHeroBlock } from '../../blocks/LandingVendreBlocks/VendreHeroBlock/config'
 import { WhyChooseUsBlock } from '../../blocks/LandingVendreBlocks/WhyChooseUsBlock/config'
-import { SellingProcessBlock } from '../../blocks/LandingVendreBlocks/SellingProcessBlock/config'
+import { LandingProcessBlock } from '../../blocks/LandingVendreBlocks/LandingProcessBlock/config'
 import { VendreCTABlock } from '../../blocks/LandingVendreBlocks/VendreCTABlock/config'
 import { EvaluationGratuiteBlock } from '@/blocks/LandingVendreBlocks/EvaluationGratuiteBlock/config'
+import { LandingHeroBlock } from '../../blocks/LandingHeroBlock/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -118,11 +118,11 @@ export const Pages: CollectionConfig<'pages'> = {
                 FooterBlock,
                 MapSectionBlock,
                 BlogCarouselBlock,
-                VendreHeroBlock,
                 WhyChooseUsBlock,
-                SellingProcessBlock,
+                LandingProcessBlock,
                 VendreCTABlock,
                 EvaluationGratuiteBlock,
+                LandingHeroBlock,
               ],
               required: true,
               admin: {
