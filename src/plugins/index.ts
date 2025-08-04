@@ -133,8 +133,14 @@ export const plugins: Plugin[] = [
 
                   // Only send to Supabase if we have the required fields
                   if (supabaseData.prenom && supabaseData.nom && supabaseData.email) {
-                    await insertContactSubmission(supabaseData)
-                    req.payload.logger.info(`${type} form submission sent to Supabase successfully`)
+                    const result = await insertContactSubmission(supabaseData)
+                    if (result.success) {
+                      req.payload.logger.info(
+                        `${type} form submission sent to Supabase successfully`,
+                      )
+                    } else {
+                      req.payload.logger.warn(`Supabase submission skipped: ${result.reason}`)
+                    }
                   }
                 } catch (error: any) {
                   req.payload.logger.error('Failed to send form submission to Supabase:', error)

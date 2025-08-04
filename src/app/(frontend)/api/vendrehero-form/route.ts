@@ -43,8 +43,8 @@ export async function POST(request: NextRequest) {
     const result = await insertContactSubmission(supabaseData)
 
     // Check if Supabase submission was successful
-    if (result === null) {
-      console.warn('Supabase submission skipped due to missing environment variables')
+    if (!result.success) {
+      console.warn(`Supabase submission failed: ${result.reason}`)
       // Still return success since form was processed, just log the issue
     }
 

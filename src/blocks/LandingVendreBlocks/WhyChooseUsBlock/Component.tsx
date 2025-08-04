@@ -67,9 +67,7 @@ export default function WhyChooseUsBlock({ title, subtitle, choices }: WhyChoose
                       {choice.description || 'Description par défaut'}
                     </p>
 
-                    <div
-                      className={`${choice.statBgColor || 'bg-green-50'} rounded-lg px-6 py-4 w-`}
-                    >
+                    <div className={`${choice.statBgColor || 'bg-green-50'} rounded-lg px-6 py-4`}>
                       <div className={`text-3xl font-bold ${choice.statColor || 'text-green-700'}`}>
                         {choice.statValue || '0'}
                       </div>

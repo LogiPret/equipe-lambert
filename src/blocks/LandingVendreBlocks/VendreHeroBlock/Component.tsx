@@ -8,7 +8,7 @@ import { DollarSign, Target, Zap } from 'lucide-react'
 import { ScrollAnimation } from '@/components/scroll-animations'
 import type { Media } from '@/payload-types'
 import { useState, FormEvent } from 'react'
-import router from 'next/router'
+import { useRouter } from 'next/navigation'
 
 interface Stat {
   value: string
@@ -68,6 +68,8 @@ export default function VendreHeroBlock({
   timeframeOptions,
   backgroundImage,
 }: VendreHeroBlockProps) {
+  const router = useRouter()
+
   // Form state
   const [formData, setFormData] = useState({
     vendre_address: '',

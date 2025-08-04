@@ -1,13 +1,29 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'your-supabase-url'
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'your-supabase-key'
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-// Only create client if we have real environment variables
-const shouldCreateClient =
-  supabaseUrl !== 'your-supabase-url' && supabaseKey !== 'your-supabase-key'
+// Factory function to create Supabase client
+function createSupabaseClient(): SupabaseClient | null {
+  if (
+    !supabaseUrl ||
+    !supabaseKey ||
+    supabaseUrl === 'your-supabase-url' ||
+    supabaseKey === 'your-supabase-key'
+  ) {
+    console.warn('Supabase environment variables not properly configured')
+    return null
+  }
+  return createClient(supabaseUrl, supabaseKey)
+}
 
-export const supabase = shouldCreateClient ? createClient(supabaseUrl, supabaseKey) : null
+// Create the client instance
+export const supabase = createSupabaseClient()
+
+// Helper function to check if Supabase is available
+export function isSupabaseAvailable(): boolean {
+  return supabase !== null
+}
 
 // Define the type for contact form data
 export interface ContactFormData {
@@ -24,12 +40,12 @@ export interface ContactFormData {
 // Function to insert contact form submission into Supabase
 export async function insertContactSubmission(data: ContactFormData) {
   try {
-    if (!supabase) {
-      console.warn('Supabase client not initialized - environment variables not set')
-      return null
+    if (!isSupabaseAvailable()) {
+      console.warn('Supabase is not available - skipping database insertion')
+      return { success: false, reason: 'Supabase not configured' }
     }
 
-    const { data: result, error } = await supabase
+    const { data: result, error } = await supabase!
       .from('david_lambert_form_submissions')
       .insert([
         {
@@ -51,7 +67,7 @@ export async function insertContactSubmission(data: ContactFormData) {
     }
 
     console.log('Contact submission saved to Supabase:', result)
-    return result
+    return { success: true, data: result }
   } catch (error) {
     console.error('Failed to save contact submission to Supabase:', error)
     throw error
