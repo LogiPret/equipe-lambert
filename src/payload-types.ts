@@ -615,6 +615,20 @@ export interface Page {
     | {
         title: string;
         subtitle: string;
+        description: string;
+        defaultValues?: {
+          homePrice?: number | null;
+          downPayment?: number | null;
+          interestRate?: number | null;
+          loanTerm?: number | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'mortgageCalculator';
+      }
+    | {
+        title: string;
+        subtitle: string;
         primaryButtonText: string;
         /**
          * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
@@ -632,6 +646,43 @@ export interface Page {
         id?: string | null;
         blockName?: string | null;
         blockType: 'vendreCTA';
+      }
+    | {
+        /**
+         * Select the rendering mode (vendre or acheter) - changes button text, colors, and styling
+         */
+        mode: 'vendre' | 'acheter';
+        /**
+         * Title will automatically adjust based on mode: "Prêt à vendre votre propriété?" for vendre mode, "Prêt à trouver votre propriété idéale ?" for acheter mode. Leave empty to use default.
+         */
+        title?: string | null;
+        /**
+         * Subtitle will automatically adjust based on mode. Leave empty to use default mode-specific text.
+         */
+        subtitle?: string | null;
+        /**
+         * Primary button text will automatically adjust based on mode: "Évaluation gratuite" for vendre mode, "Commencer ma recherche" for acheter mode. Leave empty to use default.
+         */
+        primaryButtonText?: string | null;
+        /**
+         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: landingHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
+         */
+        primaryButtonTarget?: string | null;
+        /**
+         * Secondary button text will automatically adjust based on mode: "Appelez-nous" for vendre mode, "Consultation gratuite" for acheter mode. Leave empty to use default.
+         */
+        secondaryButtonText?: string | null;
+        /**
+         * Enter the block ID to scroll to when the secondary button is clicked, or leave empty to use phone number. Format: "blockType-index"
+         */
+        secondaryButtonTarget?: string | null;
+        /**
+         * Phone number to call when secondary button is clicked (only used if no target section is selected)
+         */
+        phoneNumber?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'landingCTA';
       }
     | {
         title: string;
@@ -2055,9 +2106,40 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        mortgageCalculator?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              description?: T;
+              defaultValues?:
+                | T
+                | {
+                    homePrice?: T;
+                    downPayment?: T;
+                    interestRate?: T;
+                    loanTerm?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         vendreCTA?:
           | T
           | {
+              title?: T;
+              subtitle?: T;
+              primaryButtonText?: T;
+              primaryButtonTarget?: T;
+              secondaryButtonText?: T;
+              secondaryButtonTarget?: T;
+              phoneNumber?: T;
+              id?: T;
+              blockName?: T;
+            };
+        landingCTA?:
+          | T
+          | {
+              mode?: T;
               title?: T;
               subtitle?: T;
               primaryButtonText?: T;

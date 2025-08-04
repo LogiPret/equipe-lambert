@@ -23,11 +23,13 @@ import FooterBlock from '@/blocks/FooterBlock/Component'
 import MapSectionBlock from '@/blocks/HomePageBlocks/MapSectionBlock/Component'
 import ButtonBlock from '@/blocks/Button/Component'
 import BlogCarouselBlock from '@/blocks/HomePageBlocks/BlogCarouselBlock/ServerComponent'
-import WhyChooseUsBlock from '@/blocks/LandingVendreBlocks/WhyChooseUsBlock/Component'
-import LandingProcessBlock from '@/blocks/LandingVendreBlocks/LandingProcessBlock/Component'
+import WhyChooseUsBlock from '@/blocks/LandingCommonBlocks/WhyChooseUsBlock/Component'
+import LandingProcessBlock from '@/blocks/LandingCommonBlocks/LandingProcessBlock/Component'
+import MortgageCalculatorBlock from '@/blocks/LandingAcheterBlocks/MortgageCalculatorBlock/Component'
 import { VendreCTABlockComponent } from '@/blocks/LandingVendreBlocks/VendreCTABlock/Component'
+import { LandingCTABlockComponent } from '@/blocks/LandingCommonBlocks/LandingCTABlock/Component'
 import EvaluationGratuiteBlock from './LandingVendreBlocks/EvaluationGratuiteBlock/Component'
-import LandingHeroBlock from '@/blocks/LandingHeroBlock/Component'
+import LandingHeroBlock from '@/blocks/LandingCommonBlocks/LandingHeroBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -51,8 +53,10 @@ const blockComponents = {
   blogCarousel: BlogCarouselBlock,
   whyChooseUs: WhyChooseUsBlock,
   landingProcess: LandingProcessBlock,
+  mortgageCalculator: MortgageCalculatorBlock,
   vendreWhyChooseUs: WhyChooseUsBlock,
   vendreCTA: VendreCTABlockComponent,
+  landingCTA: LandingCTABlockComponent,
   evaluationGratuite: EvaluationGratuiteBlock,
   landingHero: LandingHeroBlock,
 }

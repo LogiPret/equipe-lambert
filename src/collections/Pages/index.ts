@@ -23,11 +23,13 @@ import { HeaderBlock } from '../../blocks/HeaderBlock/config'
 import { FooterBlock } from '../../blocks/FooterBlock/config'
 import { MapSectionBlock } from '../../blocks/HomePageBlocks/MapSectionBlock/config'
 import { BlogCarouselBlock } from '../../blocks/HomePageBlocks/BlogCarouselBlock/config'
-import { WhyChooseUsBlock } from '../../blocks/LandingVendreBlocks/WhyChooseUsBlock/config'
-import { LandingProcessBlock } from '../../blocks/LandingVendreBlocks/LandingProcessBlock/config'
+import { WhyChooseUsBlock } from '../../blocks/LandingCommonBlocks/WhyChooseUsBlock/config'
+import { LandingProcessBlock } from '../../blocks/LandingCommonBlocks/LandingProcessBlock/config'
+import { MortgageCalculatorBlock } from '../../blocks/LandingAcheterBlocks/MortgageCalculatorBlock/config'
 import { VendreCTABlock } from '../../blocks/LandingVendreBlocks/VendreCTABlock/config'
+import { LandingCTABlock } from '../../blocks/LandingCommonBlocks/LandingCTABlock/config'
 import { EvaluationGratuiteBlock } from '@/blocks/LandingVendreBlocks/EvaluationGratuiteBlock/config'
-import { LandingHeroBlock } from '../../blocks/LandingHeroBlock/config'
+import { LandingHeroBlock } from '../../blocks/LandingCommonBlocks/LandingHeroBlock/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -120,7 +122,9 @@ export const Pages: CollectionConfig<'pages'> = {
                 BlogCarouselBlock,
                 WhyChooseUsBlock,
                 LandingProcessBlock,
+                MortgageCalculatorBlock,
                 VendreCTABlock,
+                LandingCTABlock,
                 EvaluationGratuiteBlock,
                 LandingHeroBlock,
               ],
