@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge'
 import { DollarSign, Target, Zap } from 'lucide-react'
 import { ScrollAnimation } from '@/components/scroll-animations'
 import type { Media } from '@/payload-types'
+import { useState, FormEvent } from 'react'
+import router from 'next/router'
 
 interface Stat {
   value: string
@@ -66,6 +68,19 @@ export default function VendreHeroBlock({
   timeframeOptions,
   backgroundImage,
 }: VendreHeroBlockProps) {
+  // Form state
+  const [formData, setFormData] = useState({
+    vendre_address: '',
+    prenom: '',
+    nom: '',
+    phone: '',
+    email: '',
+    vendre_delais: '',
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState('')
+
   // Handle background image URL
   const backgroundImageUrl =
     typeof backgroundImage === 'object' && backgroundImage?.url
@@ -113,6 +128,69 @@ export default function VendreHeroBlock({
           window.location.href = href
         }
       }
+    }
+  }
+
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  // Handle form submission
+  const handleFormSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setError('')
+
+    try {
+      // Validate required fields
+      if (!formData.prenom || !formData.nom || !formData.email || !formData.phone) {
+        throw new Error('Veuillez remplir tous les champs obligatoires')
+      }
+
+      // Send to Supabase via our custom API endpoint
+      const payloadData = {
+        submissionData: [
+          { field: 'vendre_address', value: formData.vendre_address },
+          { field: 'prenom', value: formData.prenom },
+          { field: 'nom', value: formData.nom },
+          { field: 'phone', value: formData.phone },
+          { field: 'email', value: formData.email },
+          { field: 'vendre_delais', value: formData.vendre_delais },
+        ],
+      }
+
+      const response = await fetch('/api/vendrehero-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payloadData),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to submit form')
+      }
+
+      setIsSubmitted(true)
+      setFormData({
+        vendre_address: '',
+        prenom: '',
+        nom: '',
+        phone: '',
+        email: '',
+        vendre_delais: '',
+      })
+    } catch (err) {
+      console.error('Form submission error:', err)
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -190,61 +268,118 @@ export default function VendreHeroBlock({
           <ScrollAnimation animation="slideLeft" delay={800}>
             <div className="relative">
               <Card className="bg-white/95 p-8 backdrop-blur-sm">
-                <h3 className="text-2xl font-serif font-bold text-gray-800 mb-6">{formTitle}</h3>
-                <form className="space-y-4">
-                  <Input
-                    placeholder={formFields?.addressPlaceholder || 'Adresse de votre propriété *'}
-                    className="border border-gray-300 focus:border-[#0f3046] p-4 text-lg"
-                  />
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <Input
-                      placeholder={formFields?.firstNamePlaceholder || 'Prénom *'}
-                      className="border border-gray-300 focus:border-[#0f3046] p-4"
-                    />
-                    <Input
-                      placeholder={formFields?.lastNamePlaceholder || 'Nom de famille *'}
-                      className="border border-gray-300 focus:border-[#0f3046] p-4"
-                    />
+                {isSubmitted ? (
+                  <div className="text-center py-8">
+                    <div className="text-green-600 text-xl font-semibold mb-2">✓ Merci !</div>
+                    <p className="text-gray-600">
+                      Votre demande a été envoyée avec succès. <br /> Nous vous contactons sous peu.
+                    </p>
+                    <p className="pt-8">Clicquez ci dessous pour consulter nos blogs</p>
+                    <Button
+                      className="bg-[#0f3046] hover:bg-[#1a4a66] text-white py-4 font-medium text-lg disabled:opacity-50"
+                      onClick={() => router.push('/posts')}
+                    >
+                      Nos Blogs
+                    </Button>
                   </div>
-                  <Input
-                    placeholder={formFields?.phonePlaceholder || 'Téléphone *'}
-                    className="border border-gray-300 focus:border-[#0f3046] p-4"
-                  />
-                  <Input
-                    placeholder={formFields?.emailPlaceholder || 'Email *'}
-                    type="email"
-                    className="border border-gray-300 focus:border-[#0f3046] p-4"
-                  />
-                  <select className="w-full border border-gray-300 focus:border-[#0f3046] p-4 bg-white text-gray-500">
-                    <option value="">
-                      {formFields?.timeframePlaceholder || 'Délai souhaité pour la vente'}
-                    </option>
-                    {timeframeOptions && timeframeOptions.length > 0
-                      ? timeframeOptions.map((option, index) => (
-                          <option key={index} value={option.option}>
-                            {option.option}
-                          </option>
-                        ))
-                      : [
-                          <option key="default-1" value="Moins de 30 jours">
-                            Moins de 30 jours
-                          </option>,
-                          <option key="default-2" value="1-3 mois">
-                            1-3 mois
-                          </option>,
-                          <option key="default-3" value="3-6 mois">
-                            3-6 mois
-                          </option>,
-                          <option key="default-4" value="Plus de 6 mois">
-                            Plus de 6 mois
-                          </option>,
-                        ]}
-                  </select>
-                  <Button className="w-full bg-[#0f3046] hover:bg-[#1a4a66] text-white py-4 font-medium text-lg">
-                    <Zap className="h-5 w-5 mr-2" />
-                    {formFields?.submitButtonText || 'Obtenir mon évaluation gratuite'}
-                  </Button>
-                </form>
+                ) : (
+                  <>
+                    <h3 className="text-2xl font-serif font-bold text-gray-800 mb-6">
+                      {formTitle}
+                    </h3>
+                    {error && (
+                      <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded mb-4">
+                        {error}
+                      </div>
+                    )}
+
+                    <form onSubmit={handleFormSubmit} className="space-y-4">
+                      <Input
+                        name="vendre_address"
+                        value={formData.vendre_address}
+                        onChange={handleInputChange}
+                        placeholder={formFields?.addressPlaceholder || 'Adresse de votre propriété'}
+                        className="border border-gray-300 focus:border-[#0f3046] p-4 text-lg"
+                      />
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <Input
+                          name="prenom"
+                          value={formData.prenom}
+                          onChange={handleInputChange}
+                          placeholder={formFields?.firstNamePlaceholder || 'Prénom *'}
+                          className="border border-gray-300 focus:border-[#0f3046] p-4"
+                          required
+                        />
+                        <Input
+                          name="nom"
+                          value={formData.nom}
+                          onChange={handleInputChange}
+                          placeholder={formFields?.lastNamePlaceholder || 'Nom de famille *'}
+                          className="border border-gray-300 focus:border-[#0f3046] p-4"
+                          required
+                        />
+                      </div>
+                      <Input
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder={formFields?.phonePlaceholder || 'Téléphone *'}
+                        className="border border-gray-300 focus:border-[#0f3046] p-4"
+                        required
+                      />
+                      <Input
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder={formFields?.emailPlaceholder || 'Email *'}
+                        type="email"
+                        className="border border-gray-300 focus:border-[#0f3046] p-4"
+                        required
+                      />
+                      <select
+                        name="vendre_delais"
+                        value={formData.vendre_delais}
+                        onChange={handleInputChange}
+                        className="w-full border border-gray-300 focus:border-[#0f3046] p-4 bg-white text-gray-500"
+                      >
+                        <option value="">
+                          {formFields?.timeframePlaceholder || 'Délai souhaité pour la vente'}
+                        </option>
+                        {timeframeOptions && timeframeOptions.length > 0
+                          ? timeframeOptions.map((option, index) => (
+                              <option key={index} value={option.option}>
+                                {option.option}
+                              </option>
+                            ))
+                          : [
+                              <option key="default-1" value="Moins de 30 jours">
+                                Moins de 30 jours
+                              </option>,
+                              <option key="default-2" value="1-3 mois">
+                                1-3 mois
+                              </option>,
+                              <option key="default-3" value="3-6 mois">
+                                3-6 mois
+                              </option>,
+                              <option key="default-4" value="Plus de 6 mois">
+                                Plus de 6 mois
+                              </option>,
+                            ]}
+                      </select>
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full bg-[#0f3046] hover:bg-[#1a4a66] text-white py-4 font-medium text-lg disabled:opacity-50"
+                      >
+                        <Zap className="h-5 w-5 mr-2" />
+                        {isSubmitting
+                          ? 'Envoi en cours...'
+                          : formFields?.submitButtonText || 'Obtenir mon évaluation gratuite'}
+                      </Button>
+                    </form>
+                  </>
+                )}
+
                 <p className="text-xs text-gray-500 mt-4 text-center">
                   {formFields?.disclaimerText || '* Évaluation professionnelle sans engagement'}
                 </p>
