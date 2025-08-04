@@ -16,8 +16,9 @@ type CMSLinkType = {
     value: Page | Post | string | number
   } | null
   size?: ButtonProps['size'] | null
-  type?: 'custom' | 'reference' | null
+  type?: 'custom' | 'reference' | 'archive' | null
   url?: string | null
+  archive?: string | null
 }
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
@@ -31,14 +32,26 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     reference,
     size: sizeFromProps,
     url,
+    archive,
   } = props
 
-  const href =
-    type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${
-          reference.value.slug
-        }`
-      : url
+  let href: string | null = null
+
+  if (type === 'reference' && typeof reference?.value === 'object' && reference.value.slug) {
+    href = `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${reference.value.slug}`
+  } else if (type === 'archive' && archive) {
+    // Handle archive pages
+    switch (archive) {
+      case 'posts':
+        href = '/posts'
+        break
+      default:
+        href = `/${archive}`
+        break
+    }
+  } else if (type === 'custom' && url) {
+    href = url
+  }
 
   if (!href) return null
 

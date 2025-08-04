@@ -30,6 +30,7 @@ import { LandingCTABlock } from '../../blocks/LandingCommonBlocks/LandingCTABloc
 import { LandingResourceBlock } from '../../blocks/LandingCommonBlocks/LandingResourceBlock/config'
 import { EvaluationGratuiteBlock } from '@/blocks/LandingVendreBlocks/EvaluationGratuiteBlock/config'
 import { LandingHeroBlock } from '../../blocks/LandingCommonBlocks/LandingHeroBlock/config'
+import { InteractivePropertiesBlock } from '../../blocks/InteractivePropertiesBlock/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -127,6 +128,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 LandingResourceBlock,
                 EvaluationGratuiteBlock,
                 LandingHeroBlock,
+                InteractivePropertiesBlock,
               ],
               required: true,
               admin: {

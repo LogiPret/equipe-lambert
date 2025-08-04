@@ -348,26 +348,26 @@ export default function MortgageCalculatorBlock({
 
                 <div className="space-y-6">
                   {/* Monthly Payment */}
-                  <div className="bg-white/10 rounded-lg p-6">
+                  <div className="bg-white/10 rounded-lg p-6 pl-10">
                     <h4 className="text-lg font-semibold mb-2">Paiement mensuel</h4>
                     <p className="text-3xl font-bold">{formatCurrency(monthlyPayment)}</p>
                     <p className="text-blue-100 text-sm mt-1">Capital et intérêts</p>
                   </div>
 
                   {/* Loan Amount */}
-                  <div className="bg-white/10 rounded-lg p-4">
+                  <div className="bg-white/10 rounded-lg p-4 pl-10">
                     <h4 className="text-sm font-semibold mb-1">Montant du prêt</h4>
                     <p className="text-xl font-bold">{formatCurrency(loanAmount)}</p>
                   </div>
 
                   {/* Total Interest */}
-                  <div className="bg-white/10 rounded-lg p-4">
+                  <div className="bg-white/10 rounded-lg p-4 pl-10">
                     <h4 className="text-sm font-semibold mb-1">Intérêts totaux</h4>
                     <p className="text-xl font-bold">{formatCurrency(totalInterest)}</p>
                   </div>
 
                   {/* Total Payment */}
-                  <div className="bg-white/10 rounded-lg p-4">
+                  <div className="bg-white/10 rounded-lg p-4 pl-10">
                     <h4 className="text-sm font-semibold mb-1">Paiements totaux</h4>
                     <p className="text-xl font-bold">{formatCurrency(totalPayment)}</p>
                   </div>

@@ -168,7 +168,7 @@ export interface Page {
     links?:
       | {
           link: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'archive') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -180,6 +180,7 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            archive?: 'posts' | null;
             label: string;
             /**
              * Choose how the link should be rendered.
@@ -200,7 +201,7 @@ export interface Page {
     | {
         text: string;
         link?: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -212,6 +213,7 @@ export interface Page {
                 value: number | Post;
               } | null);
           url?: string | null;
+          archive?: 'posts' | null;
           /**
            * Choose how the link should be rendered.
            */
@@ -231,7 +233,7 @@ export interface Page {
           text: string;
           icon?: string | null;
           link?: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'archive') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -243,6 +245,7 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            archive?: 'posts' | null;
             /**
              * Choose how the link should be rendered.
              */
@@ -252,7 +255,7 @@ export interface Page {
         secondaryButton?: {
           text?: string | null;
           link?: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'archive') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -264,6 +267,7 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            archive?: 'posts' | null;
             /**
              * Choose how the link should be rendered.
              */
@@ -354,7 +358,7 @@ export interface Page {
         }[];
         showAllButton: {
           link: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'archive') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -366,6 +370,7 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            archive?: 'posts' | null;
             label: string;
           };
         };
@@ -404,7 +409,7 @@ export interface Page {
           icon?: ('dollar_sign' | 'key' | 'phone' | 'mail') | null;
           variant?: ('primary' | 'secondary') | null;
           link?: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'archive') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -416,6 +421,7 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            archive?: 'posts' | null;
             /**
              * Choose how the link should be rendered.
              */
@@ -894,6 +900,7 @@ export interface Page {
         blockName?: string | null;
         blockType: 'landingHero';
       }
+    | InteractivePropertiesBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1118,7 +1125,7 @@ export interface CallToActionBlock {
   links?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -1130,6 +1137,7 @@ export interface CallToActionBlock {
                 value: number | Post;
               } | null);
           url?: string | null;
+          archive?: 'posts' | null;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -1168,7 +1176,7 @@ export interface ContentBlock {
         } | null;
         enableLink?: boolean | null;
         link?: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -1180,6 +1188,7 @@ export interface ContentBlock {
                 value: number | Post;
               } | null);
           url?: string | null;
+          archive?: 'posts' | null;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -1478,6 +1487,41 @@ export interface MapSectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InteractivePropertiesBlock".
+ */
+export interface InteractivePropertiesBlock {
+  title?: string | null;
+  subtitle?: string | null;
+  /**
+   * L'ID du bloc calculatrice hypothécaire (ex: mortgageCalculator)
+   */
+  calculatorBlockId?: string | null;
+  /**
+   * Laissez vide pour utiliser les données mock par défaut
+   */
+  props?:
+    | {
+        image: number | Media;
+        price: number;
+        address: string;
+        description?: string | null;
+        beds: number;
+        baths: number;
+        /**
+         * Ex: 1,850
+         */
+        sqft: string;
+        propType: 'maison' | 'condo' | 'townhouse' | 'loft';
+        propStatus: 'a_vendre' | 'vendu' | 'option_achat';
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'interactivePropBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1752,6 +1796,7 @@ export interface PagesSelect<T extends boolean = true> {
                     newTab?: T;
                     reference?: T;
                     url?: T;
+                    archive?: T;
                     label?: T;
                     appearance?: T;
                   };
@@ -1778,6 +1823,7 @@ export interface PagesSelect<T extends boolean = true> {
                     newTab?: T;
                     reference?: T;
                     url?: T;
+                    archive?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -1803,6 +1849,7 @@ export interface PagesSelect<T extends boolean = true> {
                           newTab?: T;
                           reference?: T;
                           url?: T;
+                          archive?: T;
                           appearance?: T;
                         };
                   };
@@ -1817,6 +1864,7 @@ export interface PagesSelect<T extends boolean = true> {
                           newTab?: T;
                           reference?: T;
                           url?: T;
+                          archive?: T;
                           appearance?: T;
                         };
                   };
@@ -1927,6 +1975,7 @@ export interface PagesSelect<T extends boolean = true> {
                           newTab?: T;
                           reference?: T;
                           url?: T;
+                          archive?: T;
                           label?: T;
                         };
                   };
@@ -1977,6 +2026,7 @@ export interface PagesSelect<T extends boolean = true> {
                           newTab?: T;
                           reference?: T;
                           url?: T;
+                          archive?: T;
                           appearance?: T;
                         };
                   };
@@ -2349,6 +2399,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        interactivePropBlock?: T | InteractivePropertiesBlockSelect<T>;
       };
   meta?:
     | T
@@ -2380,6 +2431,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              archive?: T;
               label?: T;
               appearance?: T;
             };
@@ -2406,6 +2458,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              archive?: T;
               label?: T;
               appearance?: T;
             };
@@ -2472,6 +2525,31 @@ export interface MapSectionBlockSelect<T extends boolean = true> {
         badgeColor?: T;
         bgColor?: T;
         borderColor?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InteractivePropertiesBlock_select".
+ */
+export interface InteractivePropertiesBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  calculatorBlockId?: T;
+  props?:
+    | T
+    | {
+        image?: T;
+        price?: T;
+        address?: T;
+        description?: T;
+        beds?: T;
+        baths?: T;
+        sqft?: T;
+        propType?: T;
+        propStatus?: T;
         id?: T;
       };
   id?: T;
@@ -2908,7 +2986,7 @@ export interface Header {
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -2920,6 +2998,7 @@ export interface Header {
                 value: number | Post;
               } | null);
           url?: string | null;
+          archive?: 'posts' | null;
           label: string;
         };
         id?: string | null;
@@ -2934,10 +3013,14 @@ export interface Header {
  */
 export interface Footer {
   id: number;
+  /**
+   * Description qui apparaîtra sous le logo
+   */
+  description?: string | null;
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -2949,11 +3032,24 @@ export interface Footer {
                 value: number | Post;
               } | null);
           url?: string | null;
+          archive?: 'posts' | null;
           label: string;
         };
         id?: string | null;
       }[]
     | null;
+  resources?:
+    | {
+        title: string;
+        file: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  contactInfo?: {
+    phone?: string | null;
+    email?: string | null;
+    address?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2972,6 +3068,7 @@ export interface HeaderSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              archive?: T;
               label?: T;
             };
         id?: T;
@@ -2985,6 +3082,7 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  description?: T;
   navItems?:
     | T
     | {
@@ -2995,9 +3093,24 @@ export interface FooterSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              archive?: T;
               label?: T;
             };
         id?: T;
+      };
+  resources?:
+    | T
+    | {
+        title?: T;
+        file?: T;
+        id?: T;
+      };
+  contactInfo?:
+    | T
+    | {
+        phone?: T;
+        email?: T;
+        address?: T;
       };
   updatedAt?: T;
   createdAt?: T;

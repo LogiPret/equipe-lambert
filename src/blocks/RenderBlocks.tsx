@@ -30,6 +30,7 @@ import { LandingCTABlockComponent } from '@/blocks/LandingCommonBlocks/LandingCT
 import { LandingResourceBlockComponent } from '@/blocks/LandingCommonBlocks/LandingResourceBlock/Component'
 import EvaluationGratuiteBlock from './LandingVendreBlocks/EvaluationGratuiteBlock/Component'
 import LandingHeroBlock from '@/blocks/LandingCommonBlocks/LandingHeroBlock/Component'
+import { InteractivePropertiesBlockComponent } from '@/blocks/InteractivePropertiesBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -59,6 +60,7 @@ const blockComponents = {
   resourceBlock: LandingResourceBlockComponent,
   evaluationGratuite: EvaluationGratuiteBlock,
   landingHero: LandingHeroBlock,
+  interactivePropBlock: InteractivePropertiesBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{
