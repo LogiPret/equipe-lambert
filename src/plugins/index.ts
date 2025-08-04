@@ -92,27 +92,29 @@ export const plugins: Plugin[] = [
               if (
                 formTitle === 'Formulaire Vendre' ||
                 formTitle === 'Formulaire Acheter' ||
-                formTitle === 'Contact Form'
+                formTitle === 'Contact Form' ||
+                formTitle === 'vendreHeroForm' ||
+                doc.form === 'vendreHeroForm' // Also check by form ID
               ) {
                 try {
                   const { insertContactSubmission } = await import('../lib/supabase')
-                  
+
                   // Extract form data from submission
                   const formData: any = {}
                   if (doc.submissionData && Array.isArray(doc.submissionData)) {
                     doc.submissionData.forEach((field: any) => {
                       const fieldName = field.field || field.name
                       const fieldValue = field.value
-                      
+
                       if (fieldName && fieldValue !== undefined) {
                         formData[fieldName] = fieldValue
                       }
                     })
                   }
 
-                  // Determine type based on form title
+                  // Determine type based on form title or form ID
                   let type = 'CONTACT'
-                  if (formTitle === 'Formulaire Vendre') {
+                  if (formTitle === 'Formulaire Vendre' || doc.form === 'vendreHeroForm') {
                     type = 'VENDRE'
                   } else if (formTitle === 'Formulaire Acheter') {
                     type = 'ACHETER'
@@ -125,12 +127,20 @@ export const plugins: Plugin[] = [
                     email: formData.email || formData.Email || '', // Handle both cases
                     phone: formData.phone || '',
                     type: type,
+                    vendre_address: formData.vendre_address || undefined, // Include property address
+                    vendre_delais: formData.vendre_delais || undefined, // Include the new field
                   }
 
                   // Only send to Supabase if we have the required fields
                   if (supabaseData.prenom && supabaseData.nom && supabaseData.email) {
-                    await insertContactSubmission(supabaseData)
-                    req.payload.logger.info(`${type} form submission sent to Supabase successfully`)
+                    const result = await insertContactSubmission(supabaseData)
+                    if (result.success) {
+                      req.payload.logger.info(
+                        `${type} form submission sent to Supabase successfully`,
+                      )
+                    } else {
+                      req.payload.logger.warn(`Supabase submission skipped: ${result.reason}`)
+                    }
                   }
                 } catch (error: any) {
                   req.payload.logger.error('Failed to send form submission to Supabase:', error)

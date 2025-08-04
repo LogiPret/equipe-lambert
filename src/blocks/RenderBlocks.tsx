@@ -10,18 +10,24 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 
 // Real Estate Custom Blocks
 import HeroBlock from '@/blocks/HeroBlock/Component'
-import StatsBlock from '@/blocks/StatsBlock/Component'
-import ServicesBlock from '@/blocks/ServicesBlock/Component'
-import TeamBlock from '@/blocks/TeamBlock/Component'
-import PropertiesBlock from '@/blocks/PropertiesBlock/Component'
-import TestimonialsBlock from '@/blocks/TestimonialsBlock/Component'
+import StatsBlock from '@/blocks/HomePageBlocks/StatsBlock/Component'
+import ServicesBlock from '@/blocks/HomePageBlocks/ServicesBlock/Component'
+import TeamBlock from '@/blocks/HomePageBlocks/TeamBlock/Component'
+import PropertiesBlock from '@/blocks/HomePageBlocks/PropertiesBlock/Component'
+import TestimonialsBlock from '@/blocks/HomePageBlocks/TestimonialsBlock/Component'
 import CTABannerBlock from '@/blocks/CTABannerBlock/Component'
-import ContactBlock from '@/blocks/ContactBlock/Component'
+import BannerCTAScrollBlock from '@/blocks/BannerCTAScrollBlock/Component'
+import ContactBlock from '@/blocks/HomePageBlocks/ContactBlock/Component'
 import HeaderBlock from '@/blocks/HeaderBlock/Component'
 import FooterBlock from '@/blocks/FooterBlock/Component'
-import MapSectionBlock from '@/blocks/MapSectionBlock/Component'
+import MapSectionBlock from '@/blocks/HomePageBlocks/MapSectionBlock/Component'
 import ButtonBlock from '@/blocks/Button/Component'
-import BlogCarouselBlock from '@/blocks/BlogCarouselBlock/ServerComponent'
+import BlogCarouselBlock from '@/blocks/HomePageBlocks/BlogCarouselBlock/ServerComponent'
+import VendreHeroBlock from '@/blocks/LandingVendreBlocks/VendreHeroBlock/Component'
+import WhyChooseUsBlock from '@/blocks/LandingVendreBlocks/WhyChooseUsBlock/Component'
+import SellingProcessBlock from '@/blocks/LandingVendreBlocks/SellingProcessBlock/Component'
+import { VendreCTABlockComponent } from '@/blocks/LandingVendreBlocks/VendreCTABlock/Component'
+import EvaluationGratuiteBlock from './LandingVendreBlocks/EvaluationGratuiteBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -37,12 +43,18 @@ const blockComponents = {
   properties: PropertiesBlock,
   testimonials: TestimonialsBlock,
   ctaBanner: CTABannerBlock,
+  bannerCTAScroll: BannerCTAScrollBlock,
   contact: ContactBlock,
   header: HeaderBlock,
   footer: FooterBlock,
   mapSectionBlock: MapSectionBlock,
   button: ButtonBlock,
   blogCarousel: BlogCarouselBlock,
+  vendreHero: VendreHeroBlock,
+  whyChooseUs: WhyChooseUsBlock,
+  sellingProcess: SellingProcessBlock,
+  vendreCTA: VendreCTABlockComponent,
+  evaluationGratuite: EvaluationGratuiteBlock,
 }
 
 export const RenderBlocks: React.FC<{
@@ -62,11 +74,14 @@ export const RenderBlocks: React.FC<{
             const Block = blockComponents[blockType]
 
             if (Block) {
+              // Create unique ID for each block instance
+              const blockId = `${blockType}-${index}`
+
               // Remove all spacing for now - will add back selectively later
               return (
-                <div key={index}>
+                <div key={index} id={blockId}>
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
-                  <Block {...block} disableInnerContainer />
+                  <Block {...block} blockId={blockId} disableInnerContainer />
                 </div>
               )
             }
