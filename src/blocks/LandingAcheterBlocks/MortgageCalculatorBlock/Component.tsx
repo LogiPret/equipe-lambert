@@ -301,7 +301,7 @@ export default function MortgageCalculatorBlock({
                   <div>
                     <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
                       <Percent className="h-4 w-4 mr-2 text-blue-600" />
-                      Taux d'intérêt annuel (%)
+                      Taux d&apos;intérêt annuel (%)
                     </label>
                     <Input
                       type="number"
@@ -319,7 +319,7 @@ export default function MortgageCalculatorBlock({
                   <div>
                     <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
                       <Calendar className="h-4 w-4 mr-2 text-blue-600" />
-                      Période d'amortissement (années)
+                      Période d&apos;amortissement (années)
                     </label>
                     <Input
                       type="number"
@@ -401,7 +401,7 @@ export default function MortgageCalculatorBlock({
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-600 mb-2">{interestRate}%</div>
-              <div className="text-gray-600">Taux d'intérêt</div>
+              <div className="text-gray-600">Taux d&apos;intérêt</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-600 mb-2">{loanTerm}</div>

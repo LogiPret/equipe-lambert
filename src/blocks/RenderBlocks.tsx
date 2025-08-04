@@ -26,8 +26,8 @@ import BlogCarouselBlock from '@/blocks/HomePageBlocks/BlogCarouselBlock/ServerC
 import WhyChooseUsBlock from '@/blocks/LandingCommonBlocks/WhyChooseUsBlock/Component'
 import LandingProcessBlock from '@/blocks/LandingCommonBlocks/LandingProcessBlock/Component'
 import MortgageCalculatorBlock from '@/blocks/LandingAcheterBlocks/MortgageCalculatorBlock/Component'
-import { VendreCTABlockComponent } from '@/blocks/LandingVendreBlocks/VendreCTABlock/Component'
 import { LandingCTABlockComponent } from '@/blocks/LandingCommonBlocks/LandingCTABlock/Component'
+import { LandingResourceBlockComponent } from '@/blocks/LandingCommonBlocks/LandingResourceBlock/Component'
 import EvaluationGratuiteBlock from './LandingVendreBlocks/EvaluationGratuiteBlock/Component'
 import LandingHeroBlock from '@/blocks/LandingCommonBlocks/LandingHeroBlock/Component'
 
@@ -55,8 +55,8 @@ const blockComponents = {
   landingProcess: LandingProcessBlock,
   mortgageCalculator: MortgageCalculatorBlock,
   vendreWhyChooseUs: WhyChooseUsBlock,
-  vendreCTA: VendreCTABlockComponent,
   landingCTA: LandingCTABlockComponent,
+  resourceBlock: LandingResourceBlockComponent,
   evaluationGratuite: EvaluationGratuiteBlock,
   landingHero: LandingHeroBlock,
 }
@@ -75,7 +75,7 @@ export const RenderBlocks: React.FC<{
           const { blockType } = block
 
           if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
+            const Block = blockComponents[blockType as keyof typeof blockComponents]
 
             if (Block) {
               // Create unique ID for each block instance

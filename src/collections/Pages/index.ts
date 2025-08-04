@@ -26,8 +26,8 @@ import { BlogCarouselBlock } from '../../blocks/HomePageBlocks/BlogCarouselBlock
 import { WhyChooseUsBlock } from '../../blocks/LandingCommonBlocks/WhyChooseUsBlock/config'
 import { LandingProcessBlock } from '../../blocks/LandingCommonBlocks/LandingProcessBlock/config'
 import { MortgageCalculatorBlock } from '../../blocks/LandingAcheterBlocks/MortgageCalculatorBlock/config'
-import { VendreCTABlock } from '../../blocks/LandingVendreBlocks/VendreCTABlock/config'
 import { LandingCTABlock } from '../../blocks/LandingCommonBlocks/LandingCTABlock/config'
+import { LandingResourceBlock } from '../../blocks/LandingCommonBlocks/LandingResourceBlock/config'
 import { EvaluationGratuiteBlock } from '@/blocks/LandingVendreBlocks/EvaluationGratuiteBlock/config'
 import { LandingHeroBlock } from '../../blocks/LandingCommonBlocks/LandingHeroBlock/config'
 
@@ -123,8 +123,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 WhyChooseUsBlock,
                 LandingProcessBlock,
                 MortgageCalculatorBlock,
-                VendreCTABlock,
                 LandingCTABlock,
+                LandingResourceBlock,
                 EvaluationGratuiteBlock,
                 LandingHeroBlock,
               ],

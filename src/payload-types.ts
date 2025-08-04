@@ -627,27 +627,6 @@ export interface Page {
         blockType: 'mortgageCalculator';
       }
     | {
-        title: string;
-        subtitle: string;
-        primaryButtonText: string;
-        /**
-         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
-         */
-        primaryButtonTarget?: string | null;
-        secondaryButtonText: string;
-        /**
-         * Enter the block ID to scroll to when the secondary button is clicked, or leave empty to use phone number. Format: "blockType-index"
-         */
-        secondaryButtonTarget?: string | null;
-        /**
-         * Phone number to call when secondary button is clicked (only used if no target section is selected)
-         */
-        phoneNumber?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'vendreCTA';
-      }
-    | {
         /**
          * Select the rendering mode (vendre or acheter) - changes button text, colors, and styling
          */
@@ -683,6 +662,93 @@ export interface Page {
         id?: string | null;
         blockName?: string | null;
         blockType: 'landingCTA';
+      }
+    | {
+        /**
+         * Select the rendering mode (vendre or acheter) - changes content, colors, and styling
+         */
+        mode: 'vendre' | 'acheter';
+        /**
+         * Choose whether the main image appears on the left or right side
+         */
+        imagePosition: 'left' | 'right';
+        mainContent?: {
+          /**
+           * Badge text will automatically adjust based on mode: "VENDEZ INTELLIGEMMENT" for vendre mode, "ACHETEZ COMME UN PRO" for acheter mode. Leave empty to use default.
+           */
+          badgeText?: string | null;
+          /**
+           * Title will automatically adjust based on mode. Leave empty to use default mode-specific text.
+           */
+          title?: string | null;
+          /**
+           * Main description will automatically adjust based on mode. Leave empty to use default.
+           */
+          description?: string | null;
+          /**
+           * Highlighted text (shown in bold). Will auto-adjust based on mode if left empty.
+           */
+          highlight?: string | null;
+          /**
+           * Button text will automatically adjust based on mode: "Obtenir mes ressources" for vendre, "Recevoir mes ressources" for acheter. Leave empty to use default.
+           */
+          buttonText?: string | null;
+          /**
+           * Action to perform when button is clicked (e.g., scroll target, external URL, etc.)
+           */
+          buttonAction?: string | null;
+        };
+        imageContent?: {
+          /**
+           * Main image for the resource section. Will use placeholder if not provided.
+           */
+          mainImage?: (number | null) | Media;
+          /**
+           * Alt text for the image. Will auto-generate based on mode if left empty.
+           */
+          imageAlt?: string | null;
+          /**
+           * Caption overlay on the image. Will auto-adjust based on mode if left empty.
+           */
+          imageCaption?: string | null;
+          /**
+           * Subcaption overlay on the image. Will auto-adjust based on mode if left empty.
+           */
+          imageSubcaption?: string | null;
+        };
+        resources?: {
+          /**
+           * Title for the resources section. Will auto-adjust based on mode if left empty.
+           */
+          title?: string | null;
+          /**
+           * Subtitle for the resources section. Will auto-adjust based on mode if left empty.
+           */
+          subtitle?: string | null;
+          /**
+           * Add resources to display in cards below the main content.
+           */
+          items?:
+            | {
+                title: string;
+                description: string;
+                icon: 'download' | 'fileText' | 'calculator' | 'checkSquare';
+                color: 'blue' | 'emerald' | 'indigo' | 'amber' | 'red';
+                /**
+                 * Button text for this resource. Defaults to "Télécharger" if empty.
+                 */
+                buttonText?: string | null;
+                /**
+                 * Action to perform when this resource button is clicked (e.g., download URL, scroll target, etc.)
+                 */
+                buttonAction?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'resourceBlock';
       }
     | {
         title: string;
@@ -2123,19 +2189,6 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        vendreCTA?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              primaryButtonText?: T;
-              primaryButtonTarget?: T;
-              secondaryButtonText?: T;
-              secondaryButtonTarget?: T;
-              phoneNumber?: T;
-              id?: T;
-              blockName?: T;
-            };
         landingCTA?:
           | T
           | {
@@ -2147,6 +2200,49 @@ export interface PagesSelect<T extends boolean = true> {
               secondaryButtonText?: T;
               secondaryButtonTarget?: T;
               phoneNumber?: T;
+              id?: T;
+              blockName?: T;
+            };
+        resourceBlock?:
+          | T
+          | {
+              mode?: T;
+              imagePosition?: T;
+              mainContent?:
+                | T
+                | {
+                    badgeText?: T;
+                    title?: T;
+                    description?: T;
+                    highlight?: T;
+                    buttonText?: T;
+                    buttonAction?: T;
+                  };
+              imageContent?:
+                | T
+                | {
+                    mainImage?: T;
+                    imageAlt?: T;
+                    imageCaption?: T;
+                    imageSubcaption?: T;
+                  };
+              resources?:
+                | T
+                | {
+                    title?: T;
+                    subtitle?: T;
+                    items?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          icon?: T;
+                          color?: T;
+                          buttonText?: T;
+                          buttonAction?: T;
+                          id?: T;
+                        };
+                  };
               id?: T;
               blockName?: T;
             };
