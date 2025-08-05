@@ -97,7 +97,7 @@ export default function HeroBlock({
                   {...primaryButton.link}
                   appearance="default"
                   size="lg"
-                  className="bg-white text-[#0f3046] hover:bg-blue-50 font-medium"
+                  className="bg-secondary text-primary hover:text-secondary hover:bg-primary font-medium"
                 >
                   <Search className="h-5 w-5 mr-2" />
                   {primaryButton.text}
@@ -108,7 +108,7 @@ export default function HeroBlock({
                   {...secondaryButton.link}
                   appearance="outline"
                   size="lg"
-                  className="border-white text-white hover:bg-white hover:text-[#0f3046]"
+                  className="border-secondary bg-transparent text-secondary hover:bg-secondary hover:text-primary"
                 >
                   {secondaryButton.text}
                 </CMSLink>
@@ -131,11 +131,11 @@ export default function HeroBlock({
                 priority
               />
               {statsBoxNumber && statsBoxText && (
-                <div className="absolute bottom-4 left-4 bg-white text-gray-800 p-4 shadow-xl">
-                  <div className="text-xl font-bold text-[#0f3046] mb-1">{statsBoxNumber}</div>
-                  <div className="text-sm font-medium text-gray-600">{statsBoxText}</div>
+                <div className="absolute bottom-4 left-4 bg-secondary text-gray-800 p-4 shadow-xl">
+                  <div className="text-xl font-bold text-primary mb-1">{statsBoxNumber}</div>
+                  <div className="text-sm font-medium text-primary">{statsBoxText}</div>
                   {statsBoxDescription && (
-                    <div className="text-xs text-gray-500">{statsBoxDescription}</div>
+                    <div className="text-xs text-primary">{statsBoxDescription}</div>
                   )}
                 </div>
               )}

@@ -14,8 +14,15 @@
   }
 
   :root {
-    --background: 0 0% 100%;
+    --background: 234 7.69% 94%;
     --foreground: 222.2 84% 4.9%;
+
+    --text-primary: 222.2 84% 4.9%;
+    --text-secondary: 234 7.69% 94%;
+
+    --button-primary: 222.2 47.4% 11.2%;
+    --button-secondary: 210 40% 96.1%;
+    --button-transparent: 0 0% 0%;
 
     --card: 240 5% 96%;
     --card-foreground: 222.2 84% 4.9%;
@@ -39,6 +46,7 @@
     --destructive-foreground: 210 40% 98%;
 
     --border: 240 6% 80%;
+    --border-static: 234 7.69% 94%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
@@ -50,8 +58,15 @@
   }
 
   [data-theme='dark'] {
-    --background: 0 0% 0%;
+    --background: 202 69% 16%;
     --foreground: 210 40% 98%;
+
+    --text-secondary: 222.2 84% 4.9%;
+    --text-primary: 234 7.69% 94%;
+
+    --button-secondary: 222.2 47.4% 11.2%;
+    --button-primary: 210 40% 96.1%;
+    --button-transparent: 0 0% 0%;
 
     --card: 0 0% 4%;
     --card-foreground: 210 40% 98%;

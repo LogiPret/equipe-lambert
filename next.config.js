@@ -18,6 +18,20 @@ const nextConfig = {
           protocol: url.protocol.replace(':', ''),
         }
       }),
+      // Allow images from Unsplash
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      // Allow images from other common CDNs if needed
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   webpack: (webpackConfig) => {
