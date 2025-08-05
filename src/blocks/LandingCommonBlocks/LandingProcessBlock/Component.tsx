@@ -22,7 +22,7 @@ interface ProcessStep {
   description: string
 }
 
-interface SellingProcessBlockProps {
+interface LandingProcessBlockProps {
   title?: string
   subtitle?: string
   steps?: ProcessStep[]
@@ -43,7 +43,7 @@ const iconMap = {
   handshake: Handshake,
 }
 
-export default function SellingProcessBlock({ title, subtitle, steps }: SellingProcessBlockProps) {
+export default function LandingProcessBlock({ title, subtitle, steps }: LandingProcessBlockProps) {
   const validSteps = Array.isArray(steps) ? steps : []
 
   return (

@@ -23,11 +23,14 @@ import { HeaderBlock } from '../../blocks/HeaderBlock/config'
 import { FooterBlock } from '../../blocks/FooterBlock/config'
 import { MapSectionBlock } from '../../blocks/HomePageBlocks/MapSectionBlock/config'
 import { BlogCarouselBlock } from '../../blocks/HomePageBlocks/BlogCarouselBlock/config'
-import { VendreHeroBlock } from '../../blocks/LandingVendreBlocks/VendreHeroBlock/config'
-import { WhyChooseUsBlock } from '../../blocks/LandingVendreBlocks/WhyChooseUsBlock/config'
-import { SellingProcessBlock } from '../../blocks/LandingVendreBlocks/SellingProcessBlock/config'
-import { VendreCTABlock } from '../../blocks/LandingVendreBlocks/VendreCTABlock/config'
+import { WhyChooseUsBlock } from '../../blocks/LandingCommonBlocks/WhyChooseUsBlock/config'
+import { LandingProcessBlock } from '../../blocks/LandingCommonBlocks/LandingProcessBlock/config'
+import { MortgageCalculatorBlock } from '../../blocks/LandingAcheterBlocks/MortgageCalculatorBlock/config'
+import { LandingCTABlock } from '../../blocks/LandingCommonBlocks/LandingCTABlock/config'
+import { LandingResourceBlock } from '../../blocks/LandingCommonBlocks/LandingResourceBlock/config'
 import { EvaluationGratuiteBlock } from '@/blocks/LandingVendreBlocks/EvaluationGratuiteBlock/config'
+import { LandingHeroBlock } from '../../blocks/LandingCommonBlocks/LandingHeroBlock/config'
+import { InteractivePropertiesBlock } from '../../blocks/InteractivePropertiesBlock/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -118,11 +121,14 @@ export const Pages: CollectionConfig<'pages'> = {
                 FooterBlock,
                 MapSectionBlock,
                 BlogCarouselBlock,
-                VendreHeroBlock,
                 WhyChooseUsBlock,
-                SellingProcessBlock,
-                VendreCTABlock,
+                LandingProcessBlock,
+                MortgageCalculatorBlock,
+                LandingCTABlock,
+                LandingResourceBlock,
                 EvaluationGratuiteBlock,
+                LandingHeroBlock,
+                InteractivePropertiesBlock,
               ],
               required: true,
               admin: {

@@ -94,7 +94,9 @@ export const plugins: Plugin[] = [
                 formTitle === 'Formulaire Acheter' ||
                 formTitle === 'Contact Form' ||
                 formTitle === 'vendreHeroForm' ||
-                doc.form === 'vendreHeroForm' // Also check by form ID
+                formTitle === 'acheterHeroForm' ||
+                doc.form === 'vendreHeroForm' ||
+                doc.form === 'acheterHeroForm' // Also check by form ID
               ) {
                 try {
                   const { insertContactSubmission } = await import('../lib/supabase')
@@ -116,7 +118,7 @@ export const plugins: Plugin[] = [
                   let type = 'CONTACT'
                   if (formTitle === 'Formulaire Vendre' || doc.form === 'vendreHeroForm') {
                     type = 'VENDRE'
-                  } else if (formTitle === 'Formulaire Acheter') {
+                  } else if (formTitle === 'Formulaire Acheter' || doc.form === 'acheterHeroForm') {
                     type = 'ACHETER'
                   }
 
@@ -127,8 +129,10 @@ export const plugins: Plugin[] = [
                     email: formData.email || formData.Email || '', // Handle both cases
                     phone: formData.phone || '',
                     type: type,
-                    vendre_address: formData.vendre_address || undefined, // Include property address
-                    vendre_delais: formData.vendre_delais || undefined, // Include the new field
+                    vendre_address: formData.vendre_address || undefined, // Include property address for selling
+                    vendre_delais: formData.vendre_delais || undefined, // Include selling timeframe
+                    acheter_propertyType: formData.acheter_propertyType || undefined, // Include property type for buying
+                    acheter_city: formData.acheter_city || undefined, // Include city for buying
                   }
 
                   // Only send to Supabase if we have the required fields

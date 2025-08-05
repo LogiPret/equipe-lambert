@@ -168,7 +168,7 @@ export interface Page {
     links?:
       | {
           link: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'archive') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -180,6 +180,7 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            archive?: 'posts' | null;
             label: string;
             /**
              * Choose how the link should be rendered.
@@ -200,7 +201,7 @@ export interface Page {
     | {
         text: string;
         link?: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -212,6 +213,7 @@ export interface Page {
                 value: number | Post;
               } | null);
           url?: string | null;
+          archive?: 'posts' | null;
           /**
            * Choose how the link should be rendered.
            */
@@ -231,7 +233,7 @@ export interface Page {
           text: string;
           icon?: string | null;
           link?: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'archive') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -243,6 +245,7 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            archive?: 'posts' | null;
             /**
              * Choose how the link should be rendered.
              */
@@ -252,7 +255,7 @@ export interface Page {
         secondaryButton?: {
           text?: string | null;
           link?: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'archive') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -264,6 +267,7 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            archive?: 'posts' | null;
             /**
              * Choose how the link should be rendered.
              */
@@ -354,7 +358,7 @@ export interface Page {
         }[];
         showAllButton: {
           link: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'archive') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -366,6 +370,7 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            archive?: 'posts' | null;
             label: string;
           };
         };
@@ -404,7 +409,7 @@ export interface Page {
           icon?: ('dollar_sign' | 'key' | 'phone' | 'mail') | null;
           variant?: ('primary' | 'secondary') | null;
           link?: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'archive') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -416,6 +421,7 @@ export interface Page {
                   value: number | Post;
                 } | null);
             url?: string | null;
+            archive?: 'posts' | null;
             /**
              * Choose how the link should be rendered.
              */
@@ -565,9 +571,236 @@ export interface Page {
         blockType: 'blogCarousel';
       }
     | {
-        badgeText: string;
         title: string;
+        subtitle: string;
+        choices?:
+          | {
+              icon: 'trendingUp' | 'clock' | 'shield' | 'target' | 'award' | 'users' | 'bell';
+              /**
+               * This color will be used for icons, backgrounds, and statistics in different shades.
+               */
+              color: 'green' | 'blue' | 'red' | 'yellow' | 'purple' | 'pink' | 'indigo' | 'emerald' | 'teal' | 'cyan';
+              title: string;
+              description: string;
+              statValue: string;
+              statLabel: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'whyChooseUs';
+      }
+    | {
+        title: string;
+        subtitle: string;
+        steps?:
+          | {
+              icon:
+                | 'home'
+                | 'search'
+                | 'camera'
+                | 'users'
+                | 'dollarSign'
+                | 'key'
+                | 'calendar'
+                | 'checkCircle'
+                | 'star'
+                | 'target'
+                | 'clipboardList'
+                | 'handshake';
+              title: string;
+              description: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'landingProcess';
+      }
+    | {
+        title: string;
+        subtitle: string;
+        description: string;
+        defaultValues?: {
+          homePrice?: number | null;
+          downPayment?: number | null;
+          interestRate?: number | null;
+          loanTerm?: number | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'mortgageCalculator';
+      }
+    | {
+        /**
+         * Select the rendering mode (vendre or acheter) - changes button text, colors, and styling
+         */
+        mode: 'vendre' | 'acheter';
+        /**
+         * Title will automatically adjust based on mode: "Prêt à vendre votre propriété?" for vendre mode, "Prêt à trouver votre propriété idéale ?" for acheter mode. Leave empty to use default.
+         */
+        title?: string | null;
+        /**
+         * Subtitle will automatically adjust based on mode. Leave empty to use default mode-specific text.
+         */
         subtitle?: string | null;
+        /**
+         * Primary button text will automatically adjust based on mode: "Évaluation gratuite" for vendre mode, "Commencer ma recherche" for acheter mode. Leave empty to use default.
+         */
+        primaryButtonText?: string | null;
+        /**
+         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: landingHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
+         */
+        primaryButtonTarget?: string | null;
+        /**
+         * Secondary button text will automatically adjust based on mode: "Appelez-nous" for vendre mode, "Consultation gratuite" for acheter mode. Leave empty to use default.
+         */
+        secondaryButtonText?: string | null;
+        /**
+         * Enter the block ID to scroll to when the secondary button is clicked, or leave empty to use phone number. Format: "blockType-index"
+         */
+        secondaryButtonTarget?: string | null;
+        /**
+         * Phone number to call when secondary button is clicked (only used if no target section is selected)
+         */
+        phoneNumber?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'landingCTA';
+      }
+    | {
+        /**
+         * Select the rendering mode (vendre or acheter) - changes content, colors, and styling
+         */
+        mode: 'vendre' | 'acheter';
+        /**
+         * Choose whether the main image appears on the left or right side
+         */
+        imagePosition: 'left' | 'right';
+        mainContent?: {
+          /**
+           * Badge text will automatically adjust based on mode: "VENDEZ INTELLIGEMMENT" for vendre mode, "ACHETEZ COMME UN PRO" for acheter mode. Leave empty to use default.
+           */
+          badgeText?: string | null;
+          /**
+           * Title will automatically adjust based on mode. Leave empty to use default mode-specific text.
+           */
+          title?: string | null;
+          /**
+           * Main description will automatically adjust based on mode. Leave empty to use default.
+           */
+          description?: string | null;
+          /**
+           * Highlighted text (shown in bold). Will auto-adjust based on mode if left empty.
+           */
+          highlight?: string | null;
+          /**
+           * Button text will automatically adjust based on mode: "Obtenir mes ressources" for vendre, "Recevoir mes ressources" for acheter. Leave empty to use default.
+           */
+          buttonText?: string | null;
+          /**
+           * Action to perform when button is clicked (e.g., scroll target, external URL, etc.)
+           */
+          buttonAction?: string | null;
+        };
+        imageContent?: {
+          /**
+           * Main image for the resource section. Will use placeholder if not provided.
+           */
+          mainImage?: (number | null) | Media;
+          /**
+           * Alt text for the image. Will auto-generate based on mode if left empty.
+           */
+          imageAlt?: string | null;
+          /**
+           * Caption overlay on the image. Will auto-adjust based on mode if left empty.
+           */
+          imageCaption?: string | null;
+          /**
+           * Subcaption overlay on the image. Will auto-adjust based on mode if left empty.
+           */
+          imageSubcaption?: string | null;
+        };
+        resources?: {
+          /**
+           * Title for the resources section. Will auto-adjust based on mode if left empty.
+           */
+          title?: string | null;
+          /**
+           * Subtitle for the resources section. Will auto-adjust based on mode if left empty.
+           */
+          subtitle?: string | null;
+          /**
+           * Add resources to display in cards below the main content.
+           */
+          items?:
+            | {
+                title: string;
+                description: string;
+                icon: 'download' | 'fileText' | 'calculator' | 'checkSquare';
+                color: 'blue' | 'emerald' | 'indigo' | 'amber' | 'red';
+                /**
+                 * Button text for this resource. Defaults to "Télécharger" if empty.
+                 */
+                buttonText?: string | null;
+                /**
+                 * Action to perform when this resource button is clicked (e.g., download URL, scroll target, etc.)
+                 */
+                buttonAction?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'resourceBlock';
+      }
+    | {
+        title: string;
+        description: string;
+        closingStatement: string;
+        ctaText: string;
+        /**
+         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
+         */
+        ctaTarget?: string | null;
+        benefitsTitle: string;
+        benefits: {
+          text: string;
+          id?: string | null;
+        }[];
+        deliverablesTitle: string;
+        deliverables: {
+          icon: 'home' | 'trendingUp' | 'users';
+          title: string;
+          description: string;
+          id?: string | null;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'evaluationGratuite';
+      }
+    | {
+        /**
+         * Select the rendering mode (vendre or acheter) - changes form fields and styling
+         */
+        mode: 'vendre' | 'acheter';
+        /**
+         * Badge text will automatically adjust based on mode: "VENDEZ VOTRE PROPRIÉTÉ" for vendre mode, "ACCÈS PRIVILÉGIÉ AUX NOUVEAUTÉS" for acheter mode
+         */
+        badgeText: string;
+        /**
+         * Title will automatically adjust based on mode: "Vendez votre propriété" for vendre mode, "Trouvez la propriété" for acheter mode
+         */
+        title: string;
+        /**
+         * Subtitle will automatically adjust based on mode: "rapidement et au meilleur prix" for vendre mode, "de vos rêves" for acheter mode
+         */
+        subtitle?: string | null;
+        /**
+         * Description will automatically adjust based on the selected mode
+         */
         description: string;
         stats?:
           | {
@@ -617,139 +850,57 @@ export interface Page {
           };
         };
         formTitle: string;
-        formFields: {
-          addressPlaceholder: string;
-          firstNamePlaceholder: string;
-          lastNamePlaceholder: string;
-          phonePlaceholder: string;
-          emailPlaceholder: string;
-          timeframePlaceholder: string;
-          submitButtonText: string;
-          disclaimerText: string;
+        formFields?: {
+          /**
+           * Placeholder for the property address field (Vendre mode only)
+           */
+          addressPlaceholder?: string | null;
+          /**
+           * Placeholder for the sale timeframe field (Vendre mode only)
+           */
+          timeframePlaceholder?: string | null;
+          /**
+           * Placeholder for the property type field (Acheter mode only)
+           */
+          propertyTypePlaceholder?: string | null;
+          /**
+           * Placeholder for the city field (Acheter mode only)
+           */
+          cityPlaceholder?: string | null;
+          firstNamePlaceholder?: string | null;
+          lastNamePlaceholder?: string | null;
+          phonePlaceholder?: string | null;
+          emailPlaceholder?: string | null;
+          submitButtonText?: string | null;
+          disclaimerText?: string | null;
         };
+        /**
+         * Available timeframe options for sale (Vendre mode only)
+         */
         timeframeOptions?:
           | {
               option: string;
               id?: string | null;
             }[]
           | null;
+        /**
+         * Available property type options (Acheter mode only)
+         */
+        propertyTypeOptions?:
+          | {
+              option: string;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Optional background image for the hero section
+         */
         backgroundImage?: (number | null) | Media;
         id?: string | null;
         blockName?: string | null;
-        blockType: 'vendreHero';
+        blockType: 'landingHero';
       }
-    | {
-        title: string;
-        subtitle: string;
-        choices?:
-          | {
-              icon: 'trendingUp' | 'clock' | 'shield' | 'target' | 'award' | 'users';
-              iconColor:
-                | 'text-blue-600'
-                | 'text-green-600'
-                | 'text-orange-600'
-                | 'text-purple-600'
-                | 'text-red-600'
-                | 'text-white';
-              bgColor:
-                | 'bg-blue-100'
-                | 'bg-green-100'
-                | 'bg-orange-100'
-                | 'bg-purple-100'
-                | 'bg-red-100'
-                | 'bg-gray-100';
-              title: string;
-              description: string;
-              statValue: string;
-              statLabel: string;
-              statColor:
-                | 'text-blue-600'
-                | 'text-green-600'
-                | 'text-orange-600'
-                | 'text-purple-600'
-                | 'text-red-600'
-                | 'text-gray-600';
-              statBgColor: 'bg-blue-50' | 'bg-green-50' | 'bg-orange-50' | 'bg-purple-50' | 'bg-red-50' | 'bg-gray-50';
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'whyChooseUs';
-      }
-    | {
-        title: string;
-        subtitle: string;
-        steps?:
-          | {
-              icon:
-                | 'home'
-                | 'search'
-                | 'camera'
-                | 'users'
-                | 'dollarSign'
-                | 'key'
-                | 'calendar'
-                | 'checkCircle'
-                | 'star'
-                | 'target'
-                | 'clipboardList'
-                | 'handshake';
-              title: string;
-              description: string;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'sellingProcess';
-      }
-    | {
-        title: string;
-        subtitle: string;
-        primaryButtonText: string;
-        /**
-         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
-         */
-        primaryButtonTarget?: string | null;
-        secondaryButtonText: string;
-        /**
-         * Enter the block ID to scroll to when the secondary button is clicked, or leave empty to use phone number. Format: "blockType-index"
-         */
-        secondaryButtonTarget?: string | null;
-        /**
-         * Phone number to call when secondary button is clicked (only used if no target section is selected)
-         */
-        phoneNumber?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'vendreCTA';
-      }
-    | {
-        title: string;
-        description: string;
-        closingStatement: string;
-        ctaText: string;
-        /**
-         * Enter the block ID to scroll to when the primary button is clicked. Common IDs: vendreHero-0, whyChooseUs-1, sellingProcess-2, contact-3, etc. Format: "blockType-index"
-         */
-        ctaTarget?: string | null;
-        benefitsTitle: string;
-        benefits: {
-          text: string;
-          id?: string | null;
-        }[];
-        deliverablesTitle: string;
-        deliverables: {
-          icon: 'home' | 'trendingUp' | 'users';
-          title: string;
-          description: string;
-          id?: string | null;
-        }[];
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'evaluationGratuite';
-      }
+    | InteractivePropertiesBlock
   )[];
   meta?: {
     title?: string | null;
@@ -974,7 +1125,7 @@ export interface CallToActionBlock {
   links?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -986,6 +1137,7 @@ export interface CallToActionBlock {
                 value: number | Post;
               } | null);
           url?: string | null;
+          archive?: 'posts' | null;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -1024,7 +1176,7 @@ export interface ContentBlock {
         } | null;
         enableLink?: boolean | null;
         link?: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -1036,6 +1188,7 @@ export interface ContentBlock {
                 value: number | Post;
               } | null);
           url?: string | null;
+          archive?: 'posts' | null;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -1334,6 +1487,47 @@ export interface MapSectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InteractivePropertiesBlock".
+ */
+export interface InteractivePropertiesBlock {
+  title?: string | null;
+  subtitle?: string | null;
+  buttonInfo: string;
+  /**
+   * L'ID du bloc calculatrice hypothécaire (ex: mortgageCalculator)
+   */
+  calculatorBlockId?: string | null;
+  hoverButtonIcon?: ('eye' | 'external-link' | 'arrow-right' | 'plus' | 'heart') | null;
+  /**
+   * Laissez vide pour utiliser les données mock par défaut
+   */
+  props?:
+    | {
+        image: number | Media;
+        price: number;
+        address: string;
+        description?: string | null;
+        /**
+         * URL vers laquelle rediriger lors du survol (ex: lien vers la fiche détaillée)
+         */
+        url?: string | null;
+        beds: number;
+        baths: number;
+        /**
+         * Ex: 1,850
+         */
+        sqft: string;
+        propType: 'maison' | 'condo' | 'townhouse' | 'loft';
+        propStatus: 'a_vendre' | 'vendu' | 'option_achat';
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'interactivePropBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1608,6 +1802,7 @@ export interface PagesSelect<T extends boolean = true> {
                     newTab?: T;
                     reference?: T;
                     url?: T;
+                    archive?: T;
                     label?: T;
                     appearance?: T;
                   };
@@ -1634,6 +1829,7 @@ export interface PagesSelect<T extends boolean = true> {
                     newTab?: T;
                     reference?: T;
                     url?: T;
+                    archive?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -1659,6 +1855,7 @@ export interface PagesSelect<T extends boolean = true> {
                           newTab?: T;
                           reference?: T;
                           url?: T;
+                          archive?: T;
                           appearance?: T;
                         };
                   };
@@ -1673,6 +1870,7 @@ export interface PagesSelect<T extends boolean = true> {
                           newTab?: T;
                           reference?: T;
                           url?: T;
+                          archive?: T;
                           appearance?: T;
                         };
                   };
@@ -1783,6 +1981,7 @@ export interface PagesSelect<T extends boolean = true> {
                           newTab?: T;
                           reference?: T;
                           url?: T;
+                          archive?: T;
                           label?: T;
                         };
                   };
@@ -1833,6 +2032,7 @@ export interface PagesSelect<T extends boolean = true> {
                           newTab?: T;
                           reference?: T;
                           url?: T;
+                          archive?: T;
                           appearance?: T;
                         };
                   };
@@ -1993,9 +2193,146 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        vendreHero?:
+        whyChooseUs?:
           | T
           | {
+              title?: T;
+              subtitle?: T;
+              choices?:
+                | T
+                | {
+                    icon?: T;
+                    color?: T;
+                    title?: T;
+                    description?: T;
+                    statValue?: T;
+                    statLabel?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        landingProcess?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              steps?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        mortgageCalculator?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              description?: T;
+              defaultValues?:
+                | T
+                | {
+                    homePrice?: T;
+                    downPayment?: T;
+                    interestRate?: T;
+                    loanTerm?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        landingCTA?:
+          | T
+          | {
+              mode?: T;
+              title?: T;
+              subtitle?: T;
+              primaryButtonText?: T;
+              primaryButtonTarget?: T;
+              secondaryButtonText?: T;
+              secondaryButtonTarget?: T;
+              phoneNumber?: T;
+              id?: T;
+              blockName?: T;
+            };
+        resourceBlock?:
+          | T
+          | {
+              mode?: T;
+              imagePosition?: T;
+              mainContent?:
+                | T
+                | {
+                    badgeText?: T;
+                    title?: T;
+                    description?: T;
+                    highlight?: T;
+                    buttonText?: T;
+                    buttonAction?: T;
+                  };
+              imageContent?:
+                | T
+                | {
+                    mainImage?: T;
+                    imageAlt?: T;
+                    imageCaption?: T;
+                    imageSubcaption?: T;
+                  };
+              resources?:
+                | T
+                | {
+                    title?: T;
+                    subtitle?: T;
+                    items?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          icon?: T;
+                          color?: T;
+                          buttonText?: T;
+                          buttonAction?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        evaluationGratuite?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              closingStatement?: T;
+              ctaText?: T;
+              ctaTarget?: T;
+              benefitsTitle?: T;
+              benefits?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              deliverablesTitle?: T;
+              deliverables?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        landingHero?:
+          | T
+          | {
+              mode?: T;
               badgeText?: T;
               title?: T;
               subtitle?: T;
@@ -2042,11 +2379,13 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     addressPlaceholder?: T;
+                    timeframePlaceholder?: T;
+                    propertyTypePlaceholder?: T;
+                    cityPlaceholder?: T;
                     firstNamePlaceholder?: T;
                     lastNamePlaceholder?: T;
                     phonePlaceholder?: T;
                     emailPlaceholder?: T;
-                    timeframePlaceholder?: T;
                     submitButtonText?: T;
                     disclaimerText?: T;
                   };
@@ -2056,88 +2395,17 @@ export interface PagesSelect<T extends boolean = true> {
                     option?: T;
                     id?: T;
                   };
+              propertyTypeOptions?:
+                | T
+                | {
+                    option?: T;
+                    id?: T;
+                  };
               backgroundImage?: T;
               id?: T;
               blockName?: T;
             };
-        whyChooseUs?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              choices?:
-                | T
-                | {
-                    icon?: T;
-                    iconColor?: T;
-                    bgColor?: T;
-                    title?: T;
-                    description?: T;
-                    statValue?: T;
-                    statLabel?: T;
-                    statColor?: T;
-                    statBgColor?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        sellingProcess?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              steps?:
-                | T
-                | {
-                    icon?: T;
-                    title?: T;
-                    description?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        vendreCTA?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              primaryButtonText?: T;
-              primaryButtonTarget?: T;
-              secondaryButtonText?: T;
-              secondaryButtonTarget?: T;
-              phoneNumber?: T;
-              id?: T;
-              blockName?: T;
-            };
-        evaluationGratuite?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              closingStatement?: T;
-              ctaText?: T;
-              ctaTarget?: T;
-              benefitsTitle?: T;
-              benefits?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              deliverablesTitle?: T;
-              deliverables?:
-                | T
-                | {
-                    icon?: T;
-                    title?: T;
-                    description?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
+        interactivePropBlock?: T | InteractivePropertiesBlockSelect<T>;
       };
   meta?:
     | T
@@ -2169,6 +2437,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              archive?: T;
               label?: T;
               appearance?: T;
             };
@@ -2195,6 +2464,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              archive?: T;
               label?: T;
               appearance?: T;
             };
@@ -2261,6 +2531,34 @@ export interface MapSectionBlockSelect<T extends boolean = true> {
         badgeColor?: T;
         bgColor?: T;
         borderColor?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InteractivePropertiesBlock_select".
+ */
+export interface InteractivePropertiesBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  buttonInfo?: T;
+  calculatorBlockId?: T;
+  hoverButtonIcon?: T;
+  props?:
+    | T
+    | {
+        image?: T;
+        price?: T;
+        address?: T;
+        description?: T;
+        url?: T;
+        beds?: T;
+        baths?: T;
+        sqft?: T;
+        propType?: T;
+        propStatus?: T;
         id?: T;
       };
   id?: T;
@@ -2697,7 +2995,7 @@ export interface Header {
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -2709,6 +3007,7 @@ export interface Header {
                 value: number | Post;
               } | null);
           url?: string | null;
+          archive?: 'posts' | null;
           label: string;
         };
         id?: string | null;
@@ -2723,10 +3022,14 @@ export interface Header {
  */
 export interface Footer {
   id: number;
+  /**
+   * Description qui apparaîtra sous le logo
+   */
+  description?: string | null;
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -2738,11 +3041,24 @@ export interface Footer {
                 value: number | Post;
               } | null);
           url?: string | null;
+          archive?: 'posts' | null;
           label: string;
         };
         id?: string | null;
       }[]
     | null;
+  resources?:
+    | {
+        title: string;
+        file: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  contactInfo?: {
+    phone?: string | null;
+    email?: string | null;
+    address?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2761,6 +3077,7 @@ export interface HeaderSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              archive?: T;
               label?: T;
             };
         id?: T;
@@ -2774,6 +3091,7 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  description?: T;
   navItems?:
     | T
     | {
@@ -2784,9 +3102,24 @@ export interface FooterSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              archive?: T;
               label?: T;
             };
         id?: T;
+      };
+  resources?:
+    | T
+    | {
+        title?: T;
+        file?: T;
+        id?: T;
+      };
+  contactInfo?:
+    | T
+    | {
+        phone?: T;
+        email?: T;
+        address?: T;
       };
   updatedAt?: T;
   createdAt?: T;

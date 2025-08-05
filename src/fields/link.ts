@@ -49,6 +49,10 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
                 label: 'Custom URL',
                 value: 'custom',
               },
+              {
+                label: 'Archive page',
+                value: 'archive',
+              },
             ],
           },
           {
@@ -85,6 +89,21 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
         condition: (_, siblingData) => siblingData?.type === 'custom',
       },
       label: 'Custom URL',
+      required: true,
+    },
+    {
+      name: 'archive',
+      type: 'select',
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === 'archive',
+      },
+      label: 'Archive page',
+      options: [
+        {
+          label: 'Posts Archive',
+          value: 'posts',
+        },
+      ],
       required: true,
     },
   ]

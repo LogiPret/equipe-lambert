@@ -23,11 +23,14 @@ import FooterBlock from '@/blocks/FooterBlock/Component'
 import MapSectionBlock from '@/blocks/HomePageBlocks/MapSectionBlock/Component'
 import ButtonBlock from '@/blocks/Button/Component'
 import BlogCarouselBlock from '@/blocks/HomePageBlocks/BlogCarouselBlock/ServerComponent'
-import VendreHeroBlock from '@/blocks/LandingVendreBlocks/VendreHeroBlock/Component'
-import WhyChooseUsBlock from '@/blocks/LandingVendreBlocks/WhyChooseUsBlock/Component'
-import SellingProcessBlock from '@/blocks/LandingVendreBlocks/SellingProcessBlock/Component'
-import { VendreCTABlockComponent } from '@/blocks/LandingVendreBlocks/VendreCTABlock/Component'
+import WhyChooseUsBlock from '@/blocks/LandingCommonBlocks/WhyChooseUsBlock/Component'
+import LandingProcessBlock from '@/blocks/LandingCommonBlocks/LandingProcessBlock/Component'
+import MortgageCalculatorBlock from '@/blocks/LandingAcheterBlocks/MortgageCalculatorBlock/Component'
+import { LandingCTABlockComponent } from '@/blocks/LandingCommonBlocks/LandingCTABlock/Component'
+import { LandingResourceBlockComponent } from '@/blocks/LandingCommonBlocks/LandingResourceBlock/Component'
 import EvaluationGratuiteBlock from './LandingVendreBlocks/EvaluationGratuiteBlock/Component'
+import LandingHeroBlock from '@/blocks/LandingCommonBlocks/LandingHeroBlock/Component'
+import { InteractivePropertiesBlockComponent } from '@/blocks/InteractivePropertiesBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -35,7 +38,6 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
-  // Real Estate Custom Blocks
   hero: HeroBlock,
   stats: StatsBlock,
   services: ServicesBlock,
@@ -50,11 +52,15 @@ const blockComponents = {
   mapSectionBlock: MapSectionBlock,
   button: ButtonBlock,
   blogCarousel: BlogCarouselBlock,
-  vendreHero: VendreHeroBlock,
   whyChooseUs: WhyChooseUsBlock,
-  sellingProcess: SellingProcessBlock,
-  vendreCTA: VendreCTABlockComponent,
+  landingProcess: LandingProcessBlock,
+  mortgageCalculator: MortgageCalculatorBlock,
+  vendreWhyChooseUs: WhyChooseUsBlock,
+  landingCTA: LandingCTABlockComponent,
+  resourceBlock: LandingResourceBlockComponent,
   evaluationGratuite: EvaluationGratuiteBlock,
+  landingHero: LandingHeroBlock,
+  interactivePropBlock: InteractivePropertiesBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{
@@ -71,7 +77,7 @@ export const RenderBlocks: React.FC<{
           const { blockType } = block
 
           if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
+            const Block = blockComponents[blockType as keyof typeof blockComponents]
 
             if (Block) {
               // Create unique ID for each block instance
