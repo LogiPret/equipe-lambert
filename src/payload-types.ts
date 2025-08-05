@@ -1492,10 +1492,12 @@ export interface MapSectionBlock {
 export interface InteractivePropertiesBlock {
   title?: string | null;
   subtitle?: string | null;
+  buttonInfo: string;
   /**
    * L'ID du bloc calculatrice hypothécaire (ex: mortgageCalculator)
    */
   calculatorBlockId?: string | null;
+  hoverButtonIcon?: ('eye' | 'external-link' | 'arrow-right' | 'plus' | 'heart') | null;
   /**
    * Laissez vide pour utiliser les données mock par défaut
    */
@@ -1505,6 +1507,10 @@ export interface InteractivePropertiesBlock {
         price: number;
         address: string;
         description?: string | null;
+        /**
+         * URL vers laquelle rediriger lors du survol (ex: lien vers la fiche détaillée)
+         */
+        url?: string | null;
         beds: number;
         baths: number;
         /**
@@ -2537,7 +2543,9 @@ export interface MapSectionBlockSelect<T extends boolean = true> {
 export interface InteractivePropertiesBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
+  buttonInfo?: T;
   calculatorBlockId?: T;
+  hoverButtonIcon?: T;
   props?:
     | T
     | {
@@ -2545,6 +2553,7 @@ export interface InteractivePropertiesBlockSelect<T extends boolean = true> {
         price?: T;
         address?: T;
         description?: T;
+        url?: T;
         beds?: T;
         baths?: T;
         sqft?: T;

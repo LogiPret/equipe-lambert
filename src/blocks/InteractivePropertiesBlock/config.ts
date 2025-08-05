@@ -22,6 +22,14 @@ export const InteractivePropertiesBlock: Block = {
         'Découvrez notre sélection de propriétés et calculez vos paiements hypothécaires instantanément',
     },
     {
+      name: 'buttonInfo',
+      type: 'textarea',
+      label: 'Info de ce que le bouton fait',
+      defaultValue:
+        'Utilisez le bouton "Calculer les paiements" pour estimer vos mensualités hypothécaires',
+      required: true,
+    },
+    {
       name: 'calculatorBlockId',
       type: 'text',
       label: 'ID du bloc calculatrice',
@@ -29,6 +37,34 @@ export const InteractivePropertiesBlock: Block = {
         description: "L'ID du bloc calculatrice hypothécaire (ex: mortgageCalculator)",
       },
       defaultValue: 'mortgageCalculator',
+    },
+    {
+      name: 'hoverButtonIcon',
+      type: 'select',
+      label: 'Icône du bouton survol',
+      options: [
+        {
+          label: 'Voir détails (Eye)',
+          value: 'eye',
+        },
+        {
+          label: 'Lien externe (ExternalLink)',
+          value: 'external-link',
+        },
+        {
+          label: 'Flèche droite (ArrowRight)',
+          value: 'arrow-right',
+        },
+        {
+          label: 'Plus (Plus)',
+          value: 'plus',
+        },
+        {
+          label: 'Cœur (Heart)',
+          value: 'heart',
+        },
+      ],
+      defaultValue: 'eye',
     },
     {
       name: 'props',
@@ -64,6 +100,16 @@ export const InteractivePropertiesBlock: Block = {
           name: 'description',
           type: 'textarea',
           label: 'Description courte',
+        },
+        {
+          name: 'url',
+          type: 'text',
+          label: 'URL de la propriété',
+          admin: {
+            description:
+              'URL vers laquelle rediriger lors du survol (ex: lien vers la fiche détaillée)',
+          },
+          defaultValue: 'https://expquebec.com/en/brokers/david-lambert/',
         },
         {
           name: 'beds',

@@ -26,7 +26,9 @@ export async function Footer() {
             <Link className="flex items-center" href="/">
               <Logo />
             </Link>
-            {description && <p className="text-gray-300 text-sm leading-relaxed">{description}</p>}
+            {description && (
+              <p className="text-gray-300 text-sm leading-relaxed pt-9">{description}</p>
+            )}
           </div>
 
           {/* Column 2: Navigation */}

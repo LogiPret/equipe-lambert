@@ -3,8 +3,21 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ScrollAnimation } from '@/components/scroll-animations'
-import { MapPin, Camera, Bed, Bath, Square, Calculator } from 'lucide-react'
+import {
+  MapPin,
+  Camera,
+  Bed,
+  Bath,
+  Square,
+  Calculator,
+  Eye,
+  ExternalLink,
+  ArrowRight,
+  Plus,
+  Heart,
+} from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 
 interface Property {
@@ -18,13 +31,16 @@ interface Property {
   propType: 'maison' | 'condo' | 'townhouse' | 'loft'
   propStatus: 'a_vendre' | 'vendu' | 'option_achat'
   description?: string
+  url?: string
 }
 
 interface InteractivePropertiesBlockProps {
   title?: string
   subtitle?: string
+  buttonInfo: string
   props?: Property[]
   calculatorBlockId?: string
+  hoverButtonIcon?: 'eye' | 'external-link' | 'arrow-right' | 'plus' | 'heart'
 }
 
 // Mock data for properties
@@ -41,6 +57,7 @@ const mockProperties: Property[] = [
     propType: 'maison',
     propStatus: 'a_vendre',
     description: 'Magnifique maison familiale dans un quartier recherché',
+    url: 'https://expquebec.com/en/brokers/david-lambert/',
   },
   {
     id: '2',
@@ -54,6 +71,7 @@ const mockProperties: Property[] = [
     propType: 'condo',
     propStatus: 'a_vendre',
     description: 'Condo moderne avec vue sur le parc',
+    url: 'https://expquebec.com/en/brokers/david-lambert/',
   },
   {
     id: '3',
@@ -67,6 +85,7 @@ const mockProperties: Property[] = [
     propType: 'townhouse',
     propStatus: 'a_vendre',
     description: 'Maison de ville luxueuse avec garage',
+    url: 'https://expquebec.com/en/brokers/david-lambert/',
   },
   {
     id: '4',
@@ -80,6 +99,7 @@ const mockProperties: Property[] = [
     propType: 'loft',
     propStatus: 'a_vendre',
     description: 'Loft industriel au cœur du Plateau',
+    url: 'https://expquebec.com/en/brokers/david-lambert/',
   },
   {
     id: '5',
@@ -93,6 +113,7 @@ const mockProperties: Property[] = [
     propType: 'maison',
     propStatus: 'a_vendre',
     description: 'Charmante maison rénovée avec jardin',
+    url: 'https://expquebec.com/en/brokers/david-lambert/',
   },
   {
     id: '6',
@@ -106,6 +127,7 @@ const mockProperties: Property[] = [
     propType: 'maison',
     propStatus: 'a_vendre',
     description: "Propriété d'exception avec piscine",
+    url: 'https://expquebec.com/en/brokers/david-lambert/',
   },
 ]
 
@@ -125,13 +147,33 @@ const typeLabels = {
 export const InteractivePropertiesBlockComponent: React.FC<InteractivePropertiesBlockProps> = ({
   title = 'Propriétés Disponibles',
   subtitle = 'Découvrez notre sélection de propriétés et calculez vos paiements hypothécaires instantanément',
+  buttonInfo = 'Utilisez le bouton "Calculer les paiements" pour estimer vos mensualités hypothécaires',
   props: cmsProperties,
   calculatorBlockId = 'mortgageCalculator',
+  hoverButtonIcon = 'eye',
 }) => {
   const [hoveredProperty, setHoveredProperty] = useState<string | null>(null)
 
   // Use CMS properties if available, otherwise fall back to mock data
   const properties = cmsProperties && cmsProperties.length > 0 ? cmsProperties : mockProperties
+
+  // Helper function to get the appropriate icon component
+  const getHoverIcon = (iconType: string) => {
+    switch (iconType) {
+      case 'eye':
+        return Eye
+      case 'external-link':
+        return ExternalLink
+      case 'arrow-right':
+        return ArrowRight
+      case 'plus':
+        return Plus
+      case 'heart':
+        return Heart
+      default:
+        return Eye
+    }
+  }
 
   // Helper function to get image URL
   const getImageUrl = (image: string | { url?: string; alt?: string }) => {
@@ -252,7 +294,7 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
           </div>
         </ScrollAnimation>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {properties && properties.length > 0 ? (
             properties.map((property, index) => {
               // Ensure property has required fields
@@ -263,7 +305,7 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
               return (
                 <ScrollAnimation key={property.id} animation="slideUp" delay={index * 200}>
                   <Card
-                    className="overflow-hidden hover:shadow-2xl transition-all duration-500 group border border-gray-200 bg-white hover:border-blue-500 relative"
+                    className="flex flex-col overflow-hidden hover:shadow-2xl transition-all duration-500 group border border-gray-200 bg-white hover:border-blue-500 relative h-full w-full max-w-full"
                     onMouseEnter={() => setHoveredProperty(property.id)}
                     onMouseLeave={() => setHoveredProperty(null)}
                   >
@@ -310,36 +352,54 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
                         </Badge>
                       </div>
 
-                      {/* Hover Overlay with Calculator Button */}
-                      {hoveredProperty === property.id && property.propStatus === 'a_vendre' && (
-                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center transition-all duration-300">
-                          <Button
-                            size="lg"
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 font-semibold text-lg shadow-xl transform hover:scale-105 transition-all duration-200"
-                            onClick={() => handleCalculatorClick(property)}
+                      {/* Small Hover Button */}
+                      {hoveredProperty === property.id && (
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300">
+                          <Link
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={property.url || 'https://expquebec.com/en/brokers/david-lambert/'}
                           >
-                            <Calculator className="h-5 w-5 mr-3" />
-                            Utiliser la calculatrice hypothécaire
-                          </Button>
+                            <Button
+                              size="sm"
+                              className="bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transform hover:scale-110 transition-all duration-200"
+                            >
+                              {(() => {
+                                const IconComponent = getHoverIcon(hoverButtonIcon)
+                                return <IconComponent className="h-5 w-5" />
+                              })()}
+                            </Button>
+                          </Link>
                         </div>
                       )}
                     </div>
 
-                    <CardContent className="p-6">
-                      <div className="mb-4">
-                        <h3 className="text-2xl font-bold text-blue-600 mb-2">
+                    <CardContent className="p-6 flex flex-col flex-grow min-w-0">
+                      <div className="mb-4 min-w-0">
+                        <h3 className="text-2xl font-bold text-blue-600 mb-2 break-words">
                           {formatCurrency(property.price)}
                         </h3>
                         <div className="flex items-center text-gray-600 mb-2">
-                          <MapPin className="h-4 w-4 mr-2 text-blue-500" />
-                          <p className="text-sm">{property.address}</p>
+                          <MapPin className="h-4 w-4 mr-2 text-blue-500 flex-shrink-0" />
+                          <p className="text-sm break-words">{property.address}</p>
                         </div>
                         {property.description && (
-                          <p className="text-gray-600 text-sm mb-4">{property.description}</p>
+                          <p
+                            className="text-gray-600 text-sm mb-4 break-words overflow-hidden"
+                            style={{
+                              display: '-webkit-box',
+                              WebkitLineClamp: 3,
+                              WebkitBoxOrient: 'vertical',
+                              lineHeight: '1.4em',
+                              maxHeight: '4.2em', // 3 lines × 1.4em line height
+                            }}
+                          >
+                            {property.description}
+                          </p>
                         )}
                       </div>
 
-                      <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+                      <div className="mt-auto flex justify-between items-center pt-4 border-t border-gray-100 mb-4">
                         <div className="flex items-center space-x-4 text-sm text-gray-600">
                           <div className="flex items-center">
                             <Bed className="h-4 w-4 mr-1 text-blue-500" />
@@ -355,6 +415,17 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
                           </div>
                         </div>
                       </div>
+
+                      {/* Calculator Button at Bottom */}
+                      {property.propStatus === 'a_vendre' && (
+                        <Button
+                          onClick={() => handleCalculatorClick(property)}
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 transition-all duration-200"
+                        >
+                          <Calculator className="h-4 w-4 mr-2" />
+                          Calculer les paiements
+                        </Button>
+                      )}
                     </CardContent>
                   </Card>
                 </ScrollAnimation>
@@ -370,9 +441,7 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
         {/* CTA Section */}
         <ScrollAnimation animation="fadeIn" delay={600}>
           <div className="text-center mt-16">
-            <p className="text-gray-600 mb-6 text-lg">
-              Passez votre souris sur une propriété pour calculer vos paiements hypothécaires
-            </p>
+            <p className="text-gray-600 mb-6 text-lg">{buttonInfo}</p>
             <Button
               size="lg"
               variant="outline"
