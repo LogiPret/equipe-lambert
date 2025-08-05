@@ -124,7 +124,7 @@ export const plugins: Plugin[] = [
 
                   // Map the form data to Supabase format
                   const supabaseData = {
-                    prenom: formData.prenom || formData.nom || '', // Handle both prenom and nom fields
+                    prenom: formData.prenom || '',
                     nom: formData.nom || '',
                     email: formData.email || formData.Email || '', // Handle both cases
                     phone: formData.phone || '',
