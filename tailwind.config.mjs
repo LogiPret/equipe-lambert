@@ -57,45 +57,79 @@ const config = {
       },
       colors: {
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)',
         },
-        background: 'hsl(var(--background))',
-        border: 'hsla(var(--border))',
+        background: 'var(--background)',
+        border: 'var(--border)',
         card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
         },
-        foreground: 'hsl(var(--foreground))',
-        input: 'hsl(var(--input))',
+        foreground: 'var(--foreground)',
+        input: 'var(--input)',
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)',
         },
         popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)',
         },
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
         },
-        ring: 'hsl(var(--ring))',
+        branding100: {
+          DEFAULT: 'var(--branding-100)',
+          foreground: 'var(--branding-100)',
+        },
+        branding75: {
+          DEFAULT: 'var(--branding-75)',
+          foreground: 'var(--branding-75)',
+        },
+        branding50: {
+          DEFAULT: 'var(--branding-50)',
+          foreground: 'var(--branding-50)',
+        },
+        branding25: {
+          DEFAULT: 'var(--branding-25)',
+          foreground: 'var(--branding-25)',
+        },
+        branding1: {
+          DEFAULT: 'var(--branding1)',
+          foreground: 'var(--branding1)',
+        },
+        branding2: {
+          DEFAULT: 'var(--branding2)',
+          foreground: 'var(--branding2)',
+        },
+        branding3: {
+          DEFAULT: 'var(--branding3)',
+          foreground: 'var(--branding3)',
+        },
+        branding4: {
+          DEFAULT: 'var(--branding4)',
+          foreground: 'var(--branding4)',
+        },
+        ring: 'var(--ring)',
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
         },
-        success: 'hsl(var(--success))',
-        error: 'hsl(var(--error))',
-        warning: 'hsl(var(--warning))',
+        success: 'var(--success)',
+        error: 'var(--error)',
+        warning: 'var(--warning)',
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
         sans: ['var(--font-geist-sans)'],
+        chiffonLight: ['var(--font-chiffon-light)'],
+        generalSansLight: ['var(--font-general-sans-light)'],
       },
       keyframes: {
         'accordion-down': {

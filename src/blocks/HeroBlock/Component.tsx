@@ -56,7 +56,7 @@ export default function HeroBlock({
     typeof backgroundImage === 'object' && backgroundImage ? backgroundImage.url : undefined
 
   return (
-    <section className="relative bg-gradient-to-br from-gray-900 via-[#0f3046] to-[#1a4a66] text-white py-32 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[var(--gradient-start)] via-[var(--gradient-via)] to-[var(--gradient-end)] text-white py-32 overflow-hidden">
       <div className="absolute inset-0 bg-black/30"></div>
 
       {backgroundImageUrl && (
@@ -97,7 +97,7 @@ export default function HeroBlock({
                   {...primaryButton.link}
                   appearance="default"
                   size="lg"
-                  className="bg-secondary text-primary hover:text-secondary hover:bg-primary font-medium"
+                  className="bg-branding4 text-primary hover:text-secondary hover:bg-branding1 font-medium"
                 >
                   <Search className="h-5 w-5 mr-2" />
                   {primaryButton.text}
@@ -106,9 +106,8 @@ export default function HeroBlock({
               {secondaryButton && secondaryButton.text && (
                 <CMSLink
                   {...secondaryButton.link}
-                  appearance="outline"
                   size="lg"
-                  className="border-secondary bg-transparent text-secondary hover:bg-secondary hover:text-primary"
+                  className="border border-branding4 bg-transparent text-white hover:bg-branding4 hover:text-primary"
                 >
                   {secondaryButton.text}
                 </CMSLink>
@@ -131,7 +130,7 @@ export default function HeroBlock({
                 priority
               />
               {statsBoxNumber && statsBoxText && (
-                <div className="absolute bottom-4 left-4 bg-secondary text-gray-800 p-4 shadow-xl">
+                <div className="absolute bottom-4 left-4 bg-secondary p-4 shadow-xl">
                   <div className="text-xl font-bold text-primary mb-1">{statsBoxNumber}</div>
                   <div className="text-sm font-medium text-primary">{statsBoxText}</div>
                   {statsBoxDescription && (
