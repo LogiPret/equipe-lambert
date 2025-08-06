@@ -13,11 +13,13 @@ import {
 
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 import { ButtonBlock } from '@/blocks/Button/Component'
+import { TableByColumnsBlock } from '@/blocks/TableByColumns/Component'
 
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
+  TableByColumnsBlock as TableByColumnsBlockProps,
 } from '@/payload-types'
 
 // Local type definition for ButtonBlock until payload-types is regenerated
@@ -41,7 +43,12 @@ import { cn } from '@/utilities/ui'
 type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<
-      CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps | ButtonBlockProps
+      | CTABlockProps
+      | MediaBlockProps
+      | BannerBlockProps
+      | CodeBlockProps
+      | ButtonBlockProps
+      | TableByColumnsBlockProps
     >
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
@@ -72,6 +79,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
     button: ({ node }: { node: SerializedBlockNode<ButtonBlockProps> }) => (
       <ButtonBlock {...node.fields} />
+    ),
+    tableByColumns: ({ node }: { node: SerializedBlockNode<TableByColumnsBlockProps> }) => (
+      <TableByColumnsBlock {...node.fields} />
     ),
   },
 })
