@@ -3185,6 +3185,72 @@ export interface CodeBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TableByColumnsBlock".
+ */
+export interface TableByColumnsBlock {
+  title: string;
+  /**
+   * Define the columns for your table first
+   */
+  columns?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Add rows with values for each column
+   */
+  rows?:
+    | {
+        values?:
+          | {
+              value: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tableByColumns';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TableByRowsBlock".
+ */
+export interface TableByRowsBlock {
+  title: string;
+  /**
+   * Define the rows for your table first
+   */
+  rows?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Add columns with values for each row
+   */
+  columns?:
+    | {
+        values?:
+          | {
+              value: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tableByRows';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
