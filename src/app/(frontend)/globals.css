@@ -14,6 +14,7 @@
   }
 
   /* future prompt: looking at how the colors are set using globals.css and tailwind.config.mjs, look at the datamanipulation folder, there is a new homepage that only changed the colors, use the blocks in the homepageblocks to only cretae the new colors in the globals.css, cerate their respective colors link in the config.mjs and replace the bg-(color), text-(color), border-(color), from(color) via(color) and to(color),; */
+ /* https://www.radix-ui.com/colors/custom */
   :root {
     --brand-primary-static: hsl(222.2 47.4% 11.2%);
     --branding-100: hsl(202 69% 16%);
@@ -24,6 +25,18 @@
   }
 
   :root {
+
+      --bg: #0B1C2A;
+  --surface: #121F2E;
+  --border: #1E2C3B;
+  --text-primary: #E6EAF0;
+  --text-secondary: #A7B0BC;
+  --muted: #3A4C5C;
+  --accent: #4B82E4;
+
+  --btn-bg: #1D4F7B;
+  --btn-text: #E6F0FB;
+
     --branding1: hsl(202 69% 16%);
     --branding2: hsl(218 19% 33%);
     --branding3: hsl(226 9% 52%);
