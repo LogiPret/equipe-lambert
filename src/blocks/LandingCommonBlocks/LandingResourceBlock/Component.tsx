@@ -81,10 +81,10 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
       resourcesTitle: 'Ressources pour vendeurs',
       resourcesSubtitle:
         'Des outils et guides gratuits pour maximiser la valeur de votre propriété.',
-      bgGradient: 'from-emerald-50 to-green-100',
-      badgeColor: 'bg-emerald-100 text-emerald-800',
-      buttonClass: 'bg-emerald-600 hover:bg-emerald-700',
-      resourceButtonClass: 'border-emerald-600 text-emerald-600 hover:bg-emerald-600',
+      bgGradient: 'from-secondarystatic to-branding0',
+      badgeColor: 'bg-emerald-200 text-accent6static',
+      buttonClass: 'bg-accent5static',
+      resourceButtonClass: 'border-accent5static text-accent5static hover:bg-accent5static',
     },
     acheter: {
       badgeText: 'ACHETEZ COMME UN PRO',
@@ -96,10 +96,10 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
       buttonText: 'Recevoir mes ressources',
       resourcesTitle: 'Ressources pour acheteurs',
       resourcesSubtitle: "Des outils et guides gratuits pour vous aider dans votre projet d'achat.",
-      bgGradient: 'from-blue-50 to-indigo-100',
-      badgeColor: 'bg-blue-100 text-blue-800',
-      buttonClass: 'bg-blue-600 hover:bg-blue-700',
-      resourceButtonClass: 'border-blue-600 text-blue-600 hover:bg-blue-600',
+      bgGradient: 'from-secondarystatic to-branding0',
+      badgeColor: 'bg-accent1static text-accent3static',
+      buttonClass: 'bg-accent3static hover:bg-branding100',
+      resourceButtonClass: 'border-accent3static text-accent3static hover:bg-accent3static',
     },
   }
 
@@ -164,10 +164,10 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
               fill
               className="object-cover transform hover:scale-105 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 p-8 text-white">
+            <div className="absolute inset-0 bg-gradient-to-t from-branding75 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 p-8 text-branding0">
               <h3 className="text-2xl font-bold">{finalImageCaption}</h3>
-              <p className="text-blue-200">{finalImageSubcaption}</p>
+              <p className="text-accent1static">{finalImageSubcaption}</p>
             </div>
           </div>
 
@@ -180,14 +180,14 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
                 <CheckSquare className="h-5 w-5 mr-2" />
                 {finalBadgeText}
               </div>
-              <h2 className="text-4xl font-serif font-bold text-gray-800 mb-6">{finalTitle}</h2>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">{finalDescription}</p>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+              <h2 className="text-4xl font-serif font-bold text-branding100 mb-6">{finalTitle}</h2>
+              <p className="text-lg text-branding75 mb-6 leading-relaxed">{finalDescription}</p>
+              <p className="text-lg text-branding75 mb-8 leading-relaxed">
                 <strong>{finalHighlight}</strong>
               </p>
               <Button
                 size="lg"
-                className={`${currentDefaults.buttonClass} text-white px-8 py-4 font-medium text-lg`}
+                className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
                 onClick={handleButtonClick}
               >
                 <Eye className="h-5 w-5 mr-3" />
@@ -203,12 +203,14 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
             <ScrollAnimation animation="fadeIn">
               <div className="text-center mb-16">
                 <div
-                  className={`inline-block ${mode === 'acheter' ? 'bg-blue-600' : 'bg-emerald-600'} h-1 w-24 mb-6`}
+                  className={`inline-block ${mode === 'acheter' ? 'bg-accent3static' : 'bg-accent5static'} h-1 w-24 mb-6`}
                 ></div>
-                <h2 className="text-4xl font-serif font-bold text-gray-800 mb-6">
+                <h2 className="text-4xl font-serif font-bold text-branding100 mb-6">
                   {finalResourcesTitle}
                 </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">{finalResourcesSubtitle}</p>
+                <p className="text-xl text-branding75 max-w-3xl mx-auto">
+                  {finalResourcesSubtitle}
+                </p>
               </div>
             </ScrollAnimation>
 
@@ -219,17 +221,17 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
 
                 return (
                   <ScrollAnimation key={index} animation="slideUp" delay={300 + index * 200}>
-                    <Card className="h-full flex flex-col text-center p-8 hover:shadow-xl transition-shadow bg-white">
+                    <Card className="h-full flex flex-col text-center p-8 hover:shadow-xl transition-shadow bg-branding0">
                       <div className="flex justify-center mb-6">
                         <div className={`p-4 rounded-full ${colorClass}`}>
                           <IconComponent className="h-6 w-6" />
                         </div>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-800 mb-4">{resource.title}</h3>
-                      <p className="text-gray-600 flex-grow mb-6">{resource.description}</p>
+                      <h3 className="text-xl font-bold text-branding100 mb-4">{resource.title}</h3>
+                      <p className="text-branding75 flex-grow mb-6">{resource.description}</p>
                       <Button
                         variant="outline"
-                        className={`mt-auto ${currentDefaults.resourceButtonClass} hover:text-white bg-transparent`}
+                        className={`mt-auto ${currentDefaults.resourceButtonClass} hover:text-branding0 bg-transparent`}
                         onClick={() => handleResourceClick(resource)}
                       >
                         {resource.buttonText || 'Télécharger'}{' '}

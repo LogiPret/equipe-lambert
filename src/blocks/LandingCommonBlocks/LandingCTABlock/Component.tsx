@@ -49,11 +49,11 @@ export const LandingCTABlockComponent: React.FC<LandingCTABlockProps> = ({
         "Contactez-nous dès aujourd'hui pour une évaluation gratuite et découvrez comment nous pouvons vous aider à obtenir le meilleur prix pour votre propriété.",
       primaryButtonText: 'Évaluation gratuite',
       secondaryButtonText: 'Appelez-nous',
-      bgGradient: 'from-emerald-600 to-emerald-700',
-      primaryButtonClass: 'bg-white text-emerald-600 hover:bg-emerald-50',
+      bgGradient: 'from-accent5static to-accent6static',
+      primaryButtonClass: 'bg-white text-accent5static',
       secondaryButtonClass:
-        'border-2 border-white text-white hover:bg-white hover:text-emerald-600 bg-transparent',
-      subtitleClass: 'text-emerald-100',
+        'border-2 border-branding0 text-branding0 hover:bg-branding0 hover:text-accent5static bg-transparent',
+      subtitleClass: 'text-branding0',
       primaryIcon: Target,
       secondaryIcon: Phone,
     },
@@ -63,11 +63,11 @@ export const LandingCTABlockComponent: React.FC<LandingCTABlockProps> = ({
         "Commencez votre recherche dès aujourd'hui avec l'accompagnement expert de l'Équipe Lambert",
       primaryButtonText: 'Commencer ma recherche',
       secondaryButtonText: 'Consultation gratuite',
-      bgGradient: 'from-[#0f3046] to-[#1a4a66]',
-      primaryButtonClass: 'bg-blue-600 hover:bg-blue-700 text-white',
+      bgGradient: 'from-accent3static to-accent4static',
+      primaryButtonClass: 'bg-branding0 text-accent3static',
       secondaryButtonClass:
-        'border-2 border-white text-white hover:bg-white hover:text-[#0f3046] bg-transparent',
-      subtitleClass: 'text-blue-200',
+        'border-2 border-branding0 text-branding0 hover:bg-branding0 hover:text-accent3static bg-transparent',
+      subtitleClass: 'text-accent1static',
       primaryIcon: Search,
       secondaryIcon: Key,
     },
@@ -97,7 +97,7 @@ export const LandingCTABlockComponent: React.FC<LandingCTABlockProps> = ({
   }
 
   return (
-    <section className={`py-16 bg-gradient-to-r ${currentDefaults.bgGradient} text-white`}>
+    <section className={`py-16 bg-gradient-to-r ${currentDefaults.bgGradient} text-branding0`}>
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center">

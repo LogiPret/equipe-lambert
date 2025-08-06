@@ -91,7 +91,7 @@ function ScrollAnimation({
 
 export default function TeamBlock({ title, subtitle, members, advantages }: TeamBlockProps) {
   return (
-    <section id="equipe" className="py-24 bg-branding0">
+    <section id="equipe" className="py-24 bg-secondarystatic">
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center mb-20">

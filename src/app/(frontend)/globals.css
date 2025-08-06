@@ -30,11 +30,14 @@
 
     --text-primary-static: hsl(222.2 84% 4.9%);
     --text-secondary-static: hsl(234 7.69% 94%);
-    --text-lightblue: hsl(226 70% 55%);
+    --text-lightblue: hsl(226 70% 55%); 
 
     --accent1-static: hsl(209, 44%, 86%);
     --accent2-static: hsl(203 48% 34%);
-    --accent3-static: hsl(209, 44%, 56%);
+    --accent3-static: hsl(209, 100%, 42%); /*hsl(209, 100%, 50%)*/
+    --accent4-static: hsl(244 57.94% 50.59%);
+    --accent5-static: hsl(161.38, 93.55%, 30.39%);
+    --accent6-static: hsl(161, 91%, 23%);
 
     --test-col: hsl(134, 100%, 50%);
 
