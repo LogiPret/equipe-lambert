@@ -31,6 +31,8 @@ import { LandingResourceBlockComponent } from '@/blocks/LandingCommonBlocks/Land
 import EvaluationGratuiteBlock from './LandingVendreBlocks/EvaluationGratuiteBlock/Component'
 import LandingHeroBlock from '@/blocks/LandingCommonBlocks/LandingHeroBlock/Component'
 import { InteractivePropertiesBlockComponent } from '@/blocks/InteractivePropertiesBlock/Component'
+import { TableByColumnsBlock } from '@/blocks/TableByColumns/Component'
+import { TableByRowsBlock } from '@/blocks/TableByRows/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -61,6 +63,8 @@ const blockComponents = {
   evaluationGratuite: EvaluationGratuiteBlock,
   landingHero: LandingHeroBlock,
   interactivePropBlock: InteractivePropertiesBlockComponent,
+  tableByColumns: TableByColumnsBlock,
+  tableByRows: TableByRowsBlock,
 }
 
 export const RenderBlocks: React.FC<{

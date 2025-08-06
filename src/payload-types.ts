@@ -3185,6 +3185,86 @@ export interface CodeBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TableByColumnsBlock".
+ */
+export interface TableByColumnsBlock {
+  title: string;
+  /**
+   * Define the columns for your table first
+   */
+  columns?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Add rows with values for each column defined above
+   */
+  rows?:
+    | {
+        /**
+         * Optional label for this row
+         */
+        rowLabel?: string | null;
+        /**
+         * Add one value for each column defined above
+         */
+        values?:
+          | {
+              value?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tableByColumns';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TableByRowsBlock".
+ */
+export interface TableByRowsBlock {
+  title: string;
+  /**
+   * Define the rows for your table first
+   */
+  rows?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Add columns with values for each row defined above
+   */
+  columns?:
+    | {
+        /**
+         * Optional label for this column
+         */
+        columnLabel?: string | null;
+        /**
+         * Add one value for each row defined above
+         */
+        values?:
+          | {
+              value?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tableByRows';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
