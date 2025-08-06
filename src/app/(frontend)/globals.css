@@ -16,17 +16,41 @@
   /* future prompt: looking at how the colors are set using globals.css and tailwind.config.mjs, look at the datamanipulation folder, there is a new homepage that only changed the colors, use the blocks in the homepageblocks to only cretae the new colors in the globals.css, cerate their respective colors link in the config.mjs and replace the bg-(color), text-(color), border-(color), from(color) via(color) and to(color),; */
  /* https://www.radix-ui.com/colors/custom */
   :root {
+    --primary-static: hsl(222.2 47.4% 11.2%);
+    --secondary-static: hsl(234 7.69% 94%);
+
     --brand-primary-static: hsl(222.2 47.4% 11.2%);
     --branding-100: hsl(202 69% 16%);
+    --branding-90: hsl(203 45% 24%);
     --branding-75: hsl(218 19% 33%);
     --branding-50: hsl(226 9% 52%);
     --branding-25: hsl(234 8% 75%);
+    --branding-0: hsl(0, 0%, 96%);
     --text-white: hsl(210 40% 96.1%);
+
+    --text-primary-static: hsl(222.2 84% 4.9%);
+    --text-secondary-static: hsl(234 7.69% 94%);
+    --text-lightblue: hsl(226 70% 55%);
+
+    --accent1-static: hsl(209, 44%, 86%);
+    --accent2-static: hsl(203 48% 34%);
+    --accent3-static: hsl(209, 44%, 56%);
+
+    --test-col: hsl(134, 100%, 50%);
+
+    --card-primary: hsl(240 5% 96%);
+    --card-secondary: hsl(222.2 84% 4.9%);
+
+    --border-primary-static: hsl(223, 18%, 77%);
+    --border-secondary-static: hsl(202 69% 16%);
+
+    --gradient-start-static: hsl(0 0% 12.94%);
+    --gradient-via-static: hsl(204 65% 17%);
+    --gradient-end-static: hsl(202 59% 25%);
   }
 
   :root {
-
-      --bg: #0B1C2A;
+  --bg: #0B1C2A;
   --surface: #121F2E;
   --border: #1E2C3B;
   --text-primary: #E6EAF0;

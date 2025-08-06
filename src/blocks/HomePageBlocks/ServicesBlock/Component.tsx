@@ -84,13 +84,13 @@ function ScrollAnimation({
 
 export default function ServicesBlock({ title, subtitle, services }: ServicesBlockProps) {
   return (
-    <section id="services" className="py-24 bg-gray-100">
+    <section id="services" className="py-24 bg-secondarystatic">
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center mb-20">
-            <div className="inline-block bg-[#0f3046] h-1 w-24 mb-6"></div>
-            <h2 className="text-5xl font-serif font-bold text-gray-800 mb-6">{title}</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">{subtitle}</p>
+            <div className="inline-block bg-primarystatic h-1 w-24 mb-6"></div>
+            <h2 className="text-5xl font-serif font-bold text-primarystatic mb-6">{title}</h2>
+            <p className="text-xl text-branding75 max-w-3xl mx-auto">{subtitle}</p>
           </div>
         </ScrollAnimation>
 
@@ -104,19 +104,19 @@ export default function ServicesBlock({ title, subtitle, services }: ServicesBlo
 
             return (
               <ScrollAnimation key={index} animation="slideUp" delay={300 + index * 300}>
-                <Card className="border border-gray-200 hover:shadow-xl transition-all duration-500 bg-white hover:border-[#2d5f7f] overflow-hidden">
+                <Card className="border border-branding25 hover:shadow-xl transition-all duration-500 bg-branding0 hover:border-branding100 overflow-hidden">
                   <CardContent className="p-0">
                     {/* Icon and Title/Subtitle at top */}
                     <div className="p-8 pb-0">
                       <div className="flex items-center mb-6">
-                        <div className="bg-[#0f3046] p-3 rounded-lg mr-4">
-                          <IconComponent className="h-6 w-6 text-white" />
+                        <div className="bg-primarystatic p-3 rounded-lg mr-4">
+                          <IconComponent className="h-6 w-6 text-secondarystatic" />
                         </div>
                         <div>
-                          <h3 className="text-2xl font-serif font-bold text-gray-800">
+                          <h3 className="text-2xl font-serif font-bold text-textprimarystatic">
                             {service.title}
                           </h3>
-                          <p className="text-[#0f3046] font-medium">{service.subtitle}</p>
+                          <p className="text-branding100 font-medium">{service.subtitle}</p>
                         </div>
                       </div>
                     </div>
@@ -133,7 +133,7 @@ export default function ServicesBlock({ title, subtitle, services }: ServicesBlo
 
                     {/* Description */}
                     <div className="px-8 mb-6">
-                      <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                      <p className="text-branding75 leading-relaxed">{service.description}</p>
                     </div>
 
                     {/* Features */}
@@ -142,7 +142,7 @@ export default function ServicesBlock({ title, subtitle, services }: ServicesBlo
                         {service.features.map((feature, featureIndex) => (
                           <div key={featureIndex} className="flex items-center">
                             <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                            <span className="text-gray-700">{feature.text}</span>
+                            <span className="text-branding75">{feature.text}</span>
                           </div>
                         ))}
                       </div>

@@ -112,13 +112,13 @@ export default function PropertiesBlock({
   showAllButton = { text: "Voir toutes nos propriétés d'équipe" },
 }: PropertiesBlockProps) {
   return (
-    <section id="proprietes" className="py-24 bg-white">
+    <section id="proprietes" className="py-24 bg-branding0">
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center mb-20">
-            <div className="inline-block bg-[#0f3046] h-1 w-24 mb-6"></div>
-            <h2 className="text-5xl font-serif font-bold text-gray-800 mb-6">{title}</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">{subtitle}</p>
+            <div className="inline-block bg-branding100 h-1 w-24 mb-6"></div>
+            <h2 className="text-5xl font-serif font-bold text-branding100 mb-6">{title}</h2>
+            <p className="text-xl text-branding75 max-w-3xl mx-auto">{subtitle}</p>
           </div>
         </ScrollAnimation>
 
@@ -133,7 +133,7 @@ export default function PropertiesBlock({
 
             return (
               <ScrollAnimation key={index} animation="slideUp" delay={index * 200}>
-                <Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 group border border-gray-200 bg-white hover:border-[#2d5f7f]">
+                <Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 group border border-borderprimarystatic bg-branding0 hover:border-bordersecondarystatic">
                   <div className="relative overflow-hidden">
                     <Image
                       src={imageUrl || '/placeholder.svg'}
@@ -147,15 +147,18 @@ export default function PropertiesBlock({
                         variant={property.status === 'vendu' ? 'secondary' : 'default'}
                         className={`${
                           property.status === 'vendu'
-                            ? 'bg-gray-600 text-white'
-                            : 'bg-[#0f3046] text-white'
+                            ? 'bg-branding75 text-branding0'
+                            : 'bg-branding100 text-branding0'
                         } px-3 py-1 font-medium`}
                       >
                         {statusLabels[property.status]}
                       </Badge>
                     </div>
                     <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Button size="sm" className="bg-[#0f3046] hover:bg-[#2d5f7f] text-white">
+                      <Button
+                        size="sm"
+                        className="bg-branding100 hover:bg-accent2static text-branding0"
+                      >
                         <Camera className="h-4 w-4 mr-2" />
                         Visite virtuelle
                       </Button>
@@ -163,26 +166,29 @@ export default function PropertiesBlock({
                   </div>
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-2xl font-bold text-gray-800">{property.price}</span>
-                      <Badge variant="outline" className="border-[#0f3046] text-[#0f3046]">
+                      <span className="text-2xl font-bold text-branding100">{property.price}</span>
+                      <Badge
+                        variant="outline"
+                        className="border-bordersecondarystatic text-primarystatic"
+                      >
                         {typeLabels[property.type]}
                       </Badge>
                     </div>
-                    <p className="text-gray-600 mb-4 flex items-center">
-                      <MapPin className="h-4 w-4 mr-2 text-[#0f3046]" />
+                    <p className="text-branding75 mb-4 flex items-center">
+                      <MapPin className="h-4 w-4 mr-2 text-branding100" />
                       {property.address}
                     </p>
-                    <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-200">
+                    <div className="flex items-center justify-between text-sm text-branding50 pt-4 border-t border-borderprimarystatic">
                       <div className="flex items-center">
-                        <Bed className="h-4 w-4 mr-1 text-[#0f3046]" />
+                        <Bed className="h-4 w-4 mr-1 text-branding100" />
                         {property.beds} ch.
                       </div>
                       <div className="flex items-center">
-                        <Bath className="h-4 w-4 mr-1 text-[#0f3046]" />
+                        <Bath className="h-4 w-4 mr-1 text-branding100" />
                         {property.baths} sdb.
                       </div>
                       <div className="flex items-center">
-                        <Square className="h-4 w-4 mr-1 text-[#0f3046]" />
+                        <Square className="h-4 w-4 mr-1 text-branding100" />
                         {property.sqft} pi²
                       </div>
                     </div>
@@ -201,14 +207,14 @@ export default function PropertiesBlock({
                   {...showAllButton.link}
                   appearance="default"
                   size="lg"
-                  className="bg-[#0f3046] hover:bg-[#2d5f7f] text-white px-8 py-4 font-medium text-lg"
+                  className="bg-branding100 hover:bg-accent2static text-branding0 px-8 py-4 font-medium text-lg"
                 >
                   {showAllButton.text}
                 </CMSLink>
               ) : (
                 <Button
                   size="lg"
-                  className="bg-[#0f3046] hover:bg-[#2d5f7f] text-white px-8 py-4 font-medium text-lg"
+                  className="bg-branding100 hover:bg-accent2static text-branding0 px-8 py-4 font-medium text-lg"
                 >
                   {showAllButton.text}
                 </Button>

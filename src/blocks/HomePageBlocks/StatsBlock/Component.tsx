@@ -55,7 +55,7 @@ function CounterAnimation({ end, suffix = '' }: { end: number; suffix?: string }
   }, [end, isVisible])
 
   return (
-    <div ref={ref} className="text-4xl font-bold text-primary mb-2">
+    <div ref={ref} className="text-4xl font-bold text-primarystatic mb-2">
       {count}
       {suffix}
     </div>
@@ -124,10 +124,10 @@ export default function StatsBlock({ stats }: StatsBlockProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <ScrollAnimation key={index} animation="scaleIn" delay={200 + index * 200}>
-              <div className="text-center text-primary p-8 border border-gray-200 bg-gradient-to-br from-[var(--card-var1)] to-[var(--card-var2)] hover:shadow-lg transition-shadow h-48 flex flex-col justify-center">
+              <div className="text-center text-static p-8 border border-gray-200 bg-gradient-to-br from-[var(--card-var1)] to-[var(--card-var2)] hover:shadow-lg transition-shadow h-48 flex flex-col justify-center">
                 <CounterAnimation end={stat.number} suffix={stat.suffix || ''} />
-                <div className="text-primary font-medium text-lg">{stat.label}</div>
-                <div className="text-sm text-primary mt-2">{stat.description}</div>
+                <div className="text-primarystatic font-medium text-lg">{stat.label}</div>
+                <div className="text-sm text-primarystatic mt-2">{stat.description}</div>
               </div>
             </ScrollAnimation>
           ))}

@@ -84,9 +84,49 @@ const config = {
           DEFAULT: 'var(--primary)',
           foreground: 'var(--primary-foreground)',
         },
+        primarystatic: {
+          DEFAULT: 'var(--primary-static)',
+          foreground: 'var(--primary-static)',
+        },
+        secondarystatic: {
+          DEFAULT: 'var(--secondary-static)',
+          foreground: 'var(--secondary-static)',
+        },
+        textprimarystatic: {
+          DEFAULT: 'var(--text-primary-static)',
+          foreground: 'var(--text-primary-static)',
+        },
+        textsecondarystatic: {
+          DEFAULT: 'var(--text-secondary-static)',
+          foreground: 'var(--text-secondary-static)',
+        },
+        accent1static: {
+          DEFAULT: 'var(--accent1-static)',
+          foreground: 'var(--accent1-static)',
+        },
+        accent2static: {
+          DEFAULT: 'var(--accent2-static)',
+          foreground: 'var(--accent2-static)',
+        },
+        borderprimarystatic: {
+          DEFAULT: 'var(--border-primary-static)',
+          foreground: 'var(--border-primary-static)',
+        },
+        bordersecondarystatic: {
+          DEFAULT: 'var(--border-secondary-static)',
+          foreground: 'var(--border-secondary-static)',
+        },
+        testcol: {
+          DEFAULT: 'var(--test-col)',
+          foreground: 'var(--test-col)',
+        },
         branding100: {
           DEFAULT: 'var(--branding-100)',
           foreground: 'var(--branding-100)',
+        },
+        branding90: {
+          DEFAULT: 'var(--branding-90)',
+          foreground: 'var(--branding-90)',
         },
         branding75: {
           DEFAULT: 'var(--branding-75)',
@@ -99,6 +139,10 @@ const config = {
         branding25: {
           DEFAULT: 'var(--branding-25)',
           foreground: 'var(--branding-25)',
+        },
+        branding0: {
+          DEFAULT: 'var(--branding-0)',
+          foreground: 'var(--branding-0)',
         },
         branding1: {
           DEFAULT: 'var(--branding1)',

@@ -80,17 +80,17 @@ function ScrollAnimation({
 
 export default function HeaderBlock({ logo, navigation, contactButton }: HeaderBlockProps) {
   return (
-    <header className="bg-white shadow-lg border-b border-gray-200">
+    <header className="bg-branding0 shadow-lg border-b border-branding0">
       <div className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <ScrollAnimation animation="slideRight">
             <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-br from-[#0f3046] to-[#1a4a66] p-3 rounded-sm">
-                <Users className="h-8 w-8 text-white" />
+              <div className="bg-gradient-to-br from-branding100 to-accent2static p-3 rounded-sm">
+                <Users className="h-8 w-8 text-branding0" />
               </div>
               <div>
-                <span className="text-3xl font-serif font-bold text-gray-800">{logo.title}</span>
-                <div className="text-sm text-[#0f3046] font-medium tracking-wide">
+                <span className="text-3xl font-serif font-bold text-branding100">{logo.title}</span>
+                <div className="text-sm text-branding100 font-medium tracking-wide">
                   {logo.subtitle}
                 </div>
               </div>
@@ -102,7 +102,7 @@ export default function HeaderBlock({ logo, navigation, contactButton }: HeaderB
               <Link
                 key={index}
                 href={item.href}
-                className="text-gray-700 hover:text-[#0f3046] transition-colors font-medium"
+                className="text-branding75 hover:text-branding100 transition-colors font-medium"
               >
                 {item.label}
               </Link>
@@ -110,7 +110,7 @@ export default function HeaderBlock({ logo, navigation, contactButton }: HeaderB
           </nav>
 
           <ScrollAnimation animation="slideLeft">
-            <Button className="bg-[#0f3046] hover:bg-[#1a4a66] text-white px-6 py-3 font-medium">
+            <Button className="bg-branding100 hover:bg-accent2static text-branding0 px-6 py-3 font-medium">
               <Phone className="h-4 w-4 mr-2" />
               {contactButton.text}
             </Button>

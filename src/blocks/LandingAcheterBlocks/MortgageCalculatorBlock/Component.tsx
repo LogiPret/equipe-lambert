@@ -152,13 +152,14 @@ export default function MortgageCalculatorBlock({
   // Calculate mortgage payments
   useEffect(() => {
     const principal = homePrice - downPayment
-    const monthlyRate = interestRate / 100 / 12
     const numberOfPayments = loanTerm * 12
 
-    if (principal > 0 && monthlyRate > 0 && numberOfPayments > 0) {
-      const monthly =
-        (principal * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments))) /
-        (Math.pow(1 + monthlyRate, numberOfPayments) - 1)
+    const annualRate = interestRate / 100
+
+    if (principal > 0 && annualRate > 0 && numberOfPayments > 0) {
+      const monthlyRate = Math.pow(1 + annualRate / 2, 1 / 6) - 1
+
+      const monthly = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -numberOfPayments))
 
       const totalPaid = monthly * numberOfPayments
       const totalInt = totalPaid - principal
@@ -190,7 +191,7 @@ export default function MortgageCalculatorBlock({
   const downPaymentPercent = homePrice > 0 ? (downPayment / homePrice) * 100 : 0
 
   return (
-    <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+    <section className="py-20 bg-gradient-to-br from-branding0 to-secondarystatic">
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center mb-16">

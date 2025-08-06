@@ -85,13 +85,13 @@ export default function TestimonialsBlock({
   stats,
 }: TestimonialsBlockProps) {
   return (
-    <section className="py-24 bg-[#0f3046] text-white">
+    <section className="py-24 bg-branding100 text-branding0">
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center mb-20">
-            <div className="inline-block bg-white h-1 w-24 mb-6"></div>
+            <div className="inline-block bg-branding0 h-1 w-24 mb-6"></div>
             <h2 className="text-5xl font-serif font-bold mb-6">{title}</h2>
-            <p className="text-xl text-blue-200 max-w-3xl mx-auto">{subtitle}</p>
+            <p className="text-xl text-accent1static max-w-3xl mx-auto">{subtitle}</p>
           </div>
         </ScrollAnimation>
 
@@ -106,7 +106,7 @@ export default function TestimonialsBlock({
 
             return (
               <ScrollAnimation key={index} animation="slideUp" delay={index * 300}>
-                <Card className="bg-white/10 border border-blue-300/30 hover:border-blue-300/60 transition-all duration-500 backdrop-blur-sm h-full">
+                <Card className="bg-branding90 border border-accent2static hover:border-borderprimarystatic transition-all duration-500 backdrop-blur-sm h-full">
                   <CardContent className="p-8">
                     <div className="flex items-center mb-6">
                       <Image
@@ -114,7 +114,7 @@ export default function TestimonialsBlock({
                         alt={imageAlt}
                         width={60}
                         height={60}
-                        className="w-16 h-16 rounded-full mr-4 border-2 border-blue-300"
+                        className="w-16 h-16 rounded-full mr-4 border-2 border-accent1static"
                       />
                       <div>
                         <div className="flex items-center mb-2">
@@ -122,11 +122,11 @@ export default function TestimonialsBlock({
                             <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
                           ))}
                         </div>
-                        <p className="font-semibold text-white">{testimonial.name}</p>
-                        <p className="text-sm text-blue-200">{testimonial.location}</p>
+                        <p className="font-semibold text-branding0">{testimonial.name}</p>
+                        <p className="text-sm text-accent1static">{testimonial.location}</p>
                       </div>
                     </div>
-                    <blockquote className="text-blue-100 text-lg leading-relaxed italic">
+                    <blockquote className="text-accent1static text-lg leading-relaxed italic">
                       &ldquo;{testimonial.text}&rdquo;
                     </blockquote>
                   </CardContent>
@@ -139,12 +139,12 @@ export default function TestimonialsBlock({
         {stats && stats.length > 0 && (
           <ScrollAnimation animation="fadeIn" delay={1200}>
             <div className="text-center mt-16">
-              <div className="bg-white/10 border border-blue-300/30 p-8 max-w-4xl mx-auto">
+              <div className="bg-branding90 border border-accent2static p-8 max-w-4xl mx-auto">
                 <div className="grid md:grid-cols-3 gap-8 text-center">
                   {stats.map((stat, index) => (
                     <div key={index}>
-                      <div className="text-3xl font-bold text-white mb-2">{stat.rating}</div>
-                      <div className="text-blue-200">{stat.label}</div>
+                      <div className="text-3xl font-bold text-branding0 mb-2">{stat.rating}</div>
+                      <div className="text-accent1static">{stat.label}</div>
                     </div>
                   ))}
                 </div>

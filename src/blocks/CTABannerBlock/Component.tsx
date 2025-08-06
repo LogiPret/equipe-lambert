@@ -104,15 +104,15 @@ export default function CTABannerBlock({
     <ScrollAnimation animation="fadeIn">
       <div className={`${backgroundClasses[backgroundColor]} py-4`}>
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-secondarystatic">
             <div className="text-center md:text-left">
               <span className="text-lg font-medium">{title}</span>
-              {subtitle && <span className="text-blue-100 ml-2">{subtitle}</span>}
+              {subtitle && <span className="text-accent1static ml-2">{subtitle}</span>}
             </div>
             <CMSLink
               {...button.link}
               appearance="default"
-              className="bg-white text-[#0f3046] hover:bg-blue-50 font-medium"
+              className="bg-secondarystatic text-primarystatic hover:bg-accent1static font-medium"
             >
               {IconComponent && <IconComponent className="h-4 w-4 mr-2" />}
               {button.text}

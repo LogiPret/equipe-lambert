@@ -143,9 +143,9 @@ export default function BlogCarouselClient({
   // Don't render if no posts
   if (!posts || posts.length === 0) {
     return (
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-secondarystatic">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-gray-500">Aucun article à afficher pour le moment.</p>
+          <p className="text-branding50">Aucun article à afficher pour le moment.</p>
         </div>
       </section>
     )
@@ -206,13 +206,13 @@ export default function BlogCarouselClient({
   }
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-secondarystatic">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-block bg-[#0f3046] h-1 w-24 mb-6"></div>
-          <h2 className="text-5xl font-serif font-bold text-gray-800 mb-6">{title}</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">{subtitle}</p>
+          <div className="inline-block bg-branding100 h-1 w-24 mb-6"></div>
+          <h2 className="text-5xl font-serif font-bold text-branding100 mb-6">{title}</h2>
+          <p className="text-xl text-branding75 max-w-3xl mx-auto">{subtitle}</p>
         </div>
 
         {/* Carousel Container */}
@@ -245,9 +245,9 @@ export default function BlogCarouselClient({
                     }}
                   >
                     <Card
-                      className={`h-full shadow-xl transition-all duration-500 group overflow-hidden bg-white/90 ${
+                      className={`h-full shadow-xl transition-all duration-500 group overflow-hidden bg-branding0 ${
                         index === currentIndex
-                          ? 'border border-transparent hover:shadow-2xl hover:border-[#2d5f7f] transform hover:scale-105'
+                          ? 'border border-borderprimarystatic hover:shadow-2xl hover:border-bordersecondarystatic transform hover:scale-105'
                           : 'border-0'
                       }`}
                     >
@@ -259,7 +259,7 @@ export default function BlogCarouselClient({
                           className="object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute top-4 left-4">
-                          <Badge className="bg-[#0f3046] text-white px-3 py-1 font-medium">
+                          <Badge className="bg-branding100 text-branding0 px-3 py-1 font-medium">
                             {actualPost.category}
                           </Badge>
                         </div>
@@ -267,18 +267,18 @@ export default function BlogCarouselClient({
                       </div>
                       <CardContent className="p-6 flex flex-col justify-between min-h-[260px]">
                         <div className="flex-1">
-                          <h3 className="text-lg font-bold text-gray-800 mb-3 line-clamp-2 leading-tight">
+                          <h3 className="text-lg font-bold text-branding100 mb-3 line-clamp-2 leading-tight">
                             {actualPost.title}
                           </h3>
-                          <p className="text-gray-600 text-sm line-clamp-2 mb-3 leading-relaxed">
+                          <p className="text-branding75 text-sm line-clamp-2 mb-3 leading-relaxed">
                             {actualPost.excerpt}
                           </p>
-                          <div className="flex items-center text-xs text-gray-500 mb-3 flex-wrap">
-                            <User className="h-3 w-3 mr-1 text-[#0f3046]" />
+                          <div className="flex items-center text-xs text-branding50 mb-3 flex-wrap">
+                            <User className="h-3 w-3 mr-1 text-branding100" />
                             <span className="mr-2 truncate">{actualPost.author}</span>
-                            <Calendar className="h-3 w-3 mr-1 text-[#0f3046]" />
+                            <Calendar className="h-3 w-3 mr-1 text-branding100" />
                             <span className="mr-2">{actualPost.date}</span>
-                            <span className="text-[#0f3046] font-medium">
+                            <span className="text-branding100 font-medium">
                               {actualPost.readTime}
                             </span>
                           </div>
@@ -289,7 +289,7 @@ export default function BlogCarouselClient({
                               <Button
                                 variant="outline"
                                 size="sm"
-                                className="w-full border-[#0f3046] text-[#0f3046] hover:bg-[#0f3046] hover:text-white cursor-pointer transition-all duration-300 group bg-transparent"
+                                className="w-full border-branding100 text-branding100 hover:bg-branding100 hover:text-branding0 cursor-pointer transition-all duration-300 group bg-transparent"
                               >
                                 Lire l&apos;article
                                 <ArrowRight className="h-3 w-3 ml-2 transition-transform group-hover:translate-x-1" />
@@ -300,7 +300,7 @@ export default function BlogCarouselClient({
                               variant="outline"
                               size="sm"
                               disabled
-                              className="w-full border-[#0f3046] text-[#0f3046] opacity-50 cursor-not-allowed pointer-events-none transition-all duration-300 bg-transparent"
+                              className="w-full border-branding100 text-branding100 opacity-50 cursor-not-allowed pointer-events-none transition-all duration-300 bg-transparent"
                             >
                               Lire l&apos;article
                               <ArrowRight className="h-3 w-3 ml-2" />
@@ -318,7 +318,7 @@ export default function BlogCarouselClient({
           {/* Navigation Arrows */}
           <button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 text-[#0f3046] bg-white/90 border border-gray-300 shadow-lg rounded-full flex items-center justify-center hover:bg-[#0f3046] hover:text-white hover:border-[#0f3046] transition-all duration-300 backdrop-blur-sm"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 text-branding100 bg-branding0 border border-borderprimarystatic shadow-lg rounded-full flex items-center justify-center hover:bg-branding100 hover:text-branding0 hover:border-bordersecondarystatic transition-all duration-300 backdrop-blur-sm"
             aria-label="Article précédent"
           >
             <ChevronLeft className="h-5 w-5" /> {}
@@ -326,7 +326,7 @@ export default function BlogCarouselClient({
 
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 text-[#0f3046] bg-white/90 border border-gray-300 shadow-lg rounded-full flex items-center justify-center hover:bg-[#0f3046] hover:text-white hover:border-[#0f3046] transition-all duration-300 backdrop-blur-sm"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 text-branding100 bg-branding0 border border-borderprimarystatic shadow-lg rounded-full flex items-center justify-center hover:bg-branding100 hover:text-branding0 hover:border-bordersecondarystatic transition-all duration-300 backdrop-blur-sm"
             aria-label="Article suivant"
           >
             <ChevronRight className="h-5 w-5" />
@@ -341,8 +341,8 @@ export default function BlogCarouselClient({
               onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 getActualIndex() === index
-                  ? 'bg-[#0f3046] scale-125'
-                  : 'bg-gray-300 hover:bg-gray-400'
+                  ? 'bg-branding100 scale-125'
+                  : 'bg-branding25 hover:bg-branding50'
               }`}
               aria-label={`Aller à l'article ${index + 1}`}
             />
@@ -351,15 +351,15 @@ export default function BlogCarouselClient({
 
         {/* Auto-play indicator */}
         <div className="flex justify-center items-center space-x-4 mt-8 mb-8">
-          <div className="flex items-center text-sm text-gray-500">
+          <div className="flex items-center text-sm text-branding50">
             <div
-              className={`w-2 h-2 rounded-full mr-2 ${isAutoPlaying ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}
+              className={`w-2 h-2 rounded-full mr-2 ${isAutoPlaying ? 'bg-green-500 animate-pulse' : 'bg-branding50'}`}
             ></div>
             <span>{isAutoPlaying ? 'Lecture automatique' : 'Pause'}</span>
           </div>
           <button
             onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-            className="text-sm text-[#0f3046] hover:text-[#1a4a66] font-medium transition-colors"
+            className="text-sm text-branding100 hover:text-branding100 font-medium transition-colors"
           >
             {isAutoPlaying ? 'Pause' : 'Reprendre'}
           </button>
@@ -370,7 +370,7 @@ export default function BlogCarouselClient({
           <Link href="/posts">
             <Button
               size="lg"
-              className="bg-[#0f3046] hover:bg-[#1a4a66] text-white px-8 py-4 font-medium text-lg transition-all duration-300 group"
+              className="bg-branding100 hover:bg-branding100 text-branding0 px-8 py-4 font-medium text-lg transition-all duration-300 group"
             >
               Voir tous les articles
               <ArrowRight className="h-5 w-5 ml-3 transition-transform group-hover:translate-x-1" />

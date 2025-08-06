@@ -56,7 +56,7 @@ export default function HeroBlock({
     typeof backgroundImage === 'object' && backgroundImage ? backgroundImage.url : undefined
 
   return (
-    <section className="relative bg-gradient-to-br from-[var(--gradient-start)] via-[var(--gradient-via)] to-[var(--gradient-end)] text-white py-32 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[var(--gradient-start-static)] via-[var(--gradient-via-static)] to-[var(--gradient-end-static)] text-white py-32 overflow-hidden">
       <div className="absolute inset-0 bg-black/30"></div>
 
       {backgroundImageUrl && (

@@ -97,30 +97,30 @@ export default function FooterBlock({
   legalLinks,
 }: FooterBlockProps) {
   return (
-    <footer className="bg-gray-900 text-white py-16">
+    <footer className="bg-primarystatic text-branding0 py-16">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           <ScrollAnimation animation="fadeIn" delay={200}>
             <div>
               <div className="flex items-center space-x-3 mb-6">
-                <div className="bg-[#0f3046] p-2">
-                  <Users className="h-6 w-6 text-white" />
+                <div className="bg-branding100 p-2">
+                  <Users className="h-6 w-6 text-branding0" />
                 </div>
                 <div>
                   <span className="text-2xl font-serif font-bold">{logo.title}</span>
-                  <div className="text-xs text-blue-200 tracking-wider">{logo.subtitle}</div>
+                  <div className="text-xs text-accent1static tracking-wider">{logo.subtitle}</div>
                 </div>
               </div>
-              <p className="text-gray-400 leading-relaxed mb-6">{logo.description}</p>
+              <p className="text-branding50 leading-relaxed mb-6">{logo.description}</p>
               <div className="flex space-x-4">
-                <div className="w-8 h-8 bg-[#0f3046] border border-[#2d5f7f] flex items-center justify-center hover:bg-[#1a4a66] transition-colors">
-                  <Globe className="h-4 w-4 text-white" />
+                <div className="w-8 h-8 bg-primarystatic border border-bordersecondarystatic flex items-center justify-center hover:bg-branding100 transition-colors">
+                  <Globe className="h-4 w-4 text-branding0" />
                 </div>
-                <div className="w-8 h-8 bg-[#0f3046] border border-[#2d5f7f] flex items-center justify-center hover:bg-[#1a4a66] transition-colors">
-                  <Mail className="h-4 w-4 text-white" />
+                <div className="w-8 h-8 bg-primarystatic border border-bordersecondarystatic flex items-center justify-center hover:bg-branding100 transition-colors">
+                  <Mail className="h-4 w-4 text-branding0" />
                 </div>
-                <div className="w-8 h-8 bg-[#0f3046] border border-[#2d5f7f] flex items-center justify-center hover:bg-[#1a4a66] transition-colors">
-                  <Phone className="h-4 w-4 text-white" />
+                <div className="w-8 h-8 bg-primarystatic border border-bordersecondarystatic flex items-center justify-center hover:bg-branding100 transition-colors">
+                  <Phone className="h-4 w-4 text-branding0" />
                 </div>
               </div>
             </div>
@@ -129,11 +129,13 @@ export default function FooterBlock({
           {sections.map((section, index) => (
             <ScrollAnimation key={index} animation="fadeIn" delay={400 + index * 200}>
               <div>
-                <h4 className="font-serif font-bold mb-6 text-lg text-blue-200">{section.title}</h4>
-                <ul className="space-y-3 text-gray-400">
+                <h4 className="font-serif font-bold mb-6 text-lg text-accent1static">
+                  {section.title}
+                </h4>
+                <ul className="space-y-3 text-branding50">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <Link href={link.href} className="hover:text-blue-200 transition-colors">
+                      <Link href={link.href} className="hover:text-accent1static transition-colors">
                         {link.label}
                       </Link>
                     </li>
@@ -145,20 +147,20 @@ export default function FooterBlock({
 
           <ScrollAnimation animation="fadeIn" delay={800}>
             <div>
-              <h4 className="font-serif font-bold mb-6 text-lg text-blue-200">
+              <h4 className="font-serif font-bold mb-6 text-lg text-accent1static">
                 Contact d&apos;équipe
               </h4>
-              <div className="space-y-4 text-gray-400">
+              <div className="space-y-4 text-branding50">
                 <div>
-                  <p className="font-medium text-white">{contact.phone}</p>
+                  <p className="font-medium text-branding0">{contact.phone}</p>
                   <p className="text-sm">{contact.phoneDescription}</p>
                 </div>
                 <div>
-                  <p className="font-medium text-white">{contact.email}</p>
+                  <p className="font-medium text-branding0">{contact.email}</p>
                   <p className="text-sm">{contact.emailDescription}</p>
                 </div>
                 <div>
-                  <p className="font-medium text-white">{contact.address}</p>
+                  <p className="font-medium text-branding0">{contact.address}</p>
                   <p>{contact.addressLine2}</p>
                   <p className="text-sm">{contact.addressDescription}</p>
                 </div>
@@ -168,15 +170,15 @@ export default function FooterBlock({
         </div>
 
         <ScrollAnimation animation="fadeIn" delay={1000}>
-          <div className="border-t border-gray-800 mt-12 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+          <div className="border-t border-branding100 mt-12 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center text-branding50 text-sm">
               <p>{copyright}</p>
               <div className="flex space-x-6 mt-4 md:mt-0">
                 {legalLinks.map((link, index) => (
                   <Link
                     key={index}
                     href={link.href}
-                    className="hover:text-blue-200 transition-colors"
+                    className="hover:text-branding50 transition-colors"
                   >
                     {link.label}
                   </Link>
