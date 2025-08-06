@@ -3199,13 +3199,20 @@ export interface TableByColumnsBlock {
       }[]
     | null;
   /**
-   * Add rows with values for each column
+   * Add rows with values for each column defined above
    */
   rows?:
     | {
+        /**
+         * Optional label for this row
+         */
+        rowLabel?: string | null;
+        /**
+         * Add one value for each column defined above
+         */
         values?:
           | {
-              value: string;
+              value?: string | null;
               id?: string | null;
             }[]
           | null;
@@ -3232,13 +3239,20 @@ export interface TableByRowsBlock {
       }[]
     | null;
   /**
-   * Add columns with values for each row
+   * Add columns with values for each row defined above
    */
   columns?:
     | {
+        /**
+         * Optional label for this column
+         */
+        columnLabel?: string | null;
+        /**
+         * Add one value for each row defined above
+         */
         values?:
           | {
-              value: string;
+              value?: string | null;
               id?: string | null;
             }[]
           | null;

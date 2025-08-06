@@ -36,7 +36,7 @@ export const TableByColumnsBlock: React.FC<TableByColumnsBlockProps> = (props) =
             {rows && rows.length > 0 ? (
               rows.map((row, rowIndex) => (
                 <tr key={rowIndex} className="hover:bg-gray-50">
-                  {columns.map((_, colIndex) => {
+                  {columns.map((column, colIndex) => {
                     const cellValue = row.values && row.values[colIndex]?.value
                     return (
                       <td

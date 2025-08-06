@@ -23,7 +23,7 @@ export const TableByRowsBlock: React.FC<TableByRowsBlockProps> = (props) => {
           <thead>
             <tr className="bg-gray-100">
               <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
-                {/* Empty header for row names */}
+                {/* Header for row names */}
               </th>
               {columns && columns.length > 0 ? (
                 columns.map((column, colIndex) => (
@@ -31,7 +31,7 @@ export const TableByRowsBlock: React.FC<TableByRowsBlockProps> = (props) => {
                     key={colIndex}
                     className="border border-gray-300 px-4 py-2 text-left font-semibold"
                   >
-                    Column {colIndex + 1}
+                    {column.columnLabel || `Column ${colIndex + 1}`}
                   </th>
                 ))
               ) : (

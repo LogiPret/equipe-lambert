@@ -34,19 +34,29 @@ export const TableByRows: Block = {
       label: 'Columns',
       admin: {
         initCollapsed: true,
-        description: 'Add columns with values for each row',
+        description: 'Add columns with values for each row defined above',
       },
       fields: [
         {
+          name: 'columnLabel',
+          type: 'text',
+          label: 'Column Label (Optional)',
+          admin: {
+            description: 'Optional label for this column',
+          },
+        },
+        {
           name: 'values',
           type: 'array',
-          label: 'Column Values',
+          label: 'Cell Values',
+          admin: {
+            description: 'Add one value for each row defined above',
+          },
           fields: [
             {
               name: 'value',
               type: 'text',
               label: 'Cell Value',
-              required: true,
             },
           ],
         },
