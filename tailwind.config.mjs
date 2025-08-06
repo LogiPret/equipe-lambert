@@ -108,6 +108,10 @@ const config = {
           DEFAULT: 'var(--accent2-static)',
           foreground: 'var(--accent2-static)',
         },
+        accent3static: {
+          DEFAULT: 'var(--accent3-static)',
+          foreground: 'var(--accent3-static)',
+        },
         borderprimarystatic: {
           DEFAULT: 'var(--border-primary-static)',
           foreground: 'var(--border-primary-static)',

@@ -195,7 +195,7 @@ export default function MortgageCalculatorBlock({
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center mb-16">
-            <div className="inline-block bg-blue-600 h-1 w-24 mb-6"></div>
+            <div className="inline-block bg-accent3static h-1 w-24 mb-6"></div>
             <h2 className="text-4xl font-serif font-bold text-gray-800 mb-6">{title}</h2>
             <p className="text-2xl text-blue-600 font-semibold mb-4">{subtitle}</p>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">{description}</p>
