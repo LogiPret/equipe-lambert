@@ -13,6 +13,7 @@
     font-weight: unset;
   }
 
+  /* future prompt: looking at how the colors are set using globals.css and tailwind.config.mjs, look at the datamanipulation folder, there is a new homepage that only changed the colors, use the blocks in the homepageblocks to only cretae the new colors in the globals.css, cerate their respective colors link in the config.mjs and replace the bg-(color), text-(color), border-(color), from(color) via(color) and to(color),; */
   :root {
     --brand-primary-static: hsl(222.2 47.4% 11.2%);
     --branding-100: hsl(202 69% 16%);
@@ -41,6 +42,7 @@
 
     --card: hsl(240 5% 96%);
     --card-foreground: hsl(222.2 84% 4.9%);
+    --card-var1: hsl(202 69% 16%);
 
     --popover: hsl(0 0% 100%);
     --popover-foreground: hsl(222.2 84% 4.9%);
