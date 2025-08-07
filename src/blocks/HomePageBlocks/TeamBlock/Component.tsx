@@ -83,8 +83,10 @@ export default function TeamBlock({ title, subtitle, members, advantages }: Team
 
         <div className="bg-branding0 rounded-2xl p-12">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-serif font-bold text-gray-800 mb-4">{advantages.title}</h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">{advantages.subtitle}</p>
+            <h3 className="text-3xl font-serif font-bold text-branding100 mb-4">
+              {advantages.title}
+            </h3>
+            <p className="text-lg text-branding75 max-w-2xl mx-auto">{advantages.subtitle}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
