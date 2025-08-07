@@ -2,11 +2,11 @@ import React from 'react'
 import type { TableByRowsBlock as TableByRowsBlockProps } from '@/payload-types'
 
 export const TableByRowsBlock: React.FC<TableByRowsBlockProps> = (props) => {
-  const { title, rows, columns } = props
+  const { title, description, rows, columns } = props
 
   if (!rows || rows.length === 0) {
     return (
-      <div className="container my-16">
+      <div className="w-full my-16">
         <div className="text-center text-gray-500">
           <p>No rows defined for this table.</p>
         </div>
@@ -15,9 +15,14 @@ export const TableByRowsBlock: React.FC<TableByRowsBlockProps> = (props) => {
   }
 
   return (
-    <div className="container my-16">
-      {title && <h2 className="text-2xl font-bold mb-6">{title}</h2>}
-      
+    <div className="w-full my-16">
+      {title && <h2 className="text-2xl font-bold mb-4">{title}</h2>}
+      {description && (
+        <div className="mb-6 text-gray-600">
+          <p>{description}</p>
+        </div>
+      )}
+
       <div className="overflow-x-auto">
         <table className="w-full border-collapse border border-gray-300">
           <thead>
@@ -51,10 +56,7 @@ export const TableByRowsBlock: React.FC<TableByRowsBlockProps> = (props) => {
                   columns.map((column, colIndex) => {
                     const cellValue = column.values && column.values[rowIndex]?.value
                     return (
-                      <td
-                        key={colIndex}
-                        className="border border-gray-300 px-4 py-2"
-                      >
+                      <td key={colIndex} className="border border-gray-300 px-4 py-2">
                         {cellValue || ''}
                       </td>
                     )
