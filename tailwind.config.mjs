@@ -57,45 +57,144 @@ const config = {
       },
       colors: {
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)',
         },
-        background: 'hsl(var(--background))',
-        border: 'hsla(var(--border))',
+        background: 'var(--background)',
+        border: 'var(--border)',
         card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
         },
-        foreground: 'hsl(var(--foreground))',
-        input: 'hsl(var(--input))',
+        foreground: 'var(--foreground)',
+        input: 'var(--input)',
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)',
         },
         popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)',
         },
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
         },
-        ring: 'hsl(var(--ring))',
+        primarystatic: {
+          DEFAULT: 'var(--primary-static)',
+          foreground: 'var(--primary-static)',
+        },
+        secondarystatic: {
+          DEFAULT: 'var(--secondary-static)',
+          foreground: 'var(--secondary-static)',
+        },
+        textprimarystatic: {
+          DEFAULT: 'var(--text-primary-static)',
+          foreground: 'var(--text-primary-static)',
+        },
+        textsecondarystatic: {
+          DEFAULT: 'var(--text-secondary-static)',
+          foreground: 'var(--text-secondary-static)',
+        },
+        accent1static: {
+          DEFAULT: 'var(--accent1-static)',
+          foreground: 'var(--accent1-static)',
+        },
+        accent2static: {
+          DEFAULT: 'var(--accent2-static)',
+          foreground: 'var(--accent2-static)',
+        },
+        accent3static: {
+          DEFAULT: 'var(--accent3-static)',
+          foreground: 'var(--accent3-static)',
+        },
+        accent4static: {
+          DEFAULT: 'var(--accent4-static)',
+          foreground: 'var(--accent4-static)',
+        },
+        accent5static: {
+          DEFAULT: 'var(--accent5-static)',
+          foreground: 'var(--accent5-static)',
+        },
+        accent6static: {
+          DEFAULT: 'var(--accent6-static)',
+          foreground: 'var(--accent6-static)',
+        },
+        borderprimarystatic: {
+          DEFAULT: 'var(--border-primary-static)',
+          foreground: 'var(--border-primary-static)',
+        },
+        bordersecondarystatic: {
+          DEFAULT: 'var(--border-secondary-static)',
+          foreground: 'var(--border-secondary-static)',
+        },
+        testcol: {
+          DEFAULT: 'var(--test-col)',
+          foreground: 'var(--test-col)',
+        },
+        brandingtheme: {
+          DEFAULT: 'var(--branding-theme)',
+          foreground: 'var(--branding-foreground)',
+        },
+        branding100: {
+          DEFAULT: 'var(--branding-100)',
+          foreground: 'var(--branding-100)',
+        },
+        branding90: {
+          DEFAULT: 'var(--branding-90)',
+          foreground: 'var(--branding-90)',
+        },
+        branding75: {
+          DEFAULT: 'var(--branding-75)',
+          foreground: 'var(--branding-75)',
+        },
+        branding50: {
+          DEFAULT: 'var(--branding-50)',
+          foreground: 'var(--branding-50)',
+        },
+        branding25: {
+          DEFAULT: 'var(--branding-25)',
+          foreground: 'var(--branding-25)',
+        },
+        branding0: {
+          DEFAULT: 'var(--branding-0)',
+          foreground: 'var(--branding-0)',
+        },
+        branding1: {
+          DEFAULT: 'var(--branding1)',
+          foreground: 'var(--branding1)',
+        },
+        branding2: {
+          DEFAULT: 'var(--branding2)',
+          foreground: 'var(--branding2)',
+        },
+        branding3: {
+          DEFAULT: 'var(--branding3)',
+          foreground: 'var(--branding3)',
+        },
+        branding4: {
+          DEFAULT: 'var(--branding4)',
+          foreground: 'var(--branding4)',
+        },
+        ring: 'var(--ring)',
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
         },
-        success: 'hsl(var(--success))',
-        error: 'hsl(var(--error))',
-        warning: 'hsl(var(--warning))',
+        success: 'var(--success)',
+        error: 'var(--error)',
+        warning: 'var(--warning)',
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-geist-sans)'],
+        sans: ['General Sans', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
+        chiffon: ['Playfair Display', 'serif'],
+        'general-sans': ['General Sans', 'system-ui', '-apple-system', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {

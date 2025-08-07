@@ -1,7 +1,6 @@
 import React from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { TrendingUp, Clock, Shield, Target, Award, Users, Bell } from 'lucide-react'
-import { ScrollAnimation } from '@/components/scroll-animations'
 
 interface Choice {
   icon: string
@@ -103,14 +102,12 @@ export default function WhyChooseUsBlock({ title, subtitle, choices }: WhyChoose
   const validChoices = Array.isArray(choices) ? choices : []
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-branding0">
       <div className="container mx-auto px-4">
-        <ScrollAnimation animation="fadeIn">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{title}</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">{subtitle}</p>
-          </div>
-        </ScrollAnimation>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-branding100 mb-4">{title}</h2>
+          <p className="text-lg text-branding75 max-w-3xl mx-auto">{subtitle}</p>
+        </div>
 
         <div className="flex flex-wrap justify-center gap-8 mb-8">
           {validChoices.map((choice, index) => {
@@ -118,34 +115,35 @@ export default function WhyChooseUsBlock({ title, subtitle, choices }: WhyChoose
             const colorClasses = getColorClasses(choice.color || 'green')
 
             return (
-              <ScrollAnimation key={index} animation="slideUp" delay={index * 100}>
-                <Card className="h-full hover:shadow-lg transition-shadow duration-300">
-                  <CardContent className="p-4 flex flex-col items-center text-center">
-                    <div
-                      className={`w-20 h-20 ${colorClasses.bgColor} rounded-full flex items-center justify-center mb-6`}
-                    >
-                      <IconComponent className={`w-8 h-8 ${colorClasses.iconColor}`} />
+              <Card
+                key={index}
+                className="h-full hover:shadow-lg transition-shadow duration-300 bg-secondarystatic"
+              >
+                <CardContent className="p-4 flex flex-col items-center text-center">
+                  <div
+                    className={`w-20 h-20 ${colorClasses.bgColor} rounded-full flex items-center justify-center mb-6`}
+                  >
+                    <IconComponent className={`w-8 h-8 ${colorClasses.iconColor}`} />
+                  </div>
+
+                  <h3 className="text-2xl font-bold text-branding100 mb-4">
+                    {choice.title || 'Titre par défaut'}
+                  </h3>
+
+                  <p className="text-branding75 text-base leading-relaxed mb-8 max-w-md">
+                    {choice.description || 'Description par défaut'}
+                  </p>
+
+                  <div className={`${colorClasses.statBgColor} rounded-lg px-6 py-4`}>
+                    <div className={`text-3xl font-bold ${colorClasses.statColor}`}>
+                      {choice.statValue || '0'}
                     </div>
-
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                      {choice.title || 'Titre par défaut'}
-                    </h3>
-
-                    <p className="text-gray-600 text-base leading-relaxed mb-8 max-w-md">
-                      {choice.description || 'Description par défaut'}
-                    </p>
-
-                    <div className={`${colorClasses.statBgColor} rounded-lg px-6 py-4`}>
-                      <div className={`text-3xl font-bold ${colorClasses.statColor}`}>
-                        {choice.statValue || '0'}
-                      </div>
-                      <div className="text-gray-700 text-sm">
-                        {choice.statLabel || 'Statistique'}
-                      </div>
+                    <div className="text-branding75 text-sm">
+                      {choice.statLabel || 'Statistique'}
                     </div>
-                  </CardContent>
-                </Card>
-              </ScrollAnimation>
+                  </div>
+                </CardContent>
+              </Card>
             )
           })}
         </div>

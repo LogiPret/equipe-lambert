@@ -2,7 +2,6 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ScrollAnimation } from '@/components/scroll-animations'
 import {
   MapPin,
   Camera,
@@ -284,173 +283,171 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
   }
 
   return (
-    <section className="py-24 bg-gradient-to-br from-slate-50 to-blue-50">
+    <section className="py-24 bg-gradient-to-br from-secondarystatic to-branding0">
       <div className="container mx-auto px-4">
-        <ScrollAnimation animation="fadeIn">
-          <div className="text-center mb-20">
-            <div className="inline-block bg-blue-600 h-1 w-24 mb-6"></div>
-            <h2 className="text-5xl font-serif font-bold text-gray-800 mb-6">{title}</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">{subtitle}</p>
-          </div>
-        </ScrollAnimation>
+        <div className="text-center mb-20">
+          <div className="inline-block bg-accent3static h-1 w-24 mb-6"></div>
+          <h2 className="text-5xl font-serif font-bold text-branding100 mb-6">{title}</h2>
+          <p className="text-xl text-branding75 max-w-3xl mx-auto">{subtitle}</p>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {properties && properties.length > 0 ? (
-            properties.map((property, index) => {
+            properties.map((property, _index) => {
               // Ensure property has required fields
               if (!property || !property.id || !property.price || !property.address) {
                 return null
               }
 
               return (
-                <ScrollAnimation key={property.id} animation="slideUp" delay={index * 200}>
-                  <Card
-                    className="flex flex-col overflow-hidden hover:shadow-2xl transition-all duration-500 group border border-gray-200 bg-white hover:border-blue-500 relative h-full w-full max-w-full"
-                    onMouseEnter={() => setHoveredProperty(property.id)}
-                    onMouseLeave={() => setHoveredProperty(null)}
-                  >
-                    <div className="relative overflow-hidden">
-                      <Image
-                        src={getImageUrl(property.image)}
-                        alt={getImageAlt(property.image, property.address)}
-                        width={400}
-                        height={300}
-                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
+                <Card
+                  key={property.id}
+                  className="flex flex-col overflow-hidden hover:shadow-2xl transition-all duration-500 group border border-borderprimarystatic bg-branding0 hover:border-accent3static relative h-full w-full max-w-full"
+                  onMouseEnter={() => setHoveredProperty(property.id)}
+                  onMouseLeave={() => setHoveredProperty(null)}
+                >
+                  <div className="relative overflow-hidden">
+                    <Image
+                      src={getImageUrl(property.image)}
+                      alt={getImageAlt(property.image, property.address)}
+                      width={400}
+                      height={300}
+                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
 
-                      {/* Property Status Badge */}
-                      <div className="absolute top-4 left-4">
-                        <Badge
-                          variant={property.propStatus === 'vendu' ? 'secondary' : 'default'}
-                          className={`${
-                            property.propStatus === 'vendu'
-                              ? 'bg-gray-600 text-white'
-                              : property.propStatus === 'option_achat'
-                                ? 'bg-orange-500 text-white'
-                                : 'bg-blue-600 text-white'
-                          } font-semibold`}
+                    {/* Property Status Badge */}
+                    <div className="absolute top-4 left-4">
+                      <Badge
+                        variant={property.propStatus === 'vendu' ? 'secondary' : 'default'}
+                        className={`${
+                          property.propStatus === 'vendu'
+                            ? 'bg-branding75 text-branding0'
+                            : property.propStatus === 'option_achat'
+                              ? 'bg-orange-500 text-branding0'
+                              : 'bg-accent3static text-branding0'
+                        } font-semibold`}
+                      >
+                        {statusLabels[property.propStatus]}
+                      </Badge>
+                    </div>
+
+                    {/* Property Type Badge */}
+                    <div className="absolute top-4 right-4">
+                      <Badge
+                        variant="outline"
+                        className="bg-white/90 text-branding75 border-branding25"
+                      >
+                        {typeLabels[property.propType]}
+                      </Badge>
+                    </div>
+
+                    {/* Photos Badge */}
+                    <div className="absolute bottom-4 right-4">
+                      <Badge
+                        variant="outline"
+                        className="bg-black/50 text-branding0 border-white/30"
+                      >
+                        <Camera className="h-4 w-4 mr-2" />
+                        12 photos
+                      </Badge>
+                    </div>
+
+                    {/* Small Hover Button */}
+                    {hoveredProperty === property.id && (
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300">
+                        <Link
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={property.url || 'https://expquebec.com/en/brokers/david-lambert/'}
                         >
-                          {statusLabels[property.propStatus]}
-                        </Badge>
-                      </div>
-
-                      {/* Property Type Badge */}
-                      <div className="absolute top-4 right-4">
-                        <Badge
-                          variant="outline"
-                          className="bg-white/90 text-gray-700 border-gray-300"
-                        >
-                          {typeLabels[property.propType]}
-                        </Badge>
-                      </div>
-
-                      {/* Photos Badge */}
-                      <div className="absolute bottom-4 right-4">
-                        <Badge variant="outline" className="bg-black/50 text-white border-white/30">
-                          <Camera className="h-4 w-4 mr-2" />
-                          12 photos
-                        </Badge>
-                      </div>
-
-                      {/* Small Hover Button */}
-                      {hoveredProperty === property.id && (
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300">
-                          <Link
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={property.url || 'https://expquebec.com/en/brokers/david-lambert/'}
+                          <Button
+                            size="sm"
+                            className="bg-branding0 hover:bg-branding0 text-branding100 p-3 rounded-full shadow-lg transform hover:scale-110 transition-all duration-200"
                           >
-                            <Button
-                              size="sm"
-                              className="bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transform hover:scale-110 transition-all duration-200"
-                            >
-                              {(() => {
-                                const IconComponent = getHoverIcon(hoverButtonIcon)
-                                return <IconComponent className="h-5 w-5" />
-                              })()}
-                            </Button>
-                          </Link>
-                        </div>
+                            {(() => {
+                              const IconComponent = getHoverIcon(hoverButtonIcon)
+                              return <IconComponent className="h-5 w-5" />
+                            })()}
+                          </Button>
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+
+                  <CardContent className="p-6 flex flex-col flex-grow min-w-0">
+                    <div className="mb-4 min-w-0">
+                      <h3 className="text-2xl font-general-sans font-medium text-accent3static mb-2 break-words">
+                        {formatCurrency(property.price)}
+                      </h3>
+                      <div className="flex items-center text-branding75 mb-2">
+                        <MapPin className="h-4 w-4 mr-2 text-accent3static flex-shrink-0" />
+                        <p className="text-sm break-words">{property.address}</p>
+                      </div>
+                      {property.description && (
+                        <p
+                          className="text-branding75 text-sm mb-4 break-words overflow-hidden"
+                          style={{
+                            display: '-webkit-box',
+                            WebkitLineClamp: 3,
+                            WebkitBoxOrient: 'vertical',
+                            lineHeight: '1.4em',
+                            maxHeight: '4.2em', // 3 lines × 1.4em line height
+                          }}
+                        >
+                          {property.description}
+                        </p>
                       )}
                     </div>
 
-                    <CardContent className="p-6 flex flex-col flex-grow min-w-0">
-                      <div className="mb-4 min-w-0">
-                        <h3 className="text-2xl font-bold text-blue-600 mb-2 break-words">
-                          {formatCurrency(property.price)}
-                        </h3>
-                        <div className="flex items-center text-gray-600 mb-2">
-                          <MapPin className="h-4 w-4 mr-2 text-blue-500 flex-shrink-0" />
-                          <p className="text-sm break-words">{property.address}</p>
+                    <div className="mt-auto flex justify-between items-center pt-4 border-t border-borderprimarystatic mb-4">
+                      <div className="flex items-center space-x-4 text-sm text-branding75">
+                        <div className="flex items-center">
+                          <Bed className="h-4 w-4 mr-1 text-accent3static" />
+                          <span>{property.beds}</span>
                         </div>
-                        {property.description && (
-                          <p
-                            className="text-gray-600 text-sm mb-4 break-words overflow-hidden"
-                            style={{
-                              display: '-webkit-box',
-                              WebkitLineClamp: 3,
-                              WebkitBoxOrient: 'vertical',
-                              lineHeight: '1.4em',
-                              maxHeight: '4.2em', // 3 lines × 1.4em line height
-                            }}
-                          >
-                            {property.description}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="mt-auto flex justify-between items-center pt-4 border-t border-gray-100 mb-4">
-                        <div className="flex items-center space-x-4 text-sm text-gray-600">
-                          <div className="flex items-center">
-                            <Bed className="h-4 w-4 mr-1 text-blue-500" />
-                            <span>{property.beds}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Bath className="h-4 w-4 mr-1 text-blue-500" />
-                            <span>{property.baths}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Square className="h-4 w-4 mr-1 text-blue-500" />
-                            <span>{property.sqft} pi²</span>
-                          </div>
+                        <div className="flex items-center">
+                          <Bath className="h-4 w-4 mr-1 text-accent3static" />
+                          <span>{property.baths}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Square className="h-4 w-4 mr-1 text-accent3static" />
+                          <span>{property.sqft} pi²</span>
                         </div>
                       </div>
+                    </div>
 
-                      {/* Calculator Button at Bottom */}
-                      {property.propStatus === 'a_vendre' && (
-                        <Button
-                          onClick={() => handleCalculatorClick(property)}
-                          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 transition-all duration-200"
-                        >
-                          <Calculator className="h-4 w-4 mr-2" />
-                          Calculer les paiements
-                        </Button>
-                      )}
-                    </CardContent>
-                  </Card>
-                </ScrollAnimation>
+                    {/* Calculator Button at Bottom */}
+                    {property.propStatus === 'a_vendre' && (
+                      <Button
+                        onClick={() => handleCalculatorClick(property)}
+                        className="w-full bg-accent3static hover:bg-branding100 text-branding0 font-semibold py-2.5 transition-all duration-200"
+                      >
+                        <Calculator className="h-4 w-4 mr-2" />
+                        Calculer les paiements
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
               )
             })
           ) : (
             <div className="col-span-full text-center py-12">
-              <p className="text-gray-500 text-lg">Aucune propriété disponible pour le moment.</p>
+              <p className="text-branding50 text-lg">Aucune propriété disponible pour le moment.</p>
             </div>
           )}
         </div>
 
         {/* CTA Section */}
-        <ScrollAnimation animation="fadeIn" delay={600}>
-          <div className="text-center mt-16">
-            <p className="text-gray-600 mb-6 text-lg">{buttonInfo}</p>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 font-semibold"
-            >
-              Voir toutes nos propriétés
-            </Button>
-          </div>
-        </ScrollAnimation>
+        <div className="text-center mt-16">
+          <p className="text-branding75 mb-6 text-lg">{buttonInfo}</p>
+          <Button
+            size="lg"
+            variant="outline"
+            className="bg-accent3static border-accent3static text-branding0 hover:bg-branding0 hover:text-accent3static px-8 py-3 font-semibold"
+          >
+            Voir toutes nos propriétés
+          </Button>
+        </div>
       </div>
     </section>
   )

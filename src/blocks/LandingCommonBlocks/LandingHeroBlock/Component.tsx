@@ -170,8 +170,8 @@ export default function LandingHeroBlock({
   const modeConfig = {
     vendre: {
       badgeIcon: DollarSign,
-      badgeClass: 'bg-emerald-600',
-      primaryButtonClass: 'bg-emerald-600 hover:bg-emerald-700',
+      badgeClass: 'bg-accent5static',
+      primaryButtonClass: 'bg-accent5static hover:bg-accent6static',
       primaryButtonIcon: Target,
       formButtonIcon: Zap,
       successTitle: '✓ Merci !',
@@ -183,8 +183,8 @@ export default function LandingHeroBlock({
     },
     acheter: {
       badgeIcon: Key,
-      badgeClass: 'bg-blue-600',
-      primaryButtonClass: 'bg-blue-600 hover:bg-blue-700',
+      badgeClass: 'bg-accent3static',
+      primaryButtonClass: 'bg-accent3static hover:bg-accent4static',
       primaryButtonIcon: Search,
       formButtonIcon: Bell,
       successTitle: '✓ Merci !',
@@ -292,7 +292,7 @@ export default function LandingHeroBlock({
   }
 
   return (
-    <section className="relative bg-gradient-to-br from-[#0f3046] via-[#1a4a66] to-[#2d5f7f] text-white py-24 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[var(--gradient-start-static)] via-[var(--gradient-via-static)] to-[var(--gradient-end-static)] text-branding0 py-24 overflow-hidden">
       <div className="absolute inset-0 bg-black/20"></div>
       <div
         className="absolute inset-0 bg-cover bg-center opacity-10"
@@ -307,7 +307,7 @@ export default function LandingHeroBlock({
             <ScrollAnimation animation="fadeIn" delay={300}>
               <div className="mb-8">
                 <Badge
-                  className={`${config.badgeClass} text-white px-6 py-3 text-lg font-medium mb-6`}
+                  className={`${config.badgeClass} text-branding0 px-6 py-3 text-lg font-medium mb-6`}
                 >
                   <BadgeIcon className="h-5 w-5 mr-2" />
                   {effectiveBadgeText}
@@ -315,69 +315,61 @@ export default function LandingHeroBlock({
               </div>
             </ScrollAnimation>
 
-            <ScrollAnimation animation="slideUp" delay={600}>
-              <h1 className="text-5xl md:text-6xl font-serif font-bold mb-8 leading-tight">
-                {effectiveTitle}
-                {effectiveSubtitle && (
-                  <span className="block text-blue-200">{effectiveSubtitle}</span>
-                )}
-              </h1>
-            </ScrollAnimation>
+            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-8 leading-tight">
+              {effectiveTitle}
+              {effectiveSubtitle && (
+                <span className="block text-accent1static font-chiffon">{effectiveSubtitle}</span>
+              )}
+            </h1>
 
-            <ScrollAnimation animation="slideUp" delay={900}>
-              <div
-                className="text-xl md:text-2xl mb-8 leading-relaxed text-gray-200 max-w-2xl"
-                dangerouslySetInnerHTML={{ __html: descriptionHTML }}
-              />
-            </ScrollAnimation>
+            <div
+              className="text-xl md:text-2xl mb-8 leading-relaxed text-branding0 max-w-2xl"
+              dangerouslySetInnerHTML={{ __html: descriptionHTML }}
+            />
 
             {effectiveStats && effectiveStats.length > 0 && (
-              <ScrollAnimation animation="slideUp" delay={1200}>
-                <div className="grid md:grid-cols-3 gap-6 mb-8">
-                  {effectiveStats.map((stat, index) => (
-                    <div key={index} className="text-center">
-                      <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-                      <div className="text-blue-200 text-sm">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </ScrollAnimation>
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                {effectiveStats.map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="text-3xl font-bold text-branding0 mb-2">{stat.value}</div>
+                    <div className="text-accent1static text-sm">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             )}
 
-            <ScrollAnimation animation="slideUp" delay={1500}>
-              <div className="flex flex-col sm:flex-row gap-6">
-                <Button
-                  size="lg"
-                  className={`${config.primaryButtonClass} text-white px-8 py-4 font-medium text-lg`}
-                  onClick={() => handleButtonClick(primaryButton)}
-                >
-                  <PrimaryButtonIcon className="h-5 w-5 mr-3" />
-                  {primaryButton.text}
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-white text-white hover:bg-white hover:text-[#0f3046] bg-transparent px-8 py-4 font-medium text-lg"
-                  onClick={() => handleButtonClick(secondaryButton)}
-                >
-                  {secondaryButton.text}
-                </Button>
-              </div>
-            </ScrollAnimation>
+            <div className="flex flex-col sm:flex-row gap-6">
+              <Button
+                size="lg"
+                className={`${config.primaryButtonClass} text-branding0 px-8 py-4 font-medium text-lg`}
+                onClick={() => handleButtonClick(primaryButton)}
+              >
+                <PrimaryButtonIcon className="h-5 w-5 mr-3" />
+                {primaryButton.text}
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-borderprimarystatic text-branding0 hover:bg-branding0 hover:text-branding100 bg-transparent px-8 py-4 font-medium text-lg"
+                onClick={() => handleButtonClick(secondaryButton)}
+              >
+                {secondaryButton.text}
+              </Button>
+            </div>
           </div>
 
-          <ScrollAnimation animation="slideLeft" delay={800}>
+          <ScrollAnimation animation="slideLeft" delay={200}>
             <div className="relative">
-              <Card className="bg-white/95 p-8 backdrop-blur-sm">
+              <Card className="bg-secondarystatic p-8 backdrop-blur-sm">
                 {isSubmitted ? (
                   <div className="text-center py-8">
-                    <div className="text-green-600 text-xl font-semibold mb-2">
+                    <div className="text-accent5static text-xl font-semibold mb-2">
                       {config.successTitle}
                     </div>
                     <p className="text-gray-600 mb-4">{config.successMessage}</p>
                     <p className="pt-4">Cliquez ci-dessous pour en savoir plus</p>
                     <Button
-                      className="bg-[#0f3046] hover:bg-[#1a4a66] text-white py-4 font-medium text-lg disabled:opacity-50"
+                      className="bg-branding100 hover:bg-accent2static text-branding0 py-4 font-medium text-lg disabled:opacity-50"
                       onClick={() => router.push(config.successButtonLink)}
                     >
                       {config.successButtonText}
@@ -385,7 +377,7 @@ export default function LandingHeroBlock({
                   </div>
                 ) : (
                   <>
-                    <h3 className="text-2xl font-serif font-bold text-gray-800 mb-6">
+                    <h3 className="text-2xl font-serif font-bold text-branding100 mb-6">
                       {effectiveFormTitle}
                     </h3>
                     {error && (
@@ -404,7 +396,7 @@ export default function LandingHeroBlock({
                           placeholder={
                             formFields?.addressPlaceholder || 'Adresse de votre propriété'
                           }
-                          className="border border-gray-300 focus:border-[#0f3046] p-4 text-lg"
+                          className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 text-lg bg-branding0"
                         />
                       )}
 
@@ -415,7 +407,7 @@ export default function LandingHeroBlock({
                           value={formData.prenom}
                           onChange={handleInputChange}
                           placeholder={formFields?.firstNamePlaceholder || 'Prénom *'}
-                          className="border border-gray-300 focus:border-[#0f3046] p-4 bg-white"
+                          className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
                           required
                         />
                         <Input
@@ -423,7 +415,7 @@ export default function LandingHeroBlock({
                           value={formData.nom}
                           onChange={handleInputChange}
                           placeholder={formFields?.lastNamePlaceholder || 'Nom *'}
-                          className="border border-gray-300 focus:border-[#0f3046] p-4 bg-white"
+                          className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
                           required
                         />
                       </div>
@@ -436,7 +428,7 @@ export default function LandingHeroBlock({
                           onChange={handleInputChange}
                           placeholder={formFields?.emailPlaceholder || 'Email *'}
                           type="email"
-                          className="border border-gray-300 focus:border-[#0f3046] p-4 bg-white"
+                          className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
                           required
                         />
                         <Input
@@ -444,7 +436,7 @@ export default function LandingHeroBlock({
                           value={formData.phone}
                           onChange={handleInputChange}
                           placeholder={formFields?.phonePlaceholder || 'Téléphone *'}
-                          className="border border-gray-300 focus:border-[#0f3046] p-4 bg-white"
+                          className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
                           required
                         />
                       </div>
@@ -455,7 +447,7 @@ export default function LandingHeroBlock({
                           name="vendre_delais"
                           value={(formData as any).vendre_delais || ''}
                           onChange={handleInputChange}
-                          className="w-full border border-gray-300 focus:border-[#0f3046] p-4 bg-white text-gray-500"
+                          className="w-full border border-branding25 focus:border-branding100 p-4 bg-branding0 text-branding50"
                         >
                           <option value="">
                             {formFields?.timeframePlaceholder || 'Délai souhaité pour la vente'}
@@ -487,7 +479,7 @@ export default function LandingHeroBlock({
                             name="acheter_propertyType"
                             value={(formData as any).acheter_propertyType || ''}
                             onChange={handleInputChange}
-                            className="border border-gray-300 focus:border-[#0f3046] p-4 bg-white rounded-md w-full"
+                            className="border text-branding100 border-branding25 focus:border-branding100 p-4 bg-branding0 rounded-md w-full"
                           >
                             <option value="">
                               {formFields?.propertyTypePlaceholder || 'Type de propriété'}
@@ -518,7 +510,7 @@ export default function LandingHeroBlock({
                             value={(formData as any).acheter_city || ''}
                             onChange={handleInputChange}
                             placeholder={formFields?.cityPlaceholder || 'Ville'}
-                            className="border border-gray-300 focus:border-[#0f3046] p-4 bg-white"
+                            className="border border-branding25 focus:border-branding100 p-4 bg-branding0"
                           />
                         </div>
                       )}
@@ -526,7 +518,7 @@ export default function LandingHeroBlock({
                       <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-[#0f3046] hover:bg-[#1a4a66] text-white py-4 font-medium text-lg disabled:opacity-50"
+                        className="w-full bg-branding100 hover:bg-accent2static text-branding0 py-4 font-medium text-lg disabled:opacity-50"
                       >
                         <FormButtonIcon className="h-5 w-5 mr-2" />
                         {isSubmitting
@@ -540,7 +532,7 @@ export default function LandingHeroBlock({
                   </>
                 )}
 
-                <p className="text-xs text-gray-500 mt-4 text-center">
+                <p className="text-xs text-branding50 mt-4 text-center">
                   {formFields?.disclaimerText ||
                     (mode === 'vendre'
                       ? '* Évaluation professionnelle sans engagement'

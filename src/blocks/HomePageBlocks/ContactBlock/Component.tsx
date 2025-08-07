@@ -242,13 +242,13 @@ export default function ContactBlock({
   }
 
   return (
-    <section id="contact" className="py-24 bg-gray-100">
+    <section id="contact" className="py-24 bg-secondarystatic">
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center mb-20">
-            <div className="inline-block bg-[#0f3046] h-1 w-24 mb-6"></div>
-            <h2 className="text-5xl font-serif font-bold text-gray-800 mb-6">{title}</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">{subtitle}</p>
+            <div className="inline-block bg-branding100 h-1 w-24 mb-6"></div>
+            <h2 className="text-5xl font-serif font-bold text-branding100 mb-6">{title}</h2>
+            <p className="text-xl text-branding75 max-w-3xl mx-auto">{subtitle}</p>
           </div>
         </ScrollAnimation>
         <div className="grid lg:grid-cols-2 gap-16">
@@ -260,20 +260,20 @@ export default function ContactBlock({
                   return (
                     <div
                       key={index}
-                      className="flex items-center p-6 border border-gray-300 bg-white shadow-sm hover:border-[#2d5f7f] transition-colors"
+                      className="flex items-center p-6 border border-borderprimarystatic bg-branding0 shadow-sm hover:bordersecondarystatic transition-colors"
                     >
-                      <IconComponent className="h-8 w-8 text-[#0f3046] mr-6" />
+                      <IconComponent className="h-8 w-8 text-branding100 mr-6" />
                       <div>
-                        <p className="font-bold text-gray-800 text-lg">{info.title}</p>
-                        <p className="text-gray-600 text-lg">{info.primary}</p>
-                        <p className="text-sm text-[#0f3046] mt-2">{info.description}</p>
+                        <p className="font-bold text-branding100 text-lg">{info.title}</p>
+                        <p className="text-branding75 text-lg">{info.primary}</p>
+                        <p className="text-sm text-branding100 mt-2">{info.description}</p>
                       </div>
                     </div>
                   )
                 })}
               </div>
 
-              <div className="bg-white p-6 border border-gray-300 shadow-sm">
+              <div className="bg-branding0 p-6 border border-borderprimarystatic shadow-sm">
                 <Image
                   src={imageUrl || '/placeholder.svg'}
                   alt={imageAlt}
@@ -281,20 +281,22 @@ export default function ContactBlock({
                   height={200}
                   className="w-full h-48 object-cover mb-4"
                 />
-                <p className="text-gray-600 text-center">{officeImage.description}</p>
+                <p className="text-branding75 text-center">{officeImage.description}</p>
               </div>
             </div>
           </ScrollAnimation>
 
           <ScrollAnimation animation="slideLeft" delay={600}>
-            <Card className="border border-gray-300 shadow-xl bg-white hover:border-[#2d5f7f] transition-colors">
+            <Card className="border border-borderprimarystatic shadow-xl bg-branding0 hover:border-bordersecondarystatic transition-colors">
               <CardContent className="p-10">
-                <h3 className="text-2xl font-serif font-bold text-gray-800 mb-8">{form.title}</h3>
+                <h3 className="text-2xl font-serif font-bold text-branding100 mb-8">
+                  {form.title}
+                </h3>
 
                 {isSubmitted ? (
                   // Success message
                   <div className="text-center py-12">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6 border border-green-600">
                       <svg
                         className="w-8 h-8 text-green-600"
                         fill="none"
@@ -309,10 +311,10 @@ export default function ContactBlock({
                         />
                       </svg>
                     </div>
-                    <h4 className="text-xl font-semibold text-gray-800 mb-4">Message Sent!</h4>
-                    <p className="text-gray-600 leading-relaxed">
+                    <h4 className="text-xl font-semibold text-branding100 mb-4">Message Sent!</h4>
+                    <p className="text-branding75 leading-relaxed">
                       {form.successMessage ||
-                        'Thank you for your message! We will get back to you soon.'}
+                        'Merci pour votre message ! Nous vous contacterons bientôt.'}
                     </p>
                   </div>
                 ) : (
@@ -332,11 +334,11 @@ export default function ContactBlock({
                         required
                         checked={isCheckboxChecked}
                         onChange={(e) => setIsCheckboxChecked(e.target.checked)}
-                        className="w-5 h-5 mt-0.5 text-[#0f3046] bg-white border-2 border-gray-300 rounded focus:ring-[#0f3046] focus:ring-2"
+                        className="w-5 h-5 mt-0.5 text-branding100 bg-branding0 border-2 border-borderprimarystatic rounded focus:ring-branding100 focus:ring-2"
                       />
                       <label
                         htmlFor="agreement-checkbox"
-                        className="text-sm text-gray-700 leading-relaxed"
+                        className="text-sm text-branding75 leading-relaxed"
                       >
                         {form.checkboxText || 'I agree to the terms and conditions'} *
                       </label>
@@ -347,8 +349,8 @@ export default function ContactBlock({
                       disabled={!isSubmitEnabled}
                       className={`w-full py-4 font-medium text-lg transition-colors ${
                         !isSubmitEnabled
-                          ? 'bg-gray-400 cursor-not-allowed text-gray-200'
-                          : 'bg-[#0f3046] hover:bg-[#1a4a66] text-white'
+                          ? 'bg-branding25 cursor-not-allowed text-branding0'
+                          : 'bg-branding100 hover:bg-accent2static text-branding0'
                       }`}
                     >
                       {isSubmitting ? form.submitButton.loadingText : form.submitButton.text}
@@ -357,7 +359,7 @@ export default function ContactBlock({
                 )}
 
                 {!isSubmitted && (
-                  <p className="text-xs text-gray-500 mt-4 text-center">{form.disclaimer}</p>
+                  <p className="text-xs text-branding50 mt-4 text-center">{form.disclaimer}</p>
                 )}
               </CardContent>
             </Card>
