@@ -11,6 +11,14 @@ export const TableByColumns: Block = {
       required: true,
     },
     {
+      name: 'description',
+      type: 'textarea',
+      label: 'Table Description',
+      admin: {
+        description: 'Optional description text that will appear below the title and above the table',
+      },
+    },
+    {
       name: 'columns',
       type: 'array',
       label: 'Columns',
