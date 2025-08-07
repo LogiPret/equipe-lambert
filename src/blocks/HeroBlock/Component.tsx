@@ -1,7 +1,6 @@
 'use client'
 import { CMSLink } from '@/components/Link'
 import { Award, Search } from 'lucide-react'
-import Image from 'next/image'
 import type { Media, Page, Post } from '@/payload-types'
 
 interface ButtonLink {
@@ -41,17 +40,11 @@ export default function HeroBlock({
   _badgeIcon,
   title,
   subtitle,
-  description,
   primaryButton,
   secondaryButton,
   heroImage,
-  statsBoxNumber,
-  statsBoxText,
-  statsBoxDescription,
   backgroundImage,
 }: HeroBlockProps) {
-  const heroImageUrl =
-    typeof heroImage === 'object' && heroImage ? heroImage.url : '/placeholder.svg'
   const backgroundImageUrl =
     typeof backgroundImage === 'object' && backgroundImage ? backgroundImage.url : undefined
 

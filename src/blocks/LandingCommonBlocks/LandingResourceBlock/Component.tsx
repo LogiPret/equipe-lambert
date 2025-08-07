@@ -213,12 +213,15 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
             </ScrollAnimation>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {resources.items.map((resource, index) => {
+              {resources.items.map((resource, _index) => {
                 const IconComponent = iconMap[resource.icon]
                 const colorClass = colorMap[resource.color]
 
                 return (
-                  <Card className="h-full flex flex-col text-center p-8 hover:shadow-xl transition-shadow bg-branding0">
+                  <Card
+                    key={_index}
+                    className="h-full flex flex-col text-center p-8 hover:shadow-xl transition-shadow bg-branding0"
+                  >
                     <div className="flex justify-center mb-6">
                       <div className={`p-4 rounded-full ${colorClass}`}>
                         <IconComponent className="h-6 w-6" />

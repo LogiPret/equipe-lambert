@@ -2,7 +2,6 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ScrollAnimation } from '@/components/scroll-animations'
 import {
   MapPin,
   Camera,
@@ -294,7 +293,7 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {properties && properties.length > 0 ? (
-            properties.map((property, index) => {
+            properties.map((property, _index) => {
               // Ensure property has required fields
               if (!property || !property.id || !property.price || !property.address) {
                 return null

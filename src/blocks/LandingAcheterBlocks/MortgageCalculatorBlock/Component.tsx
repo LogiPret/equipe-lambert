@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { ScrollAnimation } from '@/components/scroll-animations'
 import { Calculator, Home, DollarSign, Percent, Calendar } from 'lucide-react'
 
 // Custom Slider Component
