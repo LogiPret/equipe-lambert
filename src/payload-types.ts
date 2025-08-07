@@ -3190,6 +3190,10 @@ export interface CodeBlock {
 export interface TableByColumnsBlock {
   title: string;
   /**
+   * Optional description text that will appear below the title and above the table
+   */
+  description?: string | null;
+  /**
    * Define the columns for your table first
    */
   columns?:
