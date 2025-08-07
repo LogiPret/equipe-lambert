@@ -136,6 +136,10 @@ const config = {
           DEFAULT: 'var(--test-col)',
           foreground: 'var(--test-col)',
         },
+        brandingtheme: {
+          DEFAULT: 'var(--branding-theme)',
+          foreground: 'var(--branding-foreground)',
+        },
         branding100: {
           DEFAULT: 'var(--branding-100)',
           foreground: 'var(--branding-100)',
@@ -187,9 +191,10 @@ const config = {
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-geist-sans)'],
-        chiffonLight: ['var(--font-chiffon-light)'],
-        generalSansLight: ['var(--font-general-sans-light)'],
+        sans: ['General Sans', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
+        chiffon: ['Playfair Display', 'serif'],
+        'general-sans': ['General Sans', 'system-ui', '-apple-system', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {

@@ -67,26 +67,24 @@ export default function EvaluationGratuiteBlock({
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column: Description */}
           <div className="space-y-6 lg:text-left sm:text-center">
-            <ScrollAnimation animation="fadeIn">
-              <h2 className="text-4xl font-serif font-bold leading-tight">{title}</h2>
-              <p className="text-lg text-accent1static leading-relaxed">{description}</p>
-              <p className="text-lg text-accent1static leading-relaxed font-medium pt-10">
-                {closingStatement}
-              </p>
-              <div className="pt-4">
-                <Button
-                  size="lg"
-                  className="bg-branding0 text-branding100 hover:bg-secondarystatic font-bold px-8 py-4 text-lg"
-                  onClick={handleCtaClick}
-                >
-                  {ctaText}
-                </Button>
-              </div>
-            </ScrollAnimation>
+            <h2 className="text-4xl font-serif font-bold leading-tight">{title}</h2>
+            <p className="text-lg text-accent1static leading-relaxed">{description}</p>
+            <p className="text-lg text-accent1static leading-relaxed font-medium pt-10">
+              {closingStatement}
+            </p>
+            <div className="pt-4">
+              <Button
+                size="lg"
+                className="bg-branding0 text-branding100 hover:bg-secondarystatic font-bold px-8 py-4 text-lg"
+                onClick={handleCtaClick}
+              >
+                {ctaText}
+              </Button>
+            </div>
           </div>
 
           {/* Right Column: Points */}
-          <ScrollAnimation animation="slideLeft" delay={300}>
+          <ScrollAnimation animation="slideLeft" delay={200}>
             <div className="bg-white/10 p-8 rounded-lg backdrop-blur-sm border border-white/20">
               <div className="space-y-8">
                 <div>

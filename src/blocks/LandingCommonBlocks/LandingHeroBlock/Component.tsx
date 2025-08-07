@@ -315,58 +315,50 @@ export default function LandingHeroBlock({
               </div>
             </ScrollAnimation>
 
-            <ScrollAnimation animation="slideUp" delay={600}>
-              <h1 className="text-5xl md:text-6xl font-serif font-bold mb-8 leading-tight">
-                {effectiveTitle}
-                {effectiveSubtitle && (
-                  <span className="block text-accent1static">{effectiveSubtitle}</span>
-                )}
-              </h1>
-            </ScrollAnimation>
+            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-8 leading-tight">
+              {effectiveTitle}
+              {effectiveSubtitle && (
+                <span className="block text-accent1static font-chiffon">{effectiveSubtitle}</span>
+              )}
+            </h1>
 
-            <ScrollAnimation animation="slideUp" delay={900}>
-              <div
-                className="text-xl md:text-2xl mb-8 leading-relaxed text-branding0 max-w-2xl"
-                dangerouslySetInnerHTML={{ __html: descriptionHTML }}
-              />
-            </ScrollAnimation>
+            <div
+              className="text-xl md:text-2xl mb-8 leading-relaxed text-branding0 max-w-2xl"
+              dangerouslySetInnerHTML={{ __html: descriptionHTML }}
+            />
 
             {effectiveStats && effectiveStats.length > 0 && (
-              <ScrollAnimation animation="slideUp" delay={1200}>
-                <div className="grid md:grid-cols-3 gap-6 mb-8">
-                  {effectiveStats.map((stat, index) => (
-                    <div key={index} className="text-center">
-                      <div className="text-3xl font-bold text-branding0 mb-2">{stat.value}</div>
-                      <div className="text-accent1static text-sm">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </ScrollAnimation>
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                {effectiveStats.map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="text-3xl font-bold text-branding0 mb-2">{stat.value}</div>
+                    <div className="text-accent1static text-sm">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             )}
 
-            <ScrollAnimation animation="slideUp" delay={1500}>
-              <div className="flex flex-col sm:flex-row gap-6">
-                <Button
-                  size="lg"
-                  className={`${config.primaryButtonClass} text-branding0 px-8 py-4 font-medium text-lg`}
-                  onClick={() => handleButtonClick(primaryButton)}
-                >
-                  <PrimaryButtonIcon className="h-5 w-5 mr-3" />
-                  {primaryButton.text}
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-borderprimarystatic text-branding0 hover:bg-branding0 hover:text-branding100 bg-transparent px-8 py-4 font-medium text-lg"
-                  onClick={() => handleButtonClick(secondaryButton)}
-                >
-                  {secondaryButton.text}
-                </Button>
-              </div>
-            </ScrollAnimation>
+            <div className="flex flex-col sm:flex-row gap-6">
+              <Button
+                size="lg"
+                className={`${config.primaryButtonClass} text-branding0 px-8 py-4 font-medium text-lg`}
+                onClick={() => handleButtonClick(primaryButton)}
+              >
+                <PrimaryButtonIcon className="h-5 w-5 mr-3" />
+                {primaryButton.text}
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-borderprimarystatic text-branding0 hover:bg-branding0 hover:text-branding100 bg-transparent px-8 py-4 font-medium text-lg"
+                onClick={() => handleButtonClick(secondaryButton)}
+              >
+                {secondaryButton.text}
+              </Button>
+            </div>
           </div>
 
-          <ScrollAnimation animation="slideLeft" delay={800}>
+          <ScrollAnimation animation="slideLeft" delay={200}>
             <div className="relative">
               <Card className="bg-secondarystatic p-8 backdrop-blur-sm">
                 {isSubmitted ? (

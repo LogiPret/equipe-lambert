@@ -118,7 +118,6 @@ export async function Footer() {
           <p className="text-gray-400 text-sm">
             © {new Date().getFullYear()} Équipe Lambert. Tous droits réservés.
           </p>
-          <ThemeSelector />
         </div>
       </div>
     </footer>

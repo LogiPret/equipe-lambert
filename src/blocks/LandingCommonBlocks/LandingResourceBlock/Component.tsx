@@ -173,27 +173,25 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
 
           {/* Content */}
           <div className={`${imagePosition === 'left' ? 'pl-8' : 'pr-8'} ${contentOrder}`}>
-            <ScrollAnimation animation="fadeIn">
-              <div
-                className={`inline-flex items-center ${currentDefaults.badgeColor} px-4 py-2 rounded-full text-sm font-semibold mb-4`}
-              >
-                <CheckSquare className="h-5 w-5 mr-2" />
-                {finalBadgeText}
-              </div>
-              <h2 className="text-4xl font-serif font-bold text-branding100 mb-6">{finalTitle}</h2>
-              <p className="text-lg text-branding75 mb-6 leading-relaxed">{finalDescription}</p>
-              <p className="text-lg text-branding75 mb-8 leading-relaxed">
-                <strong>{finalHighlight}</strong>
-              </p>
-              <Button
-                size="lg"
-                className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
-                onClick={handleButtonClick}
-              >
-                <Eye className="h-5 w-5 mr-3" />
-                {finalButtonText}
-              </Button>
-            </ScrollAnimation>
+            <div
+              className={`inline-flex items-center ${currentDefaults.badgeColor} px-4 py-2 rounded-full text-sm font-semibold mb-4`}
+            >
+              <CheckSquare className="h-5 w-5 mr-2" />
+              {finalBadgeText}
+            </div>
+            <h2 className="text-4xl font-serif font-bold text-branding100 mb-6">{finalTitle}</h2>
+            <p className="text-lg text-branding75 mb-6 leading-relaxed">{finalDescription}</p>
+            <p className="text-lg text-branding75 mb-8 leading-relaxed">
+              <strong>{finalHighlight}</strong>
+            </p>
+            <Button
+              size="lg"
+              className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
+              onClick={handleButtonClick}
+            >
+              <Eye className="h-5 w-5 mr-3" />
+              {finalButtonText}
+            </Button>
           </div>
         </div>
 
@@ -220,25 +218,22 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
                 const colorClass = colorMap[resource.color]
 
                 return (
-                  <ScrollAnimation key={index} animation="slideUp" delay={300 + index * 200}>
-                    <Card className="h-full flex flex-col text-center p-8 hover:shadow-xl transition-shadow bg-branding0">
-                      <div className="flex justify-center mb-6">
-                        <div className={`p-4 rounded-full ${colorClass}`}>
-                          <IconComponent className="h-6 w-6" />
-                        </div>
+                  <Card className="h-full flex flex-col text-center p-8 hover:shadow-xl transition-shadow bg-branding0">
+                    <div className="flex justify-center mb-6">
+                      <div className={`p-4 rounded-full ${colorClass}`}>
+                        <IconComponent className="h-6 w-6" />
                       </div>
-                      <h3 className="text-xl font-bold text-branding100 mb-4">{resource.title}</h3>
-                      <p className="text-branding75 flex-grow mb-6">{resource.description}</p>
-                      <Button
-                        variant="outline"
-                        className={`mt-auto ${currentDefaults.resourceButtonClass} hover:text-branding0 bg-transparent`}
-                        onClick={() => handleResourceClick(resource)}
-                      >
-                        {resource.buttonText || 'Télécharger'}{' '}
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Card>
-                  </ScrollAnimation>
+                    </div>
+                    <h3 className="text-xl font-bold text-branding100 mb-4">{resource.title}</h3>
+                    <p className="text-branding75 flex-grow mb-6">{resource.description}</p>
+                    <Button
+                      variant="outline"
+                      className={`mt-auto ${currentDefaults.resourceButtonClass} hover:text-branding0 bg-transparent`}
+                      onClick={() => handleResourceClick(resource)}
+                    >
+                      {resource.buttonText || 'Télécharger'} <ArrowRight className="h-4 w-4 ml-2" />
+                    </Button>
+                  </Card>
                 )
               })}
             </div>

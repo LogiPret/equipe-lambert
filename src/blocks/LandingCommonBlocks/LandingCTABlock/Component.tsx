@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { ScrollAnimation } from '@/components/scroll-animations'
 import { Target, Phone, Search, Key } from 'lucide-react'
 
 interface LandingCTABlockProps {
@@ -99,34 +98,32 @@ export const LandingCTABlockComponent: React.FC<LandingCTABlockProps> = ({
   return (
     <section className={`py-16 bg-gradient-to-r ${currentDefaults.bgGradient} text-branding0`}>
       <div className="container mx-auto px-4">
-        <ScrollAnimation animation="fadeIn">
-          <div className="text-center">
-            <h2 className="text-4xl font-serif font-bold mb-6">{finalTitle}</h2>
-            <p className={`text-xl mb-8 ${currentDefaults.subtitleClass} max-w-2xl mx-auto`}>
-              {finalSubtitle}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button
-                size="lg"
-                className={`${currentDefaults.primaryButtonClass} px-8 py-4 font-medium text-lg`}
-                onClick={handlePrimaryClick}
-              >
-                <PrimaryIcon className="h-5 w-5 mr-3" />
-                {finalPrimaryButtonText}
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className={`${currentDefaults.secondaryButtonClass} px-8 py-4 font-medium text-lg`}
-                onClick={handleSecondaryClick}
-              >
-                <SecondaryIcon className="h-5 w-5 mr-3" />
-                {finalSecondaryButtonText}
-                {phoneNumber && !secondaryButtonTarget ? `: ${phoneNumber}` : ''}
-              </Button>
-            </div>
+        <div className="text-center">
+          <h2 className="text-4xl font-serif font-bold mb-6">{finalTitle}</h2>
+          <p className={`text-xl mb-8 ${currentDefaults.subtitleClass} max-w-2xl mx-auto`}>
+            {finalSubtitle}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Button
+              size="lg"
+              className={`${currentDefaults.primaryButtonClass} px-8 py-4 font-medium text-lg`}
+              onClick={handlePrimaryClick}
+            >
+              <PrimaryIcon className="h-5 w-5 mr-3" />
+              {finalPrimaryButtonText}
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className={`${currentDefaults.secondaryButtonClass} px-8 py-4 font-medium text-lg`}
+              onClick={handleSecondaryClick}
+            >
+              <SecondaryIcon className="h-5 w-5 mr-3" />
+              {finalSecondaryButtonText}
+              {phoneNumber && !secondaryButtonTarget ? `: ${phoneNumber}` : ''}
+            </Button>
           </div>
-        </ScrollAnimation>
+        </div>
       </div>
     </section>
   )
