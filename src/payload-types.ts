@@ -3234,6 +3234,10 @@ export interface TableByColumnsBlock {
 export interface TableByRowsBlock {
   title: string;
   /**
+   * Optional description text that will appear below the title and above the table
+   */
+  description?: string | null;
+  /**
    * Define the rows for your table first
    */
   rows?:
