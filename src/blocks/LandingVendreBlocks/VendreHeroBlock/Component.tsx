@@ -9,6 +9,7 @@ import { ScrollAnimation } from '@/components/scroll-animations'
 import type { Media } from '@/payload-types'
 import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { scrollToBlock as smoothScrollToBlock } from '@/utilities/smoothScroll'
 
 interface Stat {
   value: string
@@ -96,15 +97,7 @@ export default function VendreHeroBlock({
 
   // Scroll to block functionality
   const scrollToBlock = (blockId: string) => {
-    const element = document.getElementById(blockId)
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    } else {
-      console.warn(`Block with ID "${blockId}" not found`)
-    }
+    smoothScrollToBlock(blockId, { offset: 0, duration: 600 })
   }
 
   // Handle button clicks

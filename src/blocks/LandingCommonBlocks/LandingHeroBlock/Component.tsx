@@ -9,6 +9,7 @@ import { ScrollAnimation } from '@/components/scroll-animations'
 import type { Media } from '@/payload-types'
 import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { scrollToBlock as smoothScrollToBlock } from '@/utilities/smoothScroll'
 
 interface Stat {
   value: string
@@ -61,6 +62,27 @@ interface LandingHeroBlockProps {
   propertyTypeOptions?: { option: string }[]
   backgroundImage?: Media | string
 }
+
+interface VendreFormData {
+  vendre_address: string
+  prenom: string
+  nom: string
+  phone: string
+  email: string
+  vendre_delais: string
+}
+
+interface AcheterFormData {
+  prenom: string
+  nom: string
+  phone: string
+  email: string
+  acheter_propertyType: string
+  acheter_city: string
+}
+
+// Union type for form data
+type FormDataType = VendreFormData | AcheterFormData
 
 export default function LandingHeroBlock({
   mode = 'vendre',
@@ -138,19 +160,18 @@ export default function LandingHeroBlock({
         email: '',
         vendre_delais: '',
       }
-    } else {
-      return {
-        prenom: '',
-        nom: '',
-        email: '',
-        phone: '',
-        acheter_propertyType: '',
-        acheter_city: '',
-      }
+    }
+    return {
+      prenom: '',
+      nom: '',
+      phone: '',
+      email: '',
+      acheter_propertyType: '',
+      acheter_city: '',
     }
   }
 
-  const [formData, setFormData] = useState(getInitialFormData())
+  const [formData, setFormData] = useState<FormDataType>(getInitialFormData())
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState('')
@@ -204,15 +225,7 @@ export default function LandingHeroBlock({
 
   // Scroll to block functionality
   const scrollToBlock = (blockId: string) => {
-    const element = document.getElementById(blockId)
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    } else {
-      console.warn(`Block with ID "${blockId}" not found`)
-    }
+    smoothScrollToBlock(blockId, { offset: 0, duration: 600 })
   }
 
   // Handle button clicks
@@ -391,7 +404,9 @@ export default function LandingHeroBlock({
                       {mode === 'vendre' && (
                         <Input
                           name="vendre_address"
-                          value={(formData as any).vendre_address || ''}
+                          value={
+                            mode === 'vendre' ? (formData as VendreFormData).vendre_address : ''
+                          }
                           onChange={handleInputChange}
                           placeholder={
                             formFields?.addressPlaceholder || 'Adresse de votre propriété'
@@ -445,7 +460,9 @@ export default function LandingHeroBlock({
                       {mode === 'vendre' ? (
                         <select
                           name="vendre_delais"
-                          value={(formData as any).vendre_delais || ''}
+                          value={
+                            mode === 'vendre' ? (formData as VendreFormData).vendre_delais : ''
+                          }
                           onChange={handleInputChange}
                           className="w-full border border-branding25 focus:border-branding100 p-4 bg-branding0 text-branding50"
                         >
@@ -477,7 +494,11 @@ export default function LandingHeroBlock({
                         <div className="grid md:grid-cols-2 gap-4">
                           <select
                             name="acheter_propertyType"
-                            value={(formData as any).acheter_propertyType || ''}
+                            value={
+                              mode === 'acheter'
+                                ? (formData as AcheterFormData).acheter_propertyType
+                                : ''
+                            }
                             onChange={handleInputChange}
                             className="border text-branding100 border-branding25 focus:border-branding100 p-4 bg-branding0 rounded-md w-full"
                           >
@@ -507,7 +528,9 @@ export default function LandingHeroBlock({
                           </select>
                           <Input
                             name="acheter_city"
-                            value={(formData as any).acheter_city || ''}
+                            value={
+                              mode === 'acheter' ? (formData as AcheterFormData).acheter_city : ''
+                            }
                             onChange={handleInputChange}
                             placeholder={formFields?.cityPlaceholder || 'Ville'}
                             className="border border-branding25 focus:border-branding100 p-4 bg-branding0"

@@ -18,6 +18,7 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import { scrollToBlock as smoothScrollToBlock } from '@/utilities/smoothScroll'
 
 interface Property {
   id: string
@@ -211,10 +212,73 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
       document.querySelector('[class*="mortgage"]')
 
     if (calculatorElement) {
-      calculatorElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
+      // Use smooth scroll utility targeting the found element's id or fallback
+      const id = (calculatorElement as HTMLElement).id
+      if (id) {
+        smoothScrollToBlock(id, { offset: 0, duration: 600 }).then(() => {
+          // Proceed after smooth scroll
+          setTimeout(() => {
+            // Function to trigger React events properly
+            const triggerReactChange = (element: HTMLInputElement, value: string) => {
+              const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype,
+                'value',
+              )?.set
+              if (nativeInputValueSetter) {
+                nativeInputValueSetter.call(element, value)
+              }
+              const inputEvent = new Event('input', { bubbles: true })
+              element.dispatchEvent(inputEvent)
+              const changeEvent = new Event('change', { bubbles: true })
+              element.dispatchEvent(changeEvent)
+            }
+
+            // Find and update home price input (usually the first number input)
+            const numberInputs = calculatorElement.querySelectorAll('input[type="number"]')
+            if (numberInputs.length > 0) {
+              const homePriceInput = numberInputs[0] as HTMLInputElement
+              triggerReactChange(homePriceInput, property.price.toString())
+            }
+
+            // Update down payment to 5% of property price
+            if (numberInputs.length > 1) {
+              const downPaymentInput = numberInputs[1] as HTMLInputElement
+              const downPaymentAmount = Math.round(property.price * 0.05)
+              triggerReactChange(downPaymentInput, downPaymentAmount.toString())
+            }
+
+            // Look for range inputs (sliders) and update them too
+            const rangeInputs = calculatorElement.querySelectorAll('input[type="range"]')
+            rangeInputs.forEach((slider, index) => {
+              if (index === 0) {
+                // First slider is likely home price
+                triggerReactChange(slider as HTMLInputElement, property.price.toString())
+              } else if (index === 1) {
+                // Second slider is likely down payment
+                const downPaymentAmount = Math.round(property.price * 0.05)
+                triggerReactChange(slider as HTMLInputElement, downPaymentAmount.toString())
+              }
+            })
+
+            // Try to find and click the 5% button for down payment
+            setTimeout(() => {
+              const buttons = Array.from(calculatorElement.querySelectorAll('button'))
+              const fivePercentButton = buttons.find(
+                (btn) => btn.textContent?.includes('5%') || btn.textContent?.includes('5 %'),
+              )
+
+              if (fivePercentButton) {
+                ;(fivePercentButton as HTMLButtonElement).click()
+              }
+            }, 100)
+          }, 150)
+        })
+      } else {
+        // Fallback when element lacks id: compute position directly
+        const rect = calculatorElement.getBoundingClientRect()
+        const targetY = (window.scrollY || window.pageYOffset) + rect.top
+        window.scrollTo({ top: targetY, behavior: 'smooth' })
+      }
 
       // Wait for scroll to complete, then update the form fields
       setTimeout(() => {

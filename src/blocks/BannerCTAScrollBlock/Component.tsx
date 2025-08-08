@@ -1,6 +1,7 @@
 'use client'
 
 import { DollarSign, Key, Phone, Mail } from 'lucide-react'
+import { scrollToBlock as smoothScrollToBlock } from '@/utilities/smoothScroll'
 
 interface BannerCTAScrollBlockProps {
   backgroundColor: 'gradient_blue' | 'dark_blue' | 'navy'
@@ -28,18 +29,7 @@ const iconMap = {
 }
 
 const scrollToBlock = (blockId: string) => {
-  const element = document.getElementById(blockId)
-  if (element) {
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    })
-  } else {
-    console.warn(
-      `Block with ID "${blockId}" not found. Available IDs:`,
-      Array.from(document.querySelectorAll('[id]')).map((el) => el.id),
-    )
-  }
+  smoothScrollToBlock(blockId, { offset: 0, duration: 600 })
 }
 
 export default function BannerCTAScrollBlock({

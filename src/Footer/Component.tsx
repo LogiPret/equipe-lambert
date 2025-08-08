@@ -7,6 +7,7 @@ import type { Footer } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 import { Phone, Mail, MapPin, Download } from 'lucide-react'
+import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
@@ -117,6 +118,7 @@ export async function Footer() {
           <p className="text-gray-400 text-sm">
             © {new Date().getFullYear()} Équipe Lambert. Tous droits réservés.
           </p>
+          <ThemeSelector />
         </div>
       </div>
     </footer>

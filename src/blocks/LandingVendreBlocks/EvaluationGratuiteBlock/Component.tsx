@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { CheckCircle, Home, TrendingUp, Users } from 'lucide-react'
 import React from 'react'
 import { ScrollAnimation } from '@/components/scroll-animations'
+import { scrollToBlock as smoothScrollToBlock } from '@/utilities/smoothScroll'
 
 interface Benefit {
   text: string
@@ -50,15 +51,7 @@ export default function EvaluationGratuiteBlock({
   // Scroll to block functionality
   const handleCtaClick = () => {
     if (ctaTarget) {
-      const element = document.getElementById(ctaTarget)
-      if (element) {
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        })
-      } else {
-        console.warn(`Block with ID "${ctaTarget}" not found`)
-      }
+      smoothScrollToBlock(ctaTarget, { offset: 0, duration: 600 })
     }
   }
   return (

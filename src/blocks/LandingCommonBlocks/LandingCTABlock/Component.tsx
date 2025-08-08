@@ -3,6 +3,7 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Target, Phone, Search, Key } from 'lucide-react'
+import { scrollToBlock as smoothScrollToBlock } from '@/utilities/smoothScroll'
 
 interface LandingCTABlockProps {
   mode: 'vendre' | 'acheter'
@@ -16,18 +17,7 @@ interface LandingCTABlockProps {
 }
 
 const scrollToBlock = (blockId: string) => {
-  const element = document.getElementById(blockId)
-  if (element) {
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    })
-  } else {
-    console.warn(
-      `Block with ID "${blockId}" not found. Available IDs:`,
-      Array.from(document.querySelectorAll('[id]')).map((el) => el.id),
-    )
-  }
+  smoothScrollToBlock(blockId, { offset: 0, duration: 600 })
 }
 
 export const LandingCTABlockComponent: React.FC<LandingCTABlockProps> = ({

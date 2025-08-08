@@ -5,19 +5,27 @@ import { useEffect, useState } from 'react'
 export function BlockIDHelper({ isDraft = false }: { isDraft?: boolean }) {
   const [blockIds, setBlockIds] = useState<string[]>([])
   const [isVisible, setIsVisible] = useState(false)
+  const [isPreviewEnv, setIsPreviewEnv] = useState(false)
 
   useEffect(() => {
-    const ids = Array.from(document.querySelectorAll('[id]'))
-      .map((el) => el.id)
-      .filter((id) => id && id.includes('-')) // Only show our block IDs
-      .sort()
-    setBlockIds(ids)
+    const inIframe = typeof window !== 'undefined' && window.self !== window.top
+    const ref = typeof document !== 'undefined' ? document.referrer : ''
+    const qs = typeof window !== 'undefined' ? window.location.search : ''
+    const previewHint = /preview|live/i.test(qs) || ref.includes('/admin')
+    setIsPreviewEnv(inIframe || previewHint)
   }, [])
 
-  // Only show in draft/preview mode (admin only)
-  if (!isDraft) {
-    return null
-  }
+  useEffect(() => {
+    if (!isDraft || !isPreviewEnv) return
+    const ids = Array.from(document.querySelectorAll('[id]'))
+      .map((el) => el.id)
+      .filter((id) => id && id.includes('-'))
+      .sort()
+    setBlockIds(ids)
+  }, [isDraft, isPreviewEnv])
+
+  // Only show in draft + admin preview (iframe or preview context)
+  if (!isDraft || !isPreviewEnv) return null
 
   return (
     <>

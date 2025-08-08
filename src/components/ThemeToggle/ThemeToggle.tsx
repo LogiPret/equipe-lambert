@@ -10,6 +10,16 @@ const themeLocalStorageKey = 'payload-theme'
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>('system')
   const [mounted, setMounted] = useState(false)
+  const [enabled, setEnabled] = useState(false)
+
+  // Detect preview/admin iframe environment
+  useEffect(() => {
+    const inIframe = typeof window !== 'undefined' && window.self !== window.top
+    const ref = typeof document !== 'undefined' ? document.referrer : ''
+    const qs = typeof window !== 'undefined' ? window.location.search : ''
+    const previewHint = /preview|live/i.test(qs) || ref.includes('/admin')
+    if (inIframe || previewHint) setEnabled(true)
+  }, [])
 
   // Check if component is mounted to avoid hydration mismatch
   useEffect(() => {
@@ -48,8 +58,8 @@ export default function ThemeToggle() {
     applyTheme(nextTheme)
   }
 
-  // Don't render until mounted to avoid hydration issues
-  if (!mounted) {
+  // Don't render until mounted or if not enabled (non-preview environment)
+  if (!mounted || !enabled) {
     return null
   }
 
