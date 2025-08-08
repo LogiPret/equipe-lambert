@@ -47,20 +47,6 @@ export default function EvaluationGratuiteBlock({
   const validBenefits = Array.isArray(benefits) ? benefits : []
   const validDeliverables = Array.isArray(deliverables) ? deliverables : []
 
-  // Scroll to block functionality
-  const handleCtaClick = () => {
-    if (ctaTarget) {
-      const element = document.getElementById(ctaTarget)
-      if (element) {
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        })
-      } else {
-        console.warn(`Block with ID "${ctaTarget}" not found`)
-      }
-    }
-  }
   return (
     <section className="bg-gradient-to-br from-branding100 to-accent2static text-branding0 py-20 sm:py-24">
       <div className="container mx-auto px-4">
@@ -74,9 +60,10 @@ export default function EvaluationGratuiteBlock({
             </p>
             <div className="pt-4">
               <Button
+                actionType={ctaTarget ? 'scroll' : 'default'}
+                {...(ctaTarget ? { scrollTarget: ctaTarget, scrollOffset: 80 } : {})}
                 size="lg"
                 className="bg-branding0 text-branding100 hover:bg-secondarystatic font-bold px-8 py-4 text-lg"
-                onClick={handleCtaClick}
               >
                 {ctaText}
               </Button>

@@ -15,21 +15,6 @@ interface LandingCTABlockProps {
   phoneNumber?: string
 }
 
-const scrollToBlock = (blockId: string) => {
-  const element = document.getElementById(blockId)
-  if (element) {
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    })
-  } else {
-    console.warn(
-      `Block with ID "${blockId}" not found. Available IDs:`,
-      Array.from(document.querySelectorAll('[id]')).map((el) => el.id),
-    )
-  }
-}
-
 export const LandingCTABlockComponent: React.FC<LandingCTABlockProps> = ({
   mode = 'vendre',
   title,
@@ -81,20 +66,6 @@ export const LandingCTABlockComponent: React.FC<LandingCTABlockProps> = ({
   const finalPrimaryButtonText = primaryButtonText || currentDefaults.primaryButtonText
   const finalSecondaryButtonText = secondaryButtonText || currentDefaults.secondaryButtonText
 
-  const handlePrimaryClick = () => {
-    if (primaryButtonTarget) {
-      scrollToBlock(primaryButtonTarget)
-    }
-  }
-
-  const handleSecondaryClick = () => {
-    if (secondaryButtonTarget) {
-      scrollToBlock(secondaryButtonTarget)
-    } else if (phoneNumber) {
-      window.location.href = `tel:${phoneNumber}`
-    }
-  }
-
   return (
     <section className={`py-16 bg-gradient-to-r ${currentDefaults.bgGradient} text-branding0`}>
       <div className="container mx-auto px-4">
@@ -105,18 +76,25 @@ export const LandingCTABlockComponent: React.FC<LandingCTABlockProps> = ({
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Button
+              actionType="scroll"
+              scrollTarget={primaryButtonTarget || ''}
+              scrollOffset={80}
               size="lg"
               className={`${currentDefaults.primaryButtonClass} px-8 py-4 font-medium text-lg`}
-              onClick={handlePrimaryClick}
             >
               <PrimaryIcon className="h-5 w-5 mr-3" />
               {finalPrimaryButtonText}
             </Button>
             <Button
+              actionType={secondaryButtonTarget ? 'scroll' : phoneNumber ? 'link' : 'default'}
+              {...(secondaryButtonTarget
+                ? { scrollTarget: secondaryButtonTarget, scrollOffset: 80 }
+                : phoneNumber
+                  ? { linkType: 'custom', url: `tel:${phoneNumber}` }
+                  : {})}
               size="lg"
               variant="outline"
               className={`${currentDefaults.secondaryButtonClass} px-8 py-4 font-medium text-lg`}
-              onClick={handleSecondaryClick}
             >
               <SecondaryIcon className="h-5 w-5 mr-3" />
               {finalSecondaryButtonText}

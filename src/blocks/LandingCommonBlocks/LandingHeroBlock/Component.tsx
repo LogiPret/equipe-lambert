@@ -62,6 +62,23 @@ interface LandingHeroBlockProps {
   backgroundImage?: Media | string
 }
 
+interface VendreFormData {
+  vendre_address: string
+  prenom: string
+  nom: string
+  phone: string
+  email: string
+  vendre_delais: string
+}
+interface AcheterFormData {
+  prenom: string
+  nom: string
+  email: string
+  phone: string
+  acheter_propertyType: string
+  acheter_city: string
+}
+
 export default function LandingHeroBlock({
   mode = 'vendre',
   badgeText,
@@ -130,7 +147,7 @@ export default function LandingHeroBlock({
       : stats
   const getInitialFormData = () => {
     if (mode === 'vendre') {
-      return {
+      const data: VendreFormData = {
         vendre_address: '',
         prenom: '',
         nom: '',
@@ -138,8 +155,9 @@ export default function LandingHeroBlock({
         email: '',
         vendre_delais: '',
       }
+      return data
     } else {
-      return {
+      const data: AcheterFormData = {
         prenom: '',
         nom: '',
         email: '',
@@ -147,6 +165,7 @@ export default function LandingHeroBlock({
         acheter_propertyType: '',
         acheter_city: '',
       }
+      return data
     }
   }
 
@@ -202,42 +221,7 @@ export default function LandingHeroBlock({
   const PrimaryButtonIcon = config.primaryButtonIcon
   const FormButtonIcon = config.formButtonIcon
 
-  // Scroll to block functionality
-  const scrollToBlock = (blockId: string) => {
-    const element = document.getElementById(blockId)
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    } else {
-      console.warn(`Block with ID "${blockId}" not found`)
-    }
-  }
-
-  // Handle button clicks
-  const handleButtonClick = (button: ButtonData) => {
-    if (button.actionType === 'scroll' && button.scrollTarget) {
-      scrollToBlock(button.scrollTarget)
-    } else if (button.actionType === 'link' && button.link) {
-      const { link } = button
-      let href = ''
-
-      if (link.type === 'custom' && link.url) {
-        href = link.url
-      } else if (link.type === 'reference' && link.reference) {
-        href = `/${link.reference.value}`
-      }
-
-      if (href) {
-        if (link.newTab) {
-          window.open(href, '_blank')
-        } else {
-          window.location.href = href
-        }
-      }
-    }
-  }
+  // Remove old scroll and click handlers (replaced by enhanced Button component)
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -339,19 +323,63 @@ export default function LandingHeroBlock({
             )}
 
             <div className="flex flex-col sm:flex-row gap-6">
+              {/** Primary Action */}
               <Button
+                actionType={primaryButton.actionType === 'scroll' ? 'scroll' : 'link'}
+                {...(primaryButton.actionType === 'scroll' && primaryButton.scrollTarget
+                  ? { scrollTarget: primaryButton.scrollTarget, scrollOffset: 80 }
+                  : {})}
+                {...(primaryButton.actionType === 'link' && primaryButton.link
+                  ? {
+                      linkType: primaryButton.link.type === 'reference' ? 'reference' : 'custom',
+                      url:
+                        primaryButton.link.type === 'custom' ? primaryButton.link.url : undefined,
+                      reference:
+                        primaryButton.link.type === 'reference' && primaryButton.link.reference
+                          ? {
+                              relationTo: primaryButton.link.reference.relationTo as
+                                | 'pages'
+                                | 'posts',
+                              value: primaryButton.link.reference.value,
+                            }
+                          : undefined,
+                      newTab: primaryButton.link.newTab,
+                    }
+                  : {})}
                 size="lg"
                 className={`${config.primaryButtonClass} text-branding0 px-8 py-4 font-medium text-lg`}
-                onClick={() => handleButtonClick(primaryButton)}
               >
                 <PrimaryButtonIcon className="h-5 w-5 mr-3" />
                 {primaryButton.text}
               </Button>
+              {/** Secondary Action */}
               <Button
+                actionType={secondaryButton.actionType === 'scroll' ? 'scroll' : 'link'}
+                {...(secondaryButton.actionType === 'scroll' && secondaryButton.scrollTarget
+                  ? { scrollTarget: secondaryButton.scrollTarget, scrollOffset: 80 }
+                  : {})}
+                {...(secondaryButton.actionType === 'link' && secondaryButton.link
+                  ? {
+                      linkType: secondaryButton.link.type === 'reference' ? 'reference' : 'custom',
+                      url:
+                        secondaryButton.link.type === 'custom'
+                          ? secondaryButton.link.url
+                          : undefined,
+                      reference:
+                        secondaryButton.link.type === 'reference' && secondaryButton.link.reference
+                          ? {
+                              relationTo: secondaryButton.link.reference.relationTo as
+                                | 'pages'
+                                | 'posts',
+                              value: secondaryButton.link.reference.value,
+                            }
+                          : undefined,
+                      newTab: secondaryButton.link.newTab,
+                    }
+                  : {})}
                 size="lg"
                 variant="outline"
                 className="border-2 border-borderprimarystatic text-branding0 hover:bg-branding0 hover:text-branding100 bg-transparent px-8 py-4 font-medium text-lg"
-                onClick={() => handleButtonClick(secondaryButton)}
               >
                 {secondaryButton.text}
               </Button>
@@ -391,7 +419,7 @@ export default function LandingHeroBlock({
                       {mode === 'vendre' && (
                         <Input
                           name="vendre_address"
-                          value={(formData as any).vendre_address || ''}
+                          value={(formData as VendreFormData).vendre_address}
                           onChange={handleInputChange}
                           placeholder={
                             formFields?.addressPlaceholder || 'Adresse de votre propriété'
@@ -445,7 +473,7 @@ export default function LandingHeroBlock({
                       {mode === 'vendre' ? (
                         <select
                           name="vendre_delais"
-                          value={(formData as any).vendre_delais || ''}
+                          value={(formData as VendreFormData).vendre_delais}
                           onChange={handleInputChange}
                           className="w-full border border-branding25 focus:border-branding100 p-4 bg-branding0 text-branding50"
                         >
@@ -477,7 +505,7 @@ export default function LandingHeroBlock({
                         <div className="grid md:grid-cols-2 gap-4">
                           <select
                             name="acheter_propertyType"
-                            value={(formData as any).acheter_propertyType || ''}
+                            value={(formData as AcheterFormData).acheter_propertyType}
                             onChange={handleInputChange}
                             className="border text-branding100 border-branding25 focus:border-branding100 p-4 bg-branding0 rounded-md w-full"
                           >
@@ -507,7 +535,7 @@ export default function LandingHeroBlock({
                           </select>
                           <Input
                             name="acheter_city"
-                            value={(formData as any).acheter_city || ''}
+                            value={(formData as AcheterFormData).acheter_city}
                             onChange={handleInputChange}
                             placeholder={formFields?.cityPlaceholder || 'Ville'}
                             className="border border-branding25 focus:border-branding100 p-4 bg-branding0"
