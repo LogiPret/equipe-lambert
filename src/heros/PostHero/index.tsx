@@ -16,7 +16,7 @@ export const PostHero: React.FC<{
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
 
   return (
-    <div className="relative -mt-[10.4rem] flex items-end">
+    <div className="relative -mt-[10.4rem] lg:h-[80vh] h-[50vh] flex items-end">
       <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_64rem_1fr] text-brandingtheme">
         <div className="col-start-1 col-span-1 lg:col-start-2 lg:col-span-1">
           <div className="mb-6 flex flex-wrap gap-2">
@@ -71,7 +71,7 @@ export const PostHero: React.FC<{
           />
         )}
         <div className="absolute mb-40 pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-brandingtheme-foreground to-transparent" />
-      </div>{' '}
+      </div>
       <div className="h-40 bg-brandingtheme-foreground absolute bottom-0 left-0 right-0" />
     </div>
   )
