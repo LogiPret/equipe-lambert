@@ -4,6 +4,7 @@ import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
 
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
+import ClientButton from '@/blocks/Button/ClientButton.client'
 
 export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) => {
   return (
@@ -13,7 +14,26 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
           {richText && <RichText className="mb-0" data={richText} enableGutter={false} />}
         </div>
         <div className="flex flex-col gap-8">
-          {(links || []).map(({ link }, i) => {
+          {(links || []).map((row: any, i) => {
+            const { actionType = 'link', link, popupRef, buttonText } = row
+            if (actionType === 'popup') {
+              return (
+                <ClientButton
+                  key={i}
+                  text={buttonText || link?.label || 'Learn more'}
+                  appearance={(link?.appearance as any) || 'default'}
+                  size="lg"
+                  popup={{
+                    title: popupRef?.title ?? 'Contact',
+                    firstNameLabel: popupRef?.firstNameLabel ?? 'Prénom',
+                    lastNameLabel: popupRef?.lastNameLabel ?? 'Nom',
+                    phoneLabel: popupRef?.phoneLabel ?? 'Téléphone',
+                    buttonText: popupRef?.buttonText ?? 'Envoyer',
+                    pdfName: popupRef?.pdfName ?? null,
+                  }}
+                />
+              )
+            }
             return <CMSLink key={i} size="lg" {...link} />
           })}
         </div>
