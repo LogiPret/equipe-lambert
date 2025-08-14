@@ -13,6 +13,7 @@ import { InitTheme } from '@/providers/Theme/InitTheme'
 import ThemeToggle from '@/components/ThemeToggle'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
+import { Analytics } from '@vercel/analytics/next'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -40,7 +41,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
 
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            {children}
+            <Analytics mode="production" />
+          </main>
           <Footer />
           <ThemeToggle />
         </Providers>
