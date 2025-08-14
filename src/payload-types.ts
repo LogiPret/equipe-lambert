@@ -200,6 +200,7 @@ export interface Page {
     | FormBlock
     | {
         text: string;
+        size?: ('sm' | 'default' | 'lg' | 'xl') | null;
         link?: {
           type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
@@ -1822,6 +1823,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               text?: T;
+              size?: T;
               link?:
                 | T
                 | {
@@ -3270,6 +3272,40 @@ export interface TableByRowsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'tableByRows';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogInlineCTA".
+ */
+export interface BlogInlineCTA {
+  headline: string;
+  description?: string | null;
+  /**
+   * Select a Page or Post. Only internal links are allowed for this button.
+   */
+  link: {
+    type?: ('reference' | 'custom' | 'archive') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    archive?: 'posts' | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogInlineCTA';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

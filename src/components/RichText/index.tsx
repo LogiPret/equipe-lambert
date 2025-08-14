@@ -14,6 +14,7 @@ import {
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 import { ButtonBlock } from '@/blocks/Button/Component'
 import { TableByColumnsBlock } from '@/blocks/TableByColumns/Component'
+import BlogInlineCTA from '@/blocks/BlogInlineCTA/Component'
 
 import type {
   BannerBlock as BannerBlockProps,
@@ -25,6 +26,7 @@ import type {
 // Local type definition for ButtonBlock until payload-types is regenerated
 interface ButtonBlockProps {
   text: string
+  size?: 'sm' | 'default' | 'lg' | 'xl'
   link: {
     type?: 'custom' | 'reference' | null
     newTab?: boolean | null
@@ -82,6 +84,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     ),
     tableByColumns: ({ node }: { node: SerializedBlockNode<TableByColumnsBlockProps> }) => (
       <TableByColumnsBlock {...node.fields} />
+    ),
+    blogInlineCTA: ({ node }: { node: SerializedBlockNode<any> }) => (
+      <BlogInlineCTA {...(node as any).fields} />
     ),
   },
 })
