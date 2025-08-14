@@ -16,8 +16,17 @@ export const PostHero: React.FC<{
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
 
   return (
-    <div className="relative -mt-[10.4rem] flex items-end">
-      <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_64rem_1fr] text-brandingtheme">
+    <div className="relative -mt-[10.4rem] flex h-[80vh] items-end">
+      {heroImage && typeof heroImage !== 'string' && (
+        <Media
+          fill
+          priority
+          imgClassName="-z-10 object-cover bg-brandingtheme-foreground"
+          resource={heroImage}
+        />
+      )}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brandingtheme-foreground via-brandingtheme-foreground/60 to-transparent" />
+      <div className="container relative z-10 pb-20 text-brandingtheme lg:grid lg:grid-cols-[1fr_64rem_1fr]">
         <div className="col-start-1 col-span-1 lg:col-start-2 lg:col-span-1">
           <div className="mb-6 flex flex-wrap gap-2">
             {categories?.map((category, index) => {
@@ -27,7 +36,7 @@ export const PostHero: React.FC<{
                 return (
                   <Badge
                     key={index}
-                    className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-brandingtheme text-sm font-medium text-brandingtheme"
+                    className="inline-flex items-center gap-2 rounded-full border border-brandingtheme bg-white/10 px-4 py-2 text-sm font-medium text-brandingtheme backdrop-blur-sm"
                   >
                     {titleToUse}
                   </Badge>
@@ -37,7 +46,7 @@ export const PostHero: React.FC<{
             })}
           </div>
 
-          <div className="">
+          <div>
             <h1 className="mb-6 text-5xl lg:text-7xl">{title}</h1>
           </div>
 
@@ -60,17 +69,6 @@ export const PostHero: React.FC<{
             )}
           </div>
         </div>
-      </div>
-      <div className="h-[60vh] select-none">
-        {heroImage && typeof heroImage !== 'string' && (
-          <Media
-            fill
-            priority
-            imgClassName="-z-10 object-cover bg-brandingtheme-foreground"
-            resource={heroImage}
-          />
-        )}
-        <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-brandingtheme-foreground to-transparent" />
       </div>
     </div>
   )
