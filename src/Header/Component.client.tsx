@@ -21,6 +21,8 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   // Check if this is the home page
   const isHomePage = pathname === '/'
+  // Check if this is a single post page (e.g., /posts/my-slug)
+  const isPostDetailPage = /^\/posts\/[^/]+$/.test(pathname || '')
 
   useEffect(() => {
     setHeaderTheme(null)
@@ -31,6 +33,9 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     if (headerTheme && headerTheme !== theme) setTheme(headerTheme)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerTheme])
+
+  // Hide entire header on single post pages
+  if (isPostDetailPage) return null
 
   return (
     <header
@@ -56,7 +61,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             }`}
           />
         </Link>
-        <HeaderNav data={data} isHomePage={isHomePage} />
+        {!isPostDetailPage && <HeaderNav data={data} isHomePage={isHomePage} />}
       </div>
     </header>
   )

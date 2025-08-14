@@ -214,7 +214,7 @@
   --text-primary: hsl(222.2 84% 4.9%);
   --text-secondary: hsl(234 7.69% 94%);
 
-  --button-primary: hsl(222.2 47.4% 11.2%);
+  --button-primary: hsl(0, 47%, 11%);
   --button-secondary: hsl(210 40% 96.1%);
   --button-transparent: hsl(0 0% 0%);
 
@@ -329,4 +329,11 @@ html {
 html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
+}
+
+/* Ensure bold text inside RichText uses the current text color (not default black) */
+@layer components {
+  .payload-richtext.prose strong {
+    color: inherit;
+  }
 }

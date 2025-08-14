@@ -24,11 +24,21 @@ export default async function BlogCarouselBlock(props: BlogCarouselBlockProps) {
       depth: 2,
       limit,
       where: {
-        _status: {
-          equals: 'published',
-        },
+        and: [
+          {
+            _status: {
+              equals: 'published',
+            },
+          },
+          {
+            publishedAt: {
+              less_than_equal: new Date().toISOString(),
+            },
+          },
+        ],
       },
-      sort: '-publishedAt',
+      // Use a stable sort to prevent inconsistent results when timestamps are equal
+      sort: ['-publishedAt', '-updatedAt', 'id'],
     })
 
     posts = fetchedPosts.docs || []

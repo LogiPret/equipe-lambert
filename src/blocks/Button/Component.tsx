@@ -4,6 +4,7 @@ import type { Page, Post } from '@/payload-types'
 
 interface ButtonBlockProps {
   text: string
+  size?: 'sm' | 'default' | 'lg' | 'xl'
   link: {
     type?: 'custom' | 'reference' | null
     newTab?: boolean | null
@@ -16,7 +17,7 @@ interface ButtonBlockProps {
   }
 }
 
-export const ButtonBlock: React.FC<ButtonBlockProps> = ({ text, link }) => {
+export const ButtonBlock: React.FC<ButtonBlockProps> = ({ text, link, size = 'default' }) => {
   return (
     <div className="my-8 flex justify-center">
       <CMSLink
@@ -25,6 +26,7 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({ text, link }) => {
         url={link.url}
         newTab={link.newTab}
         appearance={link.appearance || 'default'}
+        size={size}
         className="inline-flex items-center justify-center no-underline"
       >
         {text}

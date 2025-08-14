@@ -101,7 +101,7 @@ export default function BlogCarouselClient({
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => prev + 1)
-    }, 4000)
+    }, 8000)
 
     return () => clearInterval(interval)
   }, [isAutoPlaying])

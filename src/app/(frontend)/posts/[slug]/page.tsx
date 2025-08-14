@@ -63,7 +63,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       <div className="flex flex-col items-center gap-4 pt-8 bg-brandingtheme-foreground">
         <div className="container">
           <RichText
-            className="max-w-[48rem] mx-auto text-brandingtheme"
+            className="max-w-[64rem] mx-auto text-brandingtheme"
             data={post.content}
             enableGutter={false}
           />

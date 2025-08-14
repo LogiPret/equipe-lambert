@@ -5,6 +5,7 @@ import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { formatAuthors } from '@/utilities/formatAuthors'
+import { Badge } from '@/components/ui/badge'
 
 export const PostHero: React.FC<{
   post: Post
@@ -15,23 +16,21 @@ export const PostHero: React.FC<{
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
 
   return (
-    <div className="relative -mt-[10.4rem] flex items-end">
-      <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] text-brandingtheme pb-8">
-        <div className="col-start-1 col-span-1 md:col-start-2 md:col-span-2">
-          <div className="uppercase text-sm mb-6">
+    <div className="relative -mt-[10.4rem] lg:h-[80vh] h-[50vh] flex items-end">
+      <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_64rem_1fr] text-brandingtheme">
+        <div className="col-start-1 col-span-1 lg:col-start-2 lg:col-span-1">
+          <div className="mb-6 flex flex-wrap gap-2">
             {categories?.map((category, index) => {
               if (typeof category === 'object' && category !== null) {
                 const { title: categoryTitle } = category
-
                 const titleToUse = categoryTitle || 'Untitled category'
-
-                const isLast = index === categories.length - 1
-
                 return (
-                  <React.Fragment key={index}>
+                  <Badge
+                    key={index}
+                    className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-brandingtheme text-sm font-medium text-brandingtheme"
+                  >
                     {titleToUse}
-                    {!isLast && <React.Fragment>, &nbsp;</React.Fragment>}
-                  </React.Fragment>
+                  </Badge>
                 )
               }
               return null
@@ -39,14 +38,14 @@ export const PostHero: React.FC<{
           </div>
 
           <div className="">
-            <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl">{title}</h1>
+            <h1 className="mb-6 text-5xl lg:text-7xl">{title}</h1>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-4 md:gap-16">
+          <div className="flex flex-row flex-wrap items-start gap-6 md:gap-16">
             {hasAuthors && (
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
-                  <p className="text-sm">Author</p>
+                  <p className="text-sm">Auteur</p>
 
                   <p>{formatAuthors(populatedAuthors)}</p>
                 </div>
@@ -54,7 +53,7 @@ export const PostHero: React.FC<{
             )}
             {publishedAt && (
               <div className="flex flex-col gap-1">
-                <p className="text-sm">Date Published</p>
+                <p className="text-sm">Date de publication</p>
 
                 <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
               </div>
@@ -62,12 +61,18 @@ export const PostHero: React.FC<{
           </div>
         </div>
       </div>
-      <div className="min-h-[80vh] select-none">
+      <div className="h-[60vh] select-none">
         {heroImage && typeof heroImage !== 'string' && (
-          <Media fill priority imgClassName="-z-10 object-cover" resource={heroImage} />
+          <Media
+            fill
+            priority
+            imgClassName="-z-10 object-cover bg-brandingtheme-foreground"
+            resource={heroImage}
+          />
         )}
-        <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-brandingtheme-foreground to-transparent" />
+        <div className="absolute mb-40 pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-brandingtheme-foreground to-transparent" />
       </div>
+      <div className="h-40 bg-brandingtheme-foreground absolute bottom-0 left-0 right-0" />
     </div>
   )
 }

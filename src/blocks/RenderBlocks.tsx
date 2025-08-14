@@ -33,6 +33,7 @@ import LandingHeroBlock from '@/blocks/LandingCommonBlocks/LandingHeroBlock/Comp
 import { InteractivePropertiesBlockComponent } from '@/blocks/InteractivePropertiesBlock/Component'
 import { TableByColumnsBlock } from '@/blocks/TableByColumns/Component'
 import { TableByRowsBlock } from '@/blocks/TableByRows/Component'
+import BlogInlineCTA from '@/blocks/BlogInlineCTA/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -56,6 +57,7 @@ const blockComponents = {
   blogCarousel: BlogCarouselBlock,
   whyChooseUs: WhyChooseUsBlock,
   landingProcess: LandingProcessBlock,
+  blogInlineCTA: BlogInlineCTA,
   mortgageCalculator: MortgageCalculatorBlock,
   vendreWhyChooseUs: WhyChooseUsBlock,
   landingCTA: LandingCTABlockComponent,

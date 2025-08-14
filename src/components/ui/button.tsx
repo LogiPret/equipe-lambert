@@ -15,8 +15,9 @@ const buttonVariants = cva(
         clear: '',
         default: 'h-10 px-4 py-2',
         icon: 'h-10 w-10',
-        lg: 'h-11 rounded px-8',
+        lg: 'h-14 rounded px-8 text-lg',
         sm: 'h-9 rounded px-3',
+        xl: 'h-20 rounded px-10 text-lg md:text-xl',
       },
       variant: {
         default: 'bg-brandingtheme text-brandingtheme-foreground hover:bg-primary/90',
