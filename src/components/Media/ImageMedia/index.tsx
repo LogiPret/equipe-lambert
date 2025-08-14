@@ -42,19 +42,14 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromResource || ''
 
-    const cacheTag = resource.updatedAt
-
-    src = getMediaUrl(url, cacheTag)
+    // Use the original URL without any cache tagging to avoid timeouts
+    src = getMediaUrl(url)
   }
 
-  const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
+  const loading = loadingFromProps || (!priority ? 'lazy' : 'eager')
 
-  // NOTE: this is used by the browser to determine which image to download at different screen sizes
-  const sizes = sizeFromProps
-    ? sizeFromProps
-    : Object.entries(breakpoints)
-        .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
-        .join(', ')
+  // Simplified sizes to reduce optimization complexity
+  const sizes = sizeFromProps || '(max-width: 768px) 100vw, 50vw'
 
   return (
     <picture className={cn(pictureClassName)}>
@@ -63,14 +58,14 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         className={cn(imgClassName)}
         fill={fill}
         height={!fill ? height : undefined}
-        placeholder="blur"
-        blurDataURL={placeholderBlur}
+        placeholder="empty" // Remove blur placeholder to speed up loading
         priority={priority}
-        quality={100}
+        quality={75} // Further reduce quality for faster processing
         loading={loading}
         sizes={sizes}
         src={src}
         width={!fill ? width : undefined}
+        unoptimized={true} // Disable Next.js optimization to prevent timeouts
       />
     </picture>
   )

@@ -24,6 +24,7 @@ export default async function Page() {
       slug: true,
       categories: true,
       meta: true,
+      updatedAt: true, // Include for cache optimization
     },
   })
 

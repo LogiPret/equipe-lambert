@@ -17,9 +17,17 @@ export const Card: React.FC<{
   relationTo?: 'posts'
   showCategories?: boolean
   title?: string
+  priority?: boolean
 }> = (props) => {
   const { card, link } = useClickableCard({})
-  const { className, doc, relationTo, showCategories, title: titleFromProps } = props
+  const {
+    className,
+    doc,
+    relationTo,
+    showCategories,
+    title: titleFromProps,
+    priority = false,
+  } = props
 
   const { slug, categories, meta, title } = doc || {}
   const { description, image: metaImage } = meta || {}
@@ -39,7 +47,9 @@ export const Card: React.FC<{
     >
       <div className="relative w-full ">
         {!metaImage && <div className="">No image</div>}
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
+        {metaImage && typeof metaImage !== 'string' && (
+          <Media resource={metaImage} size="33vw" priority={priority} />
+        )}
       </div>
       <div className="p-4">
         {showCategories && hasCategories && (

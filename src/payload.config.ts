@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url'
 
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
+import { PDF } from './collections/PDF'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
@@ -69,7 +70,7 @@ export default buildConfig({
       connectionString: process.env.POSTGRES_URL || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Popups],
+  collections: [Pages, Posts, Media, PDF, Categories, Users, Popups],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
@@ -77,6 +78,7 @@ export default buildConfig({
     vercelBlobStorage({
       collections: {
         media: true,
+        pdf: true,
       },
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),
