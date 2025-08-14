@@ -70,8 +70,9 @@ export const PostHero: React.FC<{
             resource={heroImage}
           />
         )}
-        <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-brandingtheme-foreground to-transparent" />
-      </div>
+        <div className="absolute mb-40 pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-brandingtheme-foreground to-transparent" />
+      </div>{' '}
+      <div className="h-40 bg-brandingtheme-foreground absolute bottom-0 left-0 right-0" />
     </div>
   )
 }
