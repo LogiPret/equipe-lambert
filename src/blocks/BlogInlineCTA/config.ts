@@ -11,6 +11,19 @@ export const BlogInlineCTA: Block = {
   },
   fields: [
     {
+      name: 'actionType',
+      type: 'radio',
+      label: 'Action Type',
+      defaultValue: 'link',
+      options: [
+        { label: 'Link', value: 'link' },
+        { label: 'Popup', value: 'popup' },
+      ],
+      admin: {
+        layout: 'horizontal',
+      },
+    },
+    {
       name: 'headline',
       type: 'text',
       required: true,
@@ -27,6 +40,7 @@ export const BlogInlineCTA: Block = {
       overrides: {
         admin: {
           description: 'Select a Page or Post. Only internal links are allowed for this button.',
+          condition: (_, { actionType }) => actionType !== 'popup',
         },
         validate: (val: any) => {
           if (!val || val.type !== 'reference' || !val.reference) {
@@ -36,5 +50,25 @@ export const BlogInlineCTA: Block = {
         },
       },
     }),
+    {
+      name: 'buttonText',
+      type: 'text',
+      label: 'Button Text',
+      admin: {
+        description: 'Text shown on the CTA button when using Popup action.',
+        condition: (_, { actionType }) => actionType === 'popup',
+      },
+    },
+    {
+      name: 'popupRef',
+      type: 'relationship',
+      relationTo: 'popups',
+      label: 'Popup',
+      admin: {
+        description: 'Select the popup to display when the button is clicked.',
+        condition: (_, { actionType }) => actionType === 'popup',
+      },
+      required: false,
+    },
   ],
 }

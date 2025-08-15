@@ -27,8 +27,9 @@ import type {
 interface ButtonBlockProps {
   text: string
   size?: 'sm' | 'default' | 'lg' | 'xl'
+  actionType?: 'link' | 'popup'
   link: {
-    type?: 'custom' | 'reference' | null
+    type?: 'custom' | 'reference' | 'archive' | null
     newTab?: boolean | null
     reference?: {
       relationTo: 'pages' | 'posts'
@@ -37,6 +38,7 @@ interface ButtonBlockProps {
     url?: string | null
     appearance?: 'default' | 'outline'
   }
+  popupRef?: any
 }
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'

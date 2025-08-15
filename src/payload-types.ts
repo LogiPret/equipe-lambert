@@ -70,8 +70,10 @@ export interface Config {
     pages: Page;
     posts: Post;
     media: Media;
+    pdf: Pdf;
     categories: Category;
     users: User;
+    popups: Popup;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -86,8 +88,10 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    pdf: PdfSelect<false> | PdfSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    popups: PopupsSelect<false> | PopupsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -199,6 +203,7 @@ export interface Page {
     | ArchiveBlock
     | FormBlock
     | {
+        actionType?: ('link' | 'popup') | null;
         text: string;
         size?: ('sm' | 'default' | 'lg' | 'xl') | null;
         link?: {
@@ -220,6 +225,10 @@ export interface Page {
            */
           appearance?: ('default' | 'outline') | null;
         };
+        /**
+         * Select the popup to display when the button is clicked.
+         */
+        popupRef?: (number | null) | Popup;
         id?: string | null;
         blockName?: string | null;
         blockType: 'button';
@@ -1125,7 +1134,8 @@ export interface CallToActionBlock {
   } | null;
   links?:
     | {
-        link: {
+        actionType?: ('link' | 'popup') | null;
+        link?: {
           type?: ('reference' | 'custom' | 'archive') | null;
           newTab?: boolean | null;
           reference?:
@@ -1145,12 +1155,40 @@ export interface CallToActionBlock {
            */
           appearance?: ('default' | 'outline') | null;
         };
+        /**
+         * Text shown on the button when using Popup action.
+         */
+        buttonText?: string | null;
+        /**
+         * Select the popup to display when the button is clicked.
+         */
+        popupRef?: (number | null) | Popup;
         id?: string | null;
       }[]
     | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
+}
+/**
+ * Manage reusable popups. Buttons configured with type "Popup" can reference one of these.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popups".
+ */
+export interface Popup {
+  id: number;
+  title: string;
+  /**
+   * Name of the PDF associated to this popup (not rendered, sent to n8n).
+   */
+  pdfName?: string | null;
+  buttonText: string;
+  firstNameLabel?: string | null;
+  lastNameLabel?: string | null;
+  phoneLabel?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1529,6 +1567,42 @@ export interface InteractivePropertiesBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pdf".
+ */
+export interface Pdf {
+  id: number;
+  title: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1713,12 +1787,20 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'pdf';
+        value: number | Pdf;
+      } | null)
+    | ({
         relationTo: 'categories';
         value: number | Category;
       } | null)
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'popups';
+        value: number | Popup;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1822,6 +1904,7 @@ export interface PagesSelect<T extends boolean = true> {
         button?:
           | T
           | {
+              actionType?: T;
               text?: T;
               size?: T;
               link?:
@@ -1834,6 +1917,7 @@ export interface PagesSelect<T extends boolean = true> {
                     archive?: T;
                     appearance?: T;
                   };
+              popupRef?: T;
               id?: T;
               blockName?: T;
             };
@@ -2432,6 +2516,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
   links?:
     | T
     | {
+        actionType?: T;
         link?:
           | T
           | {
@@ -2443,6 +2528,8 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               label?: T;
               appearance?: T;
             };
+        buttonText?: T;
+        popupRef?: T;
         id?: T;
       };
   id?: T;
@@ -2692,6 +2779,27 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pdf_select".
+ */
+export interface PdfSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
@@ -2732,6 +2840,20 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popups_select".
+ */
+export interface PopupsSelect<T extends boolean = true> {
+  title?: T;
+  pdfName?: T;
+  buttonText?: T;
+  firstNameLabel?: T;
+  lastNameLabel?: T;
+  phoneLabel?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3278,12 +3400,13 @@ export interface TableByRowsBlock {
  * via the `definition` "BlogInlineCTA".
  */
 export interface BlogInlineCTA {
+  actionType?: ('link' | 'popup') | null;
   headline: string;
   description?: string | null;
   /**
    * Select a Page or Post. Only internal links are allowed for this button.
    */
-  link: {
+  link?: {
     type?: ('reference' | 'custom' | 'archive') | null;
     newTab?: boolean | null;
     reference?:
@@ -3303,6 +3426,14 @@ export interface BlogInlineCTA {
      */
     appearance?: ('default' | 'outline') | null;
   };
+  /**
+   * Text shown on the CTA button when using Popup action.
+   */
+  buttonText?: string | null;
+  /**
+   * Select the popup to display when the button is clicked.
+   */
+  popupRef?: (number | null) | Popup;
   id?: string | null;
   blockName?: string | null;
   blockType: 'blogInlineCTA';

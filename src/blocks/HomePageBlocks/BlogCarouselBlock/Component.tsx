@@ -140,6 +140,22 @@ export default function BlogCarouselClient({
     }
   }, [currentIndex, postsLength])
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        goToPrevious()
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        goToNext()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   // Don't render if no posts
   if (!posts || posts.length === 0) {
     return (
@@ -230,7 +246,11 @@ export default function BlogCarouselClient({
                     className={`absolute w-80 h-[480px] transition-all duration-500 ease-in-out ${getSlidePosition(
                       index,
                     )} ${getBlurClass(index)} ${getOpacityClass(index)} ${
-                      index === currentIndex ? 'cursor-pointer' : ''
+                      index === currentIndex
+                        ? 'cursor-pointer'
+                        : index === currentIndex - 1 || index === currentIndex + 1
+                          ? 'cursor-pointer'
+                          : 'cursor-default'
                     }`}
                     style={{
                       transform: `translateX(calc(${
@@ -241,6 +261,16 @@ export default function BlogCarouselClient({
                       if (index === currentIndex) {
                         // Navigate to the post when clicking the center card
                         window.location.href = `/posts/${actualPost.slug}`
+                      } else if (index === currentIndex - 2) {
+                        goToPrevious()
+                        goToPrevious()
+                      } else if (index === currentIndex - 1) {
+                        goToPrevious()
+                      } else if (index === currentIndex + 1) {
+                        goToNext()
+                      } else if (index === currentIndex + 2) {
+                        goToNext()
+                        goToNext()
                       }
                     }}
                   >
@@ -248,7 +278,9 @@ export default function BlogCarouselClient({
                       className={`h-full shadow-xl transition-all duration-500 group overflow-hidden bg-branding0 ${
                         index === currentIndex
                           ? 'border border-borderprimarystatic hover:shadow-2xl hover:border-bordersecondarystatic transform hover:scale-105'
-                          : 'border-0'
+                          : index === currentIndex - 1 || index === currentIndex + 1
+                            ? 'border-0 hover:shadow-lg hover:scale-105'
+                            : 'border-0'
                       }`}
                     >
                       <div className="relative h-48 overflow-hidden">
@@ -265,15 +297,15 @@ export default function BlogCarouselClient({
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                       </div>
-                      <CardContent className="p-6 flex flex-col justify-between min-h-[260px]">
-                        <div className="flex-1">
-                          <h3 className="text-lg font-bold text-branding100 mb-3 line-clamp-2 leading-tight">
+                      <CardContent className="p-6 flex flex-col h-[280px]">
+                        <div className="flex flex-col flex-1">
+                          <h3 className="text-lg font-bold text-branding100 mb-4 leading-tight min-h-[3.5rem]">
                             {actualPost.title}
                           </h3>
-                          <p className="text-branding75 text-sm line-clamp-2 mb-3 leading-relaxed">
+                          <p className="text-branding75 text-sm line-clamp-3 mb-4 leading-relaxed flex-1">
                             {actualPost.excerpt}
                           </p>
-                          <div className="flex items-center text-xs text-branding50 mb-3 flex-wrap">
+                          <div className="flex items-center text-xs text-branding50 mb-4 flex-wrap">
                             <User className="h-3 w-3 mr-1 text-branding100" />
                             <span className="mr-2 truncate">{actualPost.author}</span>
                             <Calendar className="h-3 w-3 mr-1 text-branding100" />
@@ -283,9 +315,9 @@ export default function BlogCarouselClient({
                             </span>
                           </div>
                         </div>
-                        <div className="mt-auto pt-3">
+                        <div className="mt-auto">
                           {index === currentIndex ? (
-                            <Link href={`/posts/${actualPost.slug}`} className="block">
+                            <Link href={`/posts/${actualPost.slug}`} className="block w-full">
                               <Button
                                 variant="outline"
                                 size="sm"

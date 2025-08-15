@@ -9,6 +9,19 @@ export const Button: Block = {
   },
   fields: [
     {
+      name: 'actionType',
+      type: 'radio',
+      label: 'Action Type',
+      defaultValue: 'link',
+      options: [
+        { label: 'Link', value: 'link' },
+        { label: 'Popup', value: 'popup' },
+      ],
+      admin: {
+        layout: 'horizontal',
+      },
+    },
+    {
       name: 'text',
       type: 'text',
       required: true,
@@ -29,6 +42,22 @@ export const Button: Block = {
     link({
       disableLabel: true,
       appearances: ['default', 'outline'],
+      overrides: {
+        admin: {
+          condition: (_, { actionType }) => actionType !== 'popup',
+        },
+      },
     }),
+    {
+      name: 'popupRef',
+      type: 'relationship',
+      relationTo: 'popups',
+      label: 'Popup',
+      admin: {
+        description: 'Select the popup to display when the button is clicked.',
+        condition: (_, { actionType }) => actionType === 'popup',
+      },
+      required: false,
+    },
   ],
 }
