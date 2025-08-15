@@ -504,13 +504,19 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
         {/* CTA Section */}
         <div className="text-center mt-16">
           <p className="text-branding75 mb-6 text-lg">{buttonInfo}</p>
-          <Button
-            size="lg"
-            variant="outline"
-            className="bg-accent3static border-accent3static text-branding0 hover:bg-branding0 hover:text-accent3static px-8 py-3 font-semibold"
-          >
-            Voir toutes nos propriétés
-          </Button>
+            <Link
+            href="https://www.centris.ca/en/real-estate-broker~david-lambert~exp-agence-immobiliere/g7749?onlyonedisplay=true&uc=4"
+            target="_blank"
+            rel="noopener noreferrer"
+            >
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-accent3static border-accent3static text-branding0 hover:bg-branding0 hover:text-accent3static px-8 py-3 font-semibold"
+            >
+              Voir toutes nos propriétés
+            </Button>
+            </Link>
         </div>
       </div>
     </section>

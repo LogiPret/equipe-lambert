@@ -234,15 +234,36 @@ export default function ContactBlock({
 
     setIsSubmitting(true)
 
-    // Simulate form submission (replace with actual API call)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      // Prepare submission data in the same format as other forms
+      const submissionData = formFields.map((field) => ({
+        field: field.name,
+        value: formData[field.name] || '',
+      }))
 
-    setIsSubmitted(true)
-    setIsSubmitting(false)
+      const response = await fetch('/api/contact-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ submissionData }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Form submission failed')
+      }
+
+      setIsSubmitted(true)
+    } catch (error) {
+      console.error('Form submission error:', error)
+      // Handle error - you could show an error message here
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
-    <section id="contact" className="py-24 bg-secondarystatic">
+    <section id="contact-block" className="py-24 bg-secondarystatic">
       <div className="container mx-auto px-4">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center mb-20">
@@ -279,7 +300,7 @@ export default function ContactBlock({
                   alt={imageAlt}
                   width={400}
                   height={200}
-                  className="w-full h-48 object-cover mb-4"
+                  className="w-full h-48 object-cover object-top mb-4"
                 />
                 <p className="text-branding75 text-center">{officeImage.description}</p>
               </div>
@@ -311,7 +332,7 @@ export default function ContactBlock({
                         />
                       </svg>
                     </div>
-                    <h4 className="text-xl font-semibold text-branding100 mb-4">Message Sent!</h4>
+                    <h4 className="text-xl font-semibold text-branding100 mb-4">Message Envoyé!</h4>
                     <p className="text-branding75 leading-relaxed">
                       {form.successMessage ||
                         'Merci pour votre message ! Nous vous contacterons bientôt.'}

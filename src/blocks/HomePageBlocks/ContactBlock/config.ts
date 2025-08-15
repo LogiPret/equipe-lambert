@@ -251,7 +251,7 @@ export const ContactBlock: Block = {
           type: 'textarea',
           label: 'Success Message',
           required: false,
-          defaultValue: 'Thank you for your message! We will get back to you soon.',
+          defaultValue: 'Merci pour votre message ! Nous reviendrons vers vous bientôt.',
           admin: {
             description: 'Message displayed after successful form submission',
           },
