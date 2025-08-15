@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       nom: formData.nom,
       email: formData.email,
       phone: formData.phone || '',
-      type: formData.type || '',
+      type: 'CONTACT',
     }
 
     // Insert into Supabase
