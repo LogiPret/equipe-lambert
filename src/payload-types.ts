@@ -172,7 +172,7 @@ export interface Page {
     links?:
       | {
           link: {
-            type?: ('reference' | 'custom' | 'archive') | null;
+            type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -185,6 +185,10 @@ export interface Page {
                 } | null);
             url?: string | null;
             archive?: 'posts' | null;
+            /**
+             * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+             */
+            scrollTarget?: string | null;
             label: string;
             /**
              * Choose how the link should be rendered.
@@ -207,7 +211,7 @@ export interface Page {
         text: string;
         size?: ('sm' | 'default' | 'lg' | 'xl') | null;
         link?: {
-          type?: ('reference' | 'custom' | 'archive') | null;
+          type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -220,6 +224,10 @@ export interface Page {
               } | null);
           url?: string | null;
           archive?: 'posts' | null;
+          /**
+           * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+           */
+          scrollTarget?: string | null;
           /**
            * Choose how the link should be rendered.
            */
@@ -243,7 +251,7 @@ export interface Page {
           text: string;
           icon?: string | null;
           link?: {
-            type?: ('reference' | 'custom' | 'archive') | null;
+            type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -257,6 +265,10 @@ export interface Page {
             url?: string | null;
             archive?: 'posts' | null;
             /**
+             * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+             */
+            scrollTarget?: string | null;
+            /**
              * Choose how the link should be rendered.
              */
             appearance?: ('default' | 'outline') | null;
@@ -265,7 +277,7 @@ export interface Page {
         secondaryButton?: {
           text?: string | null;
           link?: {
-            type?: ('reference' | 'custom' | 'archive') | null;
+            type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -278,6 +290,10 @@ export interface Page {
                 } | null);
             url?: string | null;
             archive?: 'posts' | null;
+            /**
+             * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+             */
+            scrollTarget?: string | null;
             /**
              * Choose how the link should be rendered.
              */
@@ -333,7 +349,7 @@ export interface Page {
         members: {
           name: string;
           role: string;
-          speciality: string;
+          speciality?: string | null;
           image: number | Media;
           experience: string;
           id?: string | null;
@@ -368,7 +384,7 @@ export interface Page {
         }[];
         showAllButton: {
           link: {
-            type?: ('reference' | 'custom' | 'archive') | null;
+            type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -381,6 +397,10 @@ export interface Page {
                 } | null);
             url?: string | null;
             archive?: 'posts' | null;
+            /**
+             * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+             */
+            scrollTarget?: string | null;
             label: string;
           };
         };
@@ -419,7 +439,7 @@ export interface Page {
           icon?: ('dollar_sign' | 'key' | 'phone' | 'mail') | null;
           variant?: ('primary' | 'secondary') | null;
           link?: {
-            type?: ('reference' | 'custom' | 'archive') | null;
+            type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -432,6 +452,10 @@ export interface Page {
                 } | null);
             url?: string | null;
             archive?: 'posts' | null;
+            /**
+             * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+             */
+            scrollTarget?: string | null;
             /**
              * Choose how the link should be rendered.
              */
@@ -1136,7 +1160,7 @@ export interface CallToActionBlock {
     | {
         actionType?: ('link' | 'popup') | null;
         link?: {
-          type?: ('reference' | 'custom' | 'archive') | null;
+          type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -1149,6 +1173,10 @@ export interface CallToActionBlock {
               } | null);
           url?: string | null;
           archive?: 'posts' | null;
+          /**
+           * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+           */
+          scrollTarget?: string | null;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -1215,7 +1243,7 @@ export interface ContentBlock {
         } | null;
         enableLink?: boolean | null;
         link?: {
-          type?: ('reference' | 'custom' | 'archive') | null;
+          type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -1228,6 +1256,10 @@ export interface ContentBlock {
               } | null);
           url?: string | null;
           archive?: 'posts' | null;
+          /**
+           * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+           */
+          scrollTarget?: string | null;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -1886,6 +1918,7 @@ export interface PagesSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     archive?: T;
+                    scrollTarget?: T;
                     label?: T;
                     appearance?: T;
                   };
@@ -1915,6 +1948,7 @@ export interface PagesSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     archive?: T;
+                    scrollTarget?: T;
                     appearance?: T;
                   };
               popupRef?: T;
@@ -1942,6 +1976,7 @@ export interface PagesSelect<T extends boolean = true> {
                           reference?: T;
                           url?: T;
                           archive?: T;
+                          scrollTarget?: T;
                           appearance?: T;
                         };
                   };
@@ -1957,6 +1992,7 @@ export interface PagesSelect<T extends boolean = true> {
                           reference?: T;
                           url?: T;
                           archive?: T;
+                          scrollTarget?: T;
                           appearance?: T;
                         };
                   };
@@ -2068,6 +2104,7 @@ export interface PagesSelect<T extends boolean = true> {
                           reference?: T;
                           url?: T;
                           archive?: T;
+                          scrollTarget?: T;
                           label?: T;
                         };
                   };
@@ -2119,6 +2156,7 @@ export interface PagesSelect<T extends boolean = true> {
                           reference?: T;
                           url?: T;
                           archive?: T;
+                          scrollTarget?: T;
                           appearance?: T;
                         };
                   };
@@ -2525,6 +2563,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               archive?: T;
+              scrollTarget?: T;
               label?: T;
               appearance?: T;
             };
@@ -2554,6 +2593,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               archive?: T;
+              scrollTarget?: T;
               label?: T;
               appearance?: T;
             };
@@ -3119,7 +3159,7 @@ export interface Header {
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom' | 'archive') | null;
+          type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -3132,6 +3172,10 @@ export interface Header {
               } | null);
           url?: string | null;
           archive?: 'posts' | null;
+          /**
+           * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+           */
+          scrollTarget?: string | null;
           label: string;
         };
         id?: string | null;
@@ -3153,7 +3197,7 @@ export interface Footer {
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom' | 'archive') | null;
+          type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -3166,6 +3210,10 @@ export interface Footer {
               } | null);
           url?: string | null;
           archive?: 'posts' | null;
+          /**
+           * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+           */
+          scrollTarget?: string | null;
           label: string;
         };
         id?: string | null;
@@ -3202,6 +3250,7 @@ export interface HeaderSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               archive?: T;
+              scrollTarget?: T;
               label?: T;
             };
         id?: T;
@@ -3227,6 +3276,7 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               archive?: T;
+              scrollTarget?: T;
               label?: T;
             };
         id?: T;
@@ -3407,7 +3457,7 @@ export interface BlogInlineCTA {
    * Select a Page or Post. Only internal links are allowed for this button.
    */
   link?: {
-    type?: ('reference' | 'custom' | 'archive') | null;
+    type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
     newTab?: boolean | null;
     reference?:
       | ({
@@ -3420,6 +3470,10 @@ export interface BlogInlineCTA {
         } | null);
     url?: string | null;
     archive?: 'posts' | null;
+    /**
+     * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+     */
+    scrollTarget?: string | null;
     label: string;
     /**
      * Choose how the link should be rendered.

@@ -8,13 +8,14 @@ interface ButtonBlockProps {
   size?: 'sm' | 'default' | 'lg' | 'xl'
   actionType?: 'link' | 'popup'
   link: {
-    type?: 'custom' | 'reference' | 'archive' | null
+    type?: 'custom' | 'reference' | 'archive' | 'scroll' | null
     newTab?: boolean | null
     reference?: {
       relationTo: 'pages' | 'posts'
       value: Page | Post | string | number
     } | null
     url?: string | null
+    scrollTarget?: string | null
     appearance?: 'default' | 'outline'
   }
   popupRef?: number | Popup | null
@@ -54,6 +55,7 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({
         type={link.type}
         reference={link.reference}
         url={link.url}
+        scrollTarget={link.scrollTarget}
         newTab={link.newTab}
         appearance={link.appearance || 'default'}
         size={size}

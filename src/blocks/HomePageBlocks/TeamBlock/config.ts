@@ -35,7 +35,6 @@ export const TeamBlock: Block = {
         {
           name: 'speciality',
           type: 'text',
-          required: true,
         },
         {
           name: 'image',

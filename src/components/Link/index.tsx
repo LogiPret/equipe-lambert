@@ -1,7 +1,7 @@
 'use client'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
-import { handleContactRedirect } from '@/utilities/contactRedirect'
+import { handleScrollRedirect } from '@/utilities/contactRedirect'
 import Link from 'next/link'
 import React from 'react'
 
@@ -18,9 +18,10 @@ type CMSLinkType = {
     value: Page | Post | string | number
   } | null
   size?: ButtonProps['size'] | null
-  type?: 'custom' | 'reference' | 'archive' | null
+  type?: 'custom' | 'reference' | 'archive' | 'scroll' | null
   url?: string | null
   archive?: string | null
+  scrollTarget?: string | null
 }
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
@@ -35,6 +36,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     size: sizeFromProps,
     url,
     archive,
+    scrollTarget,
   } = props
 
   let href: string | null = null
@@ -53,6 +55,8 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     }
   } else if (type === 'custom' && url) {
     href = url
+  } else if (type === 'scroll' && scrollTarget) {
+    href = `#${scrollTarget}`
   }
 
   if (!href) return null
@@ -63,12 +67,12 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   /* Ensure we don't break any styles set by richText */
   if (appearance === 'inline') {
     return (
-      <Link 
-        className={cn(className)} 
-        href={href || url || ''} 
+      <Link
+        className={cn(className)}
+        href={href || url || ''}
         {...newTabProps}
         onClick={(e) => {
-          if (handleContactRedirect(href || url || '')) {
+          if (handleScrollRedirect(href || url || '')) {
             e.preventDefault()
           }
         }}
@@ -84,12 +88,12 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   return (
     <Button asChild className={className} size={size} variant={appearance}>
-      <Link 
-        className={anchorClassName} 
-        href={href || url || ''} 
+      <Link
+        className={anchorClassName}
+        href={href || url || ''}
         {...newTabProps}
         onClick={(e) => {
-          if (handleContactRedirect(href || url || '')) {
+          if (handleScrollRedirect(href || url || '')) {
             e.preventDefault()
           }
         }}
