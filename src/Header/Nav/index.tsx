@@ -36,7 +36,7 @@ export const HeaderNav: React.FC<{ data: HeaderType; isHomePage?: boolean }> = (
         className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
           isHomePage
             ? 'bg-branding100 text-branding0 hover:bg-branding75 drop-shadow-lg'
-            : 'bg-primary text-white hover:bg-primary/90'
+            : 'bg-primary text-brandingtheme-foreground hover:bg-primary/90'
         }`}
       >
         Nous contacter

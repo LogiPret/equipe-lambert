@@ -4,12 +4,13 @@ import { Award, Search } from 'lucide-react'
 import type { Media, Page, Post } from '@/payload-types'
 
 interface ButtonLink {
-  type?: 'custom' | 'reference' | null
+  type?: 'custom' | 'reference' | 'scroll' | null
   reference?: {
     relationTo: 'pages' | 'posts'
     value: Page | Post | string | number
   } | null
   url?: string | null
+  scrollTarget?: string | null
   newTab?: boolean | null
 }
 

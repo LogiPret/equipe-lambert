@@ -110,7 +110,7 @@ export default function HeaderBlock({ logo, navigation, contactButton }: HeaderB
           </nav>
 
           <ScrollAnimation animation="slideLeft">
-            <Button className="bg-branding100 hover:bg-accent2static text-branding0 px-6 py-3 font-medium">
+            <Button className="bg-testcol hover:bg-accent2static text-brandingtheme px-6 py-3 font-medium">
               <Phone className="h-4 w-4 mr-2" />
               {contactButton.text}
             </Button>

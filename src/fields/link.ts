@@ -53,6 +53,10 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
                 label: 'Archive page',
                 value: 'archive',
               },
+              {
+                label: 'Scroll to section',
+                value: 'scroll',
+              },
             ],
           },
           {
@@ -104,6 +108,17 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
           value: 'posts',
         },
       ],
+      required: true,
+    },
+    {
+      name: 'scrollTarget',
+      type: 'text',
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === 'scroll',
+        description:
+          'Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)',
+      },
+      label: 'Section ID to scroll to',
       required: true,
     },
   ]

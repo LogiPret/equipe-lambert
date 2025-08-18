@@ -145,5 +145,10 @@ export default function PropertyMap({ properties }: PropertyMapProps) {
     }
   }, [propertyLocations])
 
-  return <div ref={mapRef} className="w-full h-full min-h-[500px] bg-gray-100"></div>
+  return (
+    <div
+      ref={mapRef}
+      className="w-full h-full min-h-[400px] md:min-h-[500px] bg-gray-100 overflow-hidden"
+    ></div>
+  )
 }

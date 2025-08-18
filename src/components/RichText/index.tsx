@@ -29,7 +29,7 @@ interface ButtonBlockProps {
   size?: 'sm' | 'default' | 'lg' | 'xl'
   actionType?: 'link' | 'popup'
   link: {
-    type?: 'custom' | 'reference' | 'archive' | null
+    type?: 'custom' | 'reference' | 'archive' | 'scroll' | null
     newTab?: boolean | null
     reference?: {
       relationTo: 'pages' | 'posts'

@@ -33,25 +33,27 @@ export default function MapSectionBlock({ title, subtitle, properties }: MapSect
   }
 
   return (
-    <section className="py-24 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <section className="py-24 bg-gray-50 overflow-hidden">
+      <div className="container mx-auto px-4 max-w-none overflow-hidden">
         <div className="text-center mb-16">
           <div className="inline-block bg-[#0f3046] h-1 w-24 mb-6"></div>
           <h2 className="text-5xl font-serif font-bold text-gray-800 mb-6">{title}</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">{subtitle}</p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          <div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-none">
+          <div className="w-full min-w-0">
             <Card className="overflow-hidden shadow-lg h-full">
-              <PropertyMap properties={properties} />
+              <div className="w-full h-full min-h-[400px] md:min-h-[500px]">
+                <PropertyMap properties={properties} />
+              </div>
             </Card>
           </div>
-          <div className="space-y-6">
+          <div className="space-y-6 min-w-0">
             <Card className="shadow-lg bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200">
-              <CardContent className="p-6">
+              <CardContent className="p-4 md:p-6">
                 <div className="flex items-center mb-3">
-                  <div className="w-8 h-8 bg-[#0f3046] rounded-full flex items-center justify-center mr-3">
+                  <div className="w-8 h-8 bg-[#0f3046] rounded-full flex items-center justify-center mr-3 flex-shrink-0">
                     <svg
                       className="w-4 h-4 text-white"
                       fill="none"
@@ -66,18 +68,20 @@ export default function MapSectionBlock({ title, subtitle, properties }: MapSect
                       />
                     </svg>
                   </div>
-                  <h4 className="font-semibold text-gray-800">Carte interactive</h4>
+                  <h4 className="font-semibold text-gray-800 text-sm md:text-base">
+                    Carte interactive
+                  </h4>
                 </div>
-                <p className="text-sm text-gray-600 mb-3">
+                <p className="text-xs md:text-sm text-gray-600 mb-3">
                   Cliquez sur les marqueurs pour voir les détails des propriétés ou sur une
                   propriété dans la liste pour la localiser sur la carte.
                 </p>
-                <div className="flex items-center space-x-4 text-xs text-gray-500">
-                  <div className="flex items-center">
+                <div className="flex items-center space-x-2 md:space-x-4 text-xs text-gray-500 overflow-x-auto">
+                  <div className="flex items-center flex-shrink-0">
                     <div className="w-3 h-3 bg-[#0f3046] rounded-full mr-2"></div>
                     <span>À vendre</span>
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex items-center flex-shrink-0">
                     <div className="w-3 h-3 bg-gray-400 rounded-full mr-2"></div>
                     <span>Vendu</span>
                   </div>
@@ -85,30 +89,32 @@ export default function MapSectionBlock({ title, subtitle, properties }: MapSect
               </CardContent>
             </Card>
             <Card className="shadow-lg bg-white">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                  Propriétés disponibles
+              <CardContent className="p-4 md:p-6">
+                <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4 flex items-center">
+                  <div className="w-3 h-3 bg-green-500 rounded-full mr-3 flex-shrink-0"></div>
+                  <span className="min-w-0">Propriétés disponibles</span>
                 </h3>
                 <div className="space-y-3">
                   {(properties || []).slice(0, 4).map((property, index) => (
                     <div
                       key={property.id}
-                      className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer border border-gray-200 hover:border-[#2d5f7f]"
+                      className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer border border-gray-200 hover:border-[#2d5f7f] min-w-0"
                       onClick={() => focusProperty(index)}
                     >
                       <div
-                        className={`w-3 h-3 rounded-full ${
+                        className={`w-3 h-3 rounded-full flex-shrink-0 ${
                           property.status === 'À vendre' ? 'bg-green-500' : 'bg-gray-400'
                         }`}
                       ></div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-gray-800 truncate">
+                      <div className="flex-1 min-w-0 overflow-hidden">
+                        <p className="font-medium text-gray-800 truncate text-sm md:text-base">
                           {property.address.split(',')[0]}
                         </p>
-                        <p className="text-sm text-[#0f3046] font-semibold">{property.price}</p>
+                        <p className="text-sm text-[#0f3046] font-semibold truncate">
+                          {property.price}
+                        </p>
                       </div>
-                      <Badge variant="outline" className="text-xs text-[#0f3046]">
+                      <Badge variant="outline" className="text-xs text-[#0f3046] flex-shrink-0">
                         {property.type}
                       </Badge>
                     </div>
