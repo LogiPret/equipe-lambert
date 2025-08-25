@@ -27,7 +27,7 @@ export const Logo = (props: Props) => {
           'absolute top-1/2 left-0 -translate-y-1/2 w-auto h-[100px] md:h-[150px] object-contain z-10',
           className,
         )}
-        src="/logo2_equipe_lambert.png"
+        src="/equipelambert_logo.png"
       />
     </div>
   )

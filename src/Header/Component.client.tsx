@@ -58,7 +58,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             priority="high"
             className={`${
               isHomePage
-                ? 'drop-shadow-lg filter brightness-100 invert dark:invert-0 sm:invert-0'
+                ? 'drop-shadow-lg filter brightness-100 invert dark:invert-0 sm:invert sm:dark:invert'
                 : 'sm:invert dark:invert-0'
             }`}
           />
