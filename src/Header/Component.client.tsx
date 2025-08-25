@@ -40,17 +40,16 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   return (
     <header
-      className={`${isHomePage ? 'absolute text-branding100 top-0 left-0 right-0 z-50 pt-8' : 'container relative z-20'}`}
+      className={`${isHomePage ? 'sticky top-0 sm:absolute sm:top-0 sm:left-0 sm:right-0 z-50 bg-brandingtheme-foreground sm:bg-transparent w-full max-w-full pb-2' : 'container relative z-20'}`}
       {...(theme ? { 'data-theme': theme } : {})}
     >
-      {/* Gradient overlay for better text visibility on home page */}
-      {isHomePage && <div className="absolute inset-0 pointer-events-none"></div>}
+      {isHomePage && <div className="absolute inset-0 bg-transparent pointer-events-none"></div>}
 
       <div
         className={`${
           isHomePage
-            ? 'container mx-auto py-8 flex justify-between rounded-xl px-6 mt-4 relative z-10'
-            : 'py-8 flex justify-between'
+            ? 'w-full max-w-full py-4 sm:py-8 flex justify-between items-center px-4 sm:px-6 relative z-10 box-border'
+            : 'py-8 flex justify-between items-center'
         }`}
       >
         <Link href="/">
@@ -58,7 +57,9 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             loading="eager"
             priority="high"
             className={`${
-              isHomePage ? 'drop-shadow-lg filter brightness-100 invert' : 'invert dark:invert-0'
+              isHomePage
+                ? 'drop-shadow-lg filter brightness-100 invert dark:invert-0 sm:invert-0'
+                : 'sm:invert dark:invert-0'
             }`}
           />
         </Link>

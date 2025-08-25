@@ -207,16 +207,16 @@ export default function MortgageCalculatorBlock({
                     <DollarSign className="h-4 w-4 mr-2 text-accent3static" />
                     Mise de fonds
                   </label>
-                  <div className="flex gap-3 mb-3">
+                  <div className="flex flex-col sm:flex-row gap-3 mb-3">
                     <Input
                       type="number"
                       value={downPayment}
                       onChange={(e) => setDownPayment(Number(e.target.value))}
-                      className="text-lg p-4 flex-1 text-branding100 bg-branding0 border border-borderprimarystatic"
+                      className="text-lg py-2 px-3 flex-1 text-branding100 bg-branding0 border border-borderprimarystatic"
                       min="0"
                       step="1000"
                     />
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 justify-center sm:justify-start">
                       {[5, 10, 15, 20].map((percentage) => (
                         <Button
                           key={percentage}

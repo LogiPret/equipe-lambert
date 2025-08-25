@@ -493,10 +493,6 @@ export interface Page {
           description?: string | null;
           id?: string | null;
         }[];
-        officeImage: {
-          image: number | Media;
-          description: string;
-        };
         form: {
           title: string;
           formFields: {
@@ -2193,12 +2189,6 @@ export interface PagesSelect<T extends boolean = true> {
                     primary?: T;
                     description?: T;
                     id?: T;
-                  };
-              officeImage?:
-                | T
-                | {
-                    image?: T;
-                    description?: T;
                   };
               form?:
                 | T

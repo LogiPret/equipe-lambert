@@ -4,7 +4,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Phone, Mail, MapPin } from 'lucide-react'
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import type { Media } from '@/payload-types'
 
@@ -33,10 +32,6 @@ interface ContactBlockProps {
   title: string
   subtitle: string
   contactInfo: ContactInfo[]
-  officeImage: {
-    image: Media
-    description: string
-  }
   form: {
     title: string
     formFields: FormField[]
@@ -89,9 +84,9 @@ function ScrollAnimation({
         case 'slideUp':
           return `${baseClass} opacity-0 translate-y-8`
         case 'slideLeft':
-          return `${baseClass} opacity-0 translate-x-8`
+          return `${baseClass} opacity-0 translate-x-4`
         case 'slideRight':
-          return `${baseClass} opacity-0 -translate-x-8`
+          return `${baseClass} opacity-0 -translate-x-4`
         default:
           return `${baseClass} opacity-0`
       }
@@ -189,22 +184,11 @@ function renderFormField(
   }
 }
 
-export default function ContactBlock({
-  title,
-  subtitle,
-  contactInfo,
-  officeImage,
-  form,
-}: ContactBlockProps) {
+export default function ContactBlock({ title, subtitle, contactInfo, form }: ContactBlockProps) {
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false)
   const [formData, setFormData] = useState<Record<string, string>>({})
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const imageUrl =
-    typeof officeImage.image === 'object' ? officeImage.image.url : '/placeholder.svg'
-  const imageAlt =
-    typeof officeImage.image === 'object' ? officeImage.image.alt || 'Office' : 'Office'
 
   // Filter out checkbox fields since we handle the checkbox separately
   const formFields = form.formFields.filter((field) => field.fieldType !== 'checkbox')
@@ -263,8 +247,8 @@ export default function ContactBlock({
   }
 
   return (
-    <section id="contact-block" className="py-24 bg-secondarystatic">
-      <div className="container mx-auto px-4">
+    <section id="contact-block" className="py-24 bg-secondarystatic overflow-hidden">
+      <div className="container mx-auto px-4 max-w-full">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center mb-20">
             <div className="inline-block bg-branding100 h-1 w-24 mb-6"></div>
@@ -273,7 +257,7 @@ export default function ContactBlock({
           </div>
         </ScrollAnimation>
         <div className="grid lg:grid-cols-2 gap-16">
-          <ScrollAnimation animation="slideRight" delay={300}>
+          <ScrollAnimation animation="slideRight" delay={100}>
             <div>
               <div className="space-y-6 mb-10">
                 {contactInfo.map((info, index) => {
@@ -293,21 +277,10 @@ export default function ContactBlock({
                   )
                 })}
               </div>
-
-              <div className="bg-branding0 p-6 border border-borderprimarystatic shadow-sm">
-                <Image
-                  src={imageUrl || '/placeholder.svg'}
-                  alt={imageAlt}
-                  width={400}
-                  height={200}
-                  className="w-full h-48 object-cover object-top mb-4"
-                />
-                <p className="text-branding75 text-center">{officeImage.description}</p>
-              </div>
             </div>
           </ScrollAnimation>
 
-          <ScrollAnimation animation="slideLeft" delay={600}>
+          <ScrollAnimation animation="slideLeft" delay={200}>
             <Card className="border border-borderprimarystatic shadow-xl bg-branding0 hover:border-bordersecondarystatic transition-colors">
               <CardContent className="p-10">
                 <h3 className="text-2xl font-serif font-bold text-branding100 mb-8">

@@ -60,24 +60,6 @@ export const ContactBlock: Block = {
       ],
     },
     {
-      name: 'officeImage',
-      type: 'group',
-      required: true,
-      fields: [
-        {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
-        },
-        {
-          name: 'description',
-          type: 'text',
-          required: true,
-        },
-      ],
-    },
-    {
       name: 'form',
       type: 'group',
       required: true,

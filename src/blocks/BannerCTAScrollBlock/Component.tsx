@@ -50,7 +50,7 @@ export default function BannerCTAScrollBlock({
     <div className={`${backgroundClasses[backgroundColor]} py-4`}>
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-branding0">
-          <div className="text-center md:text-left">
+          <div className="text-center flex flex-col sm:flex-row md:text-left">
             <span className="text-lg font-medium">{title}</span>
             {subtitle && <span className="text-accent1static ml-2">{subtitle}</span>}
           </div>
