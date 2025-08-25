@@ -158,6 +158,30 @@ export const InteractivePropertiesBlock: Block = {
               label: 'Loft',
               value: 'loft',
             },
+            {
+              label: 'Duplex',
+              value: 'duplex',
+            },
+            {
+              label: 'Triplex',
+              value: 'triplex',
+            },
+            {
+              label: 'Quadruplex',
+              value: 'quadruplex',
+            },
+            {
+              label: 'Immeuble',
+              value: 'immeuble',
+            },
+            {
+              label: 'Chalet',
+              value: 'chalet',
+            },
+            {
+              label: 'Commerce',
+              value: 'commerce',
+            },
           ],
           defaultValue: 'maison',
         },
