@@ -100,7 +100,7 @@ export default function TeamBlock({ title, subtitle, members, advantages }: Team
             <p className="text-lg text-branding75 max-w-2xl mx-auto">{advantages.subtitle}</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-3 gap-8">
             {advantages.items.map((advantage, index) => {
               const IconComponent = iconMap[advantage.icon]
               return (

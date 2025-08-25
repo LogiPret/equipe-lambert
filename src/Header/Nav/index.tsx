@@ -27,7 +27,7 @@ export const HeaderNav: React.FC<{ data: HeaderType; isHomePage?: boolean }> = (
             key={i}
             {...link}
             appearance="link"
-            className={`${isHomePage ? 'text-branding0 sm:text-branding100 drop-shadow-lg' : ''} text-sm sm:text-base whitespace-nowrap`}
+            className={`hidden sm:block ${isHomePage ? 'text-branding0 sm:text-branding100 drop-shadow-lg' : ''} text-sm sm:text-base whitespace-nowrap`}
           />
         )
       })}
@@ -35,7 +35,7 @@ export const HeaderNav: React.FC<{ data: HeaderType; isHomePage?: boolean }> = (
         onClick={scrollToContact}
         className={`px-2 lg:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base whitespace-nowrap flex-shrink-0 ${
           isHomePage
-            ? 'sm:bg-branding100 bg-branding0 sm:text-branding0 text-branding100 hover:bg-branding75 drop-shadow-lg'
+            ? 'sm:bg-branding100 bg-brandingtheme sm:text-branding0 text-brandingtheme-foreground hover:bg-branding75 drop-shadow-lg'
             : 'bg-primary text-brandingtheme-foreground hover:bg-primary/90'
         }`}
       >
