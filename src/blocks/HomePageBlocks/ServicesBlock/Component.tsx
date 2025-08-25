@@ -94,7 +94,7 @@ export default function ServicesBlock({ title, subtitle, services }: ServicesBlo
           </div>
         </ScrollAnimation>
 
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+        <div className="grid lg:grid-cols-2 gap-12 mb-16 lg:items-stretch">
           {services.map((service, index) => {
             const IconComponent = iconMap[service.icon]
             const imageUrl =
@@ -104,8 +104,8 @@ export default function ServicesBlock({ title, subtitle, services }: ServicesBlo
 
             return (
               <ScrollAnimation key={index} animation="slideUp" delay={300 + index * 300}>
-                <Card className="border border-branding25 hover:shadow-xl transition-all duration-500 bg-branding0 hover:border-branding100 overflow-hidden">
-                  <CardContent className="p-0">
+                <Card className="border border-branding25 hover:shadow-xl transition-all duration-500 bg-branding0 hover:border-branding100 overflow-hidden h-full flex flex-col">
+                  <CardContent className="p-0 flex flex-col h-full">
                     {/* Icon and Title/Subtitle at top */}
                     <div className="p-8 pb-0">
                       <div className="flex items-center mb-6">
@@ -137,7 +137,7 @@ export default function ServicesBlock({ title, subtitle, services }: ServicesBlo
                     </div>
 
                     {/* Features */}
-                    <div className="px-8 pb-8">
+                    <div className="px-8 pb-8 flex-grow">
                       <div className="space-y-3">
                         {service.features.map((feature, featureIndex) => (
                           <div key={featureIndex} className="flex items-center">

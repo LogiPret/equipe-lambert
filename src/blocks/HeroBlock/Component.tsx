@@ -38,7 +38,6 @@ interface HeroBlockProps {
 
 export default function HeroBlock({
   badgeText = "ÉQUIPE D'EXCELLENCE DEPUIS 2008",
-  _badgeIcon,
   title,
   subtitle,
   primaryButton,
@@ -50,13 +49,16 @@ export default function HeroBlock({
     typeof backgroundImage === 'object' && backgroundImage ? backgroundImage.url : undefined
 
   return (
-    <section className="relative text-white pt-64 pb-16 overflow-hidden">
+    <section className="relative text-white pt-0 md:pt-64 pb-16 overflow-hidden">
       <div className="absolute inset-0 bg-black/20"></div>
 
       {backgroundImageUrl && (
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${backgroundImageUrl})` }}
+          className="absolute inset-0 bg-cover bg-no-repeat"
+          style={{
+            backgroundImage: `url(${backgroundImageUrl})`,
+            backgroundPosition: 'center 5%',
+          }}
         />
       )}
 

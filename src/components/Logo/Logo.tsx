@@ -14,7 +14,7 @@ export const Logo = (props: Props) => {
   const priority = priorityFromProps || 'low'
 
   return (
-    <div className="relative h-[34px] w-[15rem] flex items-center">
+    <div className="relative h-[24px] sm:h-[34px] w-[10rem] sm:w-[15rem] flex items-center">
       {/* eslint-disable @next/next/no-img-element */}
       <img
         alt="Equipe Lambert Logo"
@@ -24,7 +24,7 @@ export const Logo = (props: Props) => {
         fetchPriority={priority}
         decoding="async"
         className={clsx(
-          'absolute top-1/2 left-0 -translate-y-1/2 w-auto h-[150px] object-contain z-10',
+          'absolute top-1/2 left-0 -translate-y-1/2 w-auto h-[100px] md:h-[150px] object-contain z-10',
           className,
         )}
         src="/logo2_equipe_lambert.png"
