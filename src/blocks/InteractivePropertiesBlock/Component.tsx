@@ -28,7 +28,17 @@ interface Property {
   beds: number
   baths: number
   sqft: string
-  propType: 'maison' | 'condo' | 'townhouse' | 'loft'
+  propType:
+    | 'maison'
+    | 'condo'
+    | 'townhouse'
+    | 'loft'
+    | 'duplex'
+    | 'triplex'
+    | 'quadruplex'
+    | 'immeuble'
+    | 'chalet'
+    | 'commerce'
   propStatus: 'a_vendre' | 'vendu' | 'option_achat'
   description?: string
   url?: string
@@ -142,6 +152,12 @@ const typeLabels = {
   condo: 'Condo',
   townhouse: 'Maison de ville',
   loft: 'Loft',
+  duplex: 'Duplex',
+  triplex: 'Triplex',
+  quadruplex: 'Quadruplex',
+  immeuble: 'Immeuble',
+  chalet: 'Chalet',
+  commerce: 'Commerce',
 }
 
 export const InteractivePropertiesBlockComponent: React.FC<InteractivePropertiesBlockProps> = ({
@@ -405,7 +421,7 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
                       </Badge>
                     </div>
 
-                    {/* Photos Badge */}
+                    {/* Photos Badge 
                     <div className="absolute bottom-4 right-4">
                       <Badge
                         variant="outline"
@@ -414,7 +430,7 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
                         <Camera className="h-4 w-4 mr-2" />
                         12 photos
                       </Badge>
-                    </div>
+                    </div> */}
 
                     {/* Small Hover Button */}
                     {hoveredProperty === property.id && (
@@ -504,11 +520,11 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
         {/* CTA Section */}
         <div className="text-center mt-16">
           <p className="text-branding75 mb-6 text-lg">{buttonInfo}</p>
-            <Link
+          <Link
             href="https://www.centris.ca/en/real-estate-broker~david-lambert~exp-agence-immobiliere/g7749?onlyonedisplay=true&uc=4"
             target="_blank"
             rel="noopener noreferrer"
-            >
+          >
             <Button
               size="lg"
               variant="outline"
@@ -516,7 +532,7 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
             >
               Voir toutes nos propriétés
             </Button>
-            </Link>
+          </Link>
         </div>
       </div>
     </section>

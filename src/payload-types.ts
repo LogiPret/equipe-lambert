@@ -1584,7 +1584,17 @@ export interface InteractivePropertiesBlock {
          * Ex: 1,850
          */
         sqft: string;
-        propType: 'maison' | 'condo' | 'townhouse' | 'loft';
+        propType:
+          | 'maison'
+          | 'condo'
+          | 'townhouse'
+          | 'loft'
+          | 'duplex'
+          | 'triplex'
+          | 'quadruplex'
+          | 'immeuble'
+          | 'chalet'
+          | 'commerce';
         propStatus: 'a_vendre' | 'vendu' | 'option_achat';
         id?: string | null;
       }[]
