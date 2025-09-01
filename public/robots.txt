@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+
+# Sitemaps
+Sitemap: https://www.equipelambert.ca/sitemap.xml
+Sitemap: https://www.equipelambert.ca/pages-sitemap.xml
+Sitemap: https://www.equipelambert.ca/posts-sitemap.xml
