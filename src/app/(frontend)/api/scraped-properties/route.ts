@@ -31,17 +31,6 @@ interface ScraperData {
 
 export async function POST(request: NextRequest) {
   try {
-    // Authentication check
-    const authHeader = request.headers.get('authorization')
-    const expectedAuth = `Bearer ${process.env.SCRAPER_SECRET}`
-
-    if (!authHeader || authHeader !== expectedAuth) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Invalid or missing authentication' },
-        { status: 401 },
-      )
-    }
-
     // Parse and validate request body
     let scraperData: ScraperData
     try {
