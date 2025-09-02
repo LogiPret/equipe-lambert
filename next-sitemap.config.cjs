@@ -13,5 +13,6 @@ if (SITE_URL && !SITE_URL.startsWith('http')) {
 module.exports = {
   siteUrl: SITE_URL,
   generateRobotsTxt: false, // Disable automatic robots.txt generation
-  exclude: ['/posts-sitemap.xml', '/pages-sitemap.xml', '/*', '/posts/*'],
+  generateIndexSitemap: false, // Disable automatic sitemap generation completely
+  exclude: ['/**'], // Exclude everything from automatic generation
 }
