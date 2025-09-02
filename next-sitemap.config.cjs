@@ -12,15 +12,6 @@ if (SITE_URL && !SITE_URL.startsWith('http')) {
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: SITE_URL,
-  generateRobotsTxt: true,
+  generateRobotsTxt: false, // Disable automatic robots.txt generation
   exclude: ['/posts-sitemap.xml', '/pages-sitemap.xml', '/*', '/posts/*'],
-  robotsTxtOptions: {
-    policies: [
-      {
-        userAgent: '*',
-        disallow: '/admin/*',
-      },
-    ],
-    additionalSitemaps: [`${SITE_URL}/pages-sitemap.xml`, `${SITE_URL}/posts-sitemap.xml`],
-  },
 }
