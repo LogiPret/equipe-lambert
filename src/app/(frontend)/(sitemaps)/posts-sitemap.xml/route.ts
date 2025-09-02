@@ -1,11 +1,18 @@
 import { getServerSideSitemap } from 'next-sitemap'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { fallbackPostsSitemap } from '@/lib/fallback-sitemap'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 3600 // Revalidate every hour
 
 export async function GET() {
   try {
+    // Set a timeout for the database query
+    const timeout = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Database query timeout')), 10000)
+    );
+
     const payload = await getPayload({ config })
     let SITE_URL =
       process.env.NEXT_PUBLIC_SERVER_URL ||
@@ -17,7 +24,7 @@ export async function GET() {
       SITE_URL = `https://${SITE_URL}`
     }
 
-    const results = await payload.find({
+    const queryPromise = payload.find({
       collection: 'posts',
       overrideAccess: false,
       draft: false,
@@ -33,14 +40,17 @@ export async function GET() {
         slug: true,
         updatedAt: true,
       },
-    })
+    });
+
+    // Race the query against the timeout
+    const results = await Promise.race([queryPromise, timeout]) as any;
 
     const dateFallback = new Date().toISOString()
 
     const sitemap = results.docs
       ? results.docs
-          .filter((post) => Boolean(post?.slug))
-          .map((post) => ({
+          .filter((post: any) => Boolean(post?.slug))
+          .map((post: any) => ({
             loc: `${SITE_URL}/posts/${post?.slug}`,
             lastmod: post.updatedAt || dateFallback,
           }))
@@ -50,7 +60,7 @@ export async function GET() {
   } catch (error) {
     console.error('Posts sitemap error:', error)
     
-    // Return empty sitemap on error
-    return getServerSideSitemap([])
+    // Return fallback sitemap on error
+    return getServerSideSitemap(fallbackPostsSitemap)
   }
 }

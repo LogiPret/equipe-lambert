@@ -1,11 +1,18 @@
 import { getServerSideSitemap } from 'next-sitemap'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { fallbackPagesSitemap } from '@/lib/fallback-sitemap'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 3600 // Revalidate every hour
 
 export async function GET() {
   try {
+    // Set a timeout for the database query
+    const timeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Database query timeout')), 10000),
+    )
+
     const payload = await getPayload({ config })
     let SITE_URL =
       process.env.NEXT_PUBLIC_SERVER_URL ||
@@ -17,7 +24,7 @@ export async function GET() {
       SITE_URL = `https://${SITE_URL}`
     }
 
-    const results = await payload.find({
+    const queryPromise = payload.find({
       collection: 'pages',
       overrideAccess: false,
       draft: false,
@@ -35,6 +42,9 @@ export async function GET() {
       },
     })
 
+    // Race the query against the timeout
+    const results = (await Promise.race([queryPromise, timeout])) as any
+
     const dateFallback = new Date().toISOString()
 
     const defaultSitemap = [
@@ -50,8 +60,8 @@ export async function GET() {
 
     const sitemap = results.docs
       ? results.docs
-          .filter((page) => Boolean(page?.slug))
-          .map((page) => {
+          .filter((page: any) => Boolean(page?.slug))
+          .map((page: any) => {
             return {
               loc: page?.slug === 'home' ? `${SITE_URL}/` : `${SITE_URL}/${page?.slug}`,
               lastmod: page.updatedAt || dateFallback,
@@ -62,13 +72,8 @@ export async function GET() {
     return getServerSideSitemap([...defaultSitemap, ...sitemap])
   } catch (error) {
     console.error('Pages sitemap error:', error)
-    
-    // Return basic sitemap on error
-    const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://www.equipelambert.ca'
-    return getServerSideSitemap([
-      { loc: `${SITE_URL}/`, lastmod: new Date().toISOString() },
-      { loc: `${SITE_URL}/search`, lastmod: new Date().toISOString() },
-      { loc: `${SITE_URL}/posts`, lastmod: new Date().toISOString() },
-    ])
+
+    // Return fallback sitemap on error
+    return getServerSideSitemap(fallbackPagesSitemap)
   }
 }
