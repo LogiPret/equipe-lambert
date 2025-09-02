@@ -9,9 +9,9 @@ export const revalidate = 3600 // Revalidate every hour
 export async function GET() {
   try {
     // Set a timeout for the database query
-    const timeout = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Database query timeout')), 10000)
-    );
+    const timeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Database query timeout')), 10000),
+    )
 
     const payload = await getPayload({ config })
     let SITE_URL =
@@ -40,10 +40,10 @@ export async function GET() {
         slug: true,
         updatedAt: true,
       },
-    });
+    })
 
     // Race the query against the timeout
-    const results = await Promise.race([queryPromise, timeout]) as any;
+    const results = (await Promise.race([queryPromise, timeout])) as any
 
     const dateFallback = new Date().toISOString()
 
@@ -59,7 +59,7 @@ export async function GET() {
     return getServerSideSitemap(sitemap)
   } catch (error) {
     console.error('Posts sitemap error:', error)
-    
+
     // Return fallback sitemap on error
     return getServerSideSitemap(fallbackPostsSitemap)
   }

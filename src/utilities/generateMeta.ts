@@ -21,14 +21,20 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 
 export const generateMeta = async (args: {
   doc: Partial<Page> | Partial<Post> | null
+  type?: 'page' | 'post'
 }): Promise<Metadata> => {
-  const { doc } = args
+  const { doc, type } = args
 
   const ogImage = getImageURL(doc?.meta?.image)
 
-  const title = doc?.meta?.title ? doc?.meta?.title + ' | Equipe Lambert' : 'Equipe Lambert'
-
-  //insert equipe lambert logo here
+  let title: string
+  if (doc?.meta?.title) {
+    // Only add "| Équipe Lambert" for posts
+    // Pages and homepage use only the admin panel title
+    title = type === 'post' ? `${doc.meta.title} | Équipe Lambert` : doc.meta.title
+  } else {
+    title = 'Équipe Lambert'
+  } //insert equipe lambert logo here
   return {
     description: doc?.meta?.description,
     openGraph: mergeOpenGraph({
