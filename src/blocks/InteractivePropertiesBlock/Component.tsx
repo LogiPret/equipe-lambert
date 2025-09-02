@@ -42,6 +42,7 @@ interface Property {
   propStatus: 'a_vendre' | 'vendu' | 'option_achat'
   description?: string
   url?: string
+  photoCount?: number
 }
 
 interface InteractivePropertiesBlockProps {
@@ -68,6 +69,7 @@ const mockProperties: Property[] = [
     propStatus: 'a_vendre',
     description: 'Magnifique maison familiale dans un quartier recherché',
     url: 'https://expquebec.com/en/brokers/david-lambert/',
+    photoCount: 25,
   },
   {
     id: '2',
@@ -82,6 +84,7 @@ const mockProperties: Property[] = [
     propStatus: 'a_vendre',
     description: 'Condo moderne avec vue sur le parc',
     url: 'https://expquebec.com/en/brokers/david-lambert/',
+    photoCount: 18,
   },
   {
     id: '3',
@@ -96,6 +99,7 @@ const mockProperties: Property[] = [
     propStatus: 'a_vendre',
     description: 'Maison de ville luxueuse avec garage',
     url: 'https://expquebec.com/en/brokers/david-lambert/',
+    photoCount: 32,
   },
   {
     id: '4',
@@ -110,6 +114,7 @@ const mockProperties: Property[] = [
     propStatus: 'a_vendre',
     description: 'Loft industriel au cœur du Plateau',
     url: 'https://expquebec.com/en/brokers/david-lambert/',
+    photoCount: 15,
   },
   {
     id: '5',
@@ -124,6 +129,7 @@ const mockProperties: Property[] = [
     propStatus: 'a_vendre',
     description: 'Charmante maison rénovée avec jardin',
     url: 'https://expquebec.com/en/brokers/david-lambert/',
+    photoCount: 28,
   },
   {
     id: '6',
@@ -138,6 +144,7 @@ const mockProperties: Property[] = [
     propStatus: 'a_vendre',
     description: "Propriété d'exception avec piscine",
     url: 'https://expquebec.com/en/brokers/david-lambert/',
+    photoCount: 45,
   },
 ]
 
@@ -421,16 +428,18 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
                       </Badge>
                     </div>
 
-                    {/* Photos Badge 
-                    <div className="absolute bottom-4 right-4">
-                      <Badge
-                        variant="outline"
-                        className="bg-black/50 text-branding0 border-white/30"
-                      >
-                        <Camera className="h-4 w-4 mr-2" />
-                        12 photos
-                      </Badge>
-                    </div> */}
+                    {/* Photos Badge */}
+                    {property.photoCount && property.photoCount > 0 && (
+                      <div className="absolute bottom-4 right-4">
+                        <Badge
+                          variant="outline"
+                          className="bg-black/50 text-branding0 border-white/30"
+                        >
+                          <Camera className="h-4 w-4 mr-2" />
+                          {property.photoCount} photo{property.photoCount > 1 ? 's' : ''}
+                        </Badge>
+                      </div>
+                    )}
 
                     {/* Small Hover Button */}
                     {hoveredProperty === property.id && (
@@ -481,18 +490,24 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
 
                     <div className="mt-auto flex justify-between items-center pt-4 border-t border-borderprimarystatic mb-4">
                       <div className="flex items-center space-x-4 text-sm text-branding75">
-                        <div className="flex items-center">
-                          <Bed className="h-4 w-4 mr-1 text-accent3static" />
-                          <span>{property.beds}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <Bath className="h-4 w-4 mr-1 text-accent3static" />
-                          <span>{property.baths}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <Square className="h-4 w-4 mr-1 text-accent3static" />
-                          <span>{property.sqft} pi²</span>
-                        </div>
+                        {property.beds > 0 && (
+                          <div className="flex items-center">
+                            <Bed className="h-4 w-4 mr-1 text-accent3static" />
+                            <span>{property.beds}</span>
+                          </div>
+                        )}
+                        {property.baths > 0 && (
+                          <div className="flex items-center">
+                            <Bath className="h-4 w-4 mr-1 text-accent3static" />
+                            <span>{property.baths}</span>
+                          </div>
+                        )}
+                        {property.sqft && property.sqft.trim() !== '' && property.sqft !== '0' && (
+                          <div className="flex items-center">
+                            <Square className="h-4 w-4 mr-1 text-accent3static" />
+                            <span>{property.sqft} pi²</span>
+                          </div>
+                        )}
                       </div>
                     </div>
 

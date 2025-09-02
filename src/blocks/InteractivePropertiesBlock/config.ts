@@ -7,7 +7,22 @@ export const InteractivePropertiesBlock: Block = {
     singular: 'Propriétés Interactives',
     plural: 'Blocs Propriétés Interactives',
   },
+  admin: {
+    components: {
+      Block: '@/blocks/InteractivePropertiesBlock/ServerWrapper',
+    },
+  },
   fields: [
+    {
+      name: 'useScrapedData',
+      type: 'checkbox',
+      label: 'Utiliser les données du scraper Centris',
+      defaultValue: true,
+      admin: {
+        description:
+          'Si activé, utilise les propriétés automatiquement récupérées depuis Centris. Sinon, utilise les propriétés manuelles ci-dessous.',
+      },
+    },
     {
       name: 'title',
       type: 'text',

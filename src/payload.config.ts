@@ -13,6 +13,7 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Popups } from './collections/Popups'
+import { ScrapedProperties } from './collections/ScrapedProperties'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -70,7 +71,7 @@ export default buildConfig({
       connectionString: process.env.POSTGRES_URL || '',
     },
   }),
-  collections: [Pages, Posts, Media, PDF, Categories, Users, Popups],
+  collections: [Pages, Posts, Media, PDF, Categories, Users, Popups, ScrapedProperties],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

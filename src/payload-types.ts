@@ -74,6 +74,7 @@ export interface Config {
     categories: Category;
     users: User;
     popups: Popup;
+    scrapedProperties: ScrapedProperty;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -92,6 +93,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     popups: PopupsSelect<false> | PopupsSelect<true>;
+    scrapedProperties: ScrapedPropertiesSelect<false> | ScrapedPropertiesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1557,6 +1559,10 @@ export interface MapSectionBlock {
  * via the `definition` "InteractivePropertiesBlock".
  */
 export interface InteractivePropertiesBlock {
+  /**
+   * Si activé, utilise les propriétés automatiquement récupérées depuis Centris. Sinon, utilise les propriétés manuelles ci-dessous.
+   */
+  useScrapedData?: boolean | null;
   title?: string | null;
   subtitle?: string | null;
   buttonInfo: string;
@@ -1638,6 +1644,74 @@ export interface Pdf {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * Properties automatically scraped from Centris
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scrapedProperties".
+ */
+export interface ScrapedProperty {
+  id: number;
+  /**
+   * Unique MLS identifier from Centris
+   */
+  mlsNumber: string;
+  /**
+   * Price as scraped from Centris (e.g., "$649,000")
+   */
+  price: string;
+  address: string;
+  /**
+   * Type as scraped from Centris (e.g., "House for sale")
+   */
+  type: string;
+  /**
+   * Number of bedrooms (can be null from scraper)
+   */
+  bedrooms?: string | null;
+  /**
+   * Number of bathrooms (can be null from scraper)
+   */
+  bathrooms?: string | null;
+  /**
+   * Lot area in square feet (can be null from scraper)
+   */
+  lotArea?: string | null;
+  /**
+   * Number of photos available for this property
+   */
+  photoCount?: number | null;
+  /**
+   * Direct URL to property image from Centris
+   */
+  imageUrl: string;
+  /**
+   * Link to the property on Centris website
+   */
+  link: string;
+  /**
+   * Whether this property should be displayed on the website
+   */
+  isActive?: boolean | null;
+  /**
+   * When this property was last scraped from Centris
+   */
+  scrapedAt: string;
+  /**
+   * Original data from scraper for debugging
+   */
+  rawData?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1839,6 +1913,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'popups';
         value: number | Popup;
+      } | null)
+    | ({
+        relationTo: 'scrapedProperties';
+        value: number | ScrapedProperty;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2670,6 +2748,7 @@ export interface MapSectionBlockSelect<T extends boolean = true> {
  * via the `definition` "InteractivePropertiesBlock_select".
  */
 export interface InteractivePropertiesBlockSelect<T extends boolean = true> {
+  useScrapedData?: T;
   title?: T;
   subtitle?: T;
   buttonInfo?: T;
@@ -2892,6 +2971,27 @@ export interface PopupsSelect<T extends boolean = true> {
   firstNameLabel?: T;
   lastNameLabel?: T;
   phoneLabel?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scrapedProperties_select".
+ */
+export interface ScrapedPropertiesSelect<T extends boolean = true> {
+  mlsNumber?: T;
+  price?: T;
+  address?: T;
+  type?: T;
+  bedrooms?: T;
+  bathrooms?: T;
+  lotArea?: T;
+  photoCount?: T;
+  imageUrl?: T;
+  link?: T;
+  isActive?: T;
+  scrapedAt?: T;
+  rawData?: T;
   updatedAt?: T;
   createdAt?: T;
 }

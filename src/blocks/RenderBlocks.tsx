@@ -30,7 +30,7 @@ import { LandingCTABlockComponent } from '@/blocks/LandingCommonBlocks/LandingCT
 import { LandingResourceBlockComponent } from '@/blocks/LandingCommonBlocks/LandingResourceBlock/Component'
 import EvaluationGratuiteBlock from './LandingVendreBlocks/EvaluationGratuiteBlock/Component'
 import LandingHeroBlock from '@/blocks/LandingCommonBlocks/LandingHeroBlock/Component'
-import { InteractivePropertiesBlockComponent } from '@/blocks/InteractivePropertiesBlock/Component'
+import InteractivePropertiesBlock from '@/blocks/InteractivePropertiesBlock/ServerWrapper'
 import { TableByColumnsBlock } from '@/blocks/TableByColumns/Component'
 import { TableByRowsBlock } from '@/blocks/TableByRows/Component'
 import BlogInlineCTA from '@/blocks/BlogInlineCTA/Component'
@@ -64,7 +64,7 @@ const blockComponents = {
   resourceBlock: LandingResourceBlockComponent,
   evaluationGratuite: EvaluationGratuiteBlock,
   landingHero: LandingHeroBlock,
-  interactivePropBlock: InteractivePropertiesBlockComponent,
+  interactivePropBlock: InteractivePropertiesBlock,
   tableByColumns: TableByColumnsBlock,
   tableByRows: TableByRowsBlock,
 }
@@ -92,7 +92,7 @@ export const RenderBlocks: React.FC<{
               // Remove all spacing for now - will add back selectively later
               return (
                 <div key={index} id={blockId}>
-                  {/* @ts-expect-error there may be some mismatch between the expected types here */}
+                  {/* @ts-expect-error Block component props mismatch with server component types */}
                   <Block {...block} blockId={blockId} disableInnerContainer />
                 </div>
               )
