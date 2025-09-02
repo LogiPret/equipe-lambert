@@ -1,15 +1,21 @@
 import { getServerSideSitemap } from 'next-sitemap'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { unstable_cache } from 'next/cache'
 
-const getPagesSitemap = unstable_cache(
-  async () => {
+export const dynamic = 'force-dynamic'
+
+export async function GET() {
+  try {
     const payload = await getPayload({ config })
-    const SITE_URL =
+    let SITE_URL =
       process.env.NEXT_PUBLIC_SERVER_URL ||
       process.env.VERCEL_PROJECT_PRODUCTION_URL ||
       'https://www.equipelambert.ca'
+
+    // Add https:// if missing
+    if (SITE_URL && !SITE_URL.startsWith('http')) {
+      SITE_URL = `https://${SITE_URL}`
+    }
 
     const results = await payload.find({
       collection: 'pages',
@@ -53,16 +59,16 @@ const getPagesSitemap = unstable_cache(
           })
       : []
 
-    return [...defaultSitemap, ...sitemap]
-  },
-  ['pages-sitemap'],
-  {
-    tags: ['pages-sitemap'],
-  },
-)
-
-export async function GET() {
-  const sitemap = await getPagesSitemap()
-
-  return getServerSideSitemap(sitemap)
+    return getServerSideSitemap([...defaultSitemap, ...sitemap])
+  } catch (error) {
+    console.error('Pages sitemap error:', error)
+    
+    // Return basic sitemap on error
+    const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://www.equipelambert.ca'
+    return getServerSideSitemap([
+      { loc: `${SITE_URL}/`, lastmod: new Date().toISOString() },
+      { loc: `${SITE_URL}/search`, lastmod: new Date().toISOString() },
+      { loc: `${SITE_URL}/posts`, lastmod: new Date().toISOString() },
+    ])
+  }
 }
