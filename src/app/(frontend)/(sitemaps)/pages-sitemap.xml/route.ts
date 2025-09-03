@@ -47,20 +47,22 @@ export async function GET() {
 
     const dateFallback = new Date().toISOString()
 
-    const defaultSitemap = [
-      {
-        loc: `${SITE_URL}/search`,
-        lastmod: dateFallback,
-      },
-      {
-        loc: `${SITE_URL}/posts`,
-        lastmod: dateFallback,
-      },
-    ]
+    // Denylist of routes that should never be in the pages sitemap
+    const DENYLIST = new Set<string>([
+      'search',
+      'components-test',
+      'posts', // archive index; individual posts go to posts-sitemap
+    ])
 
     const sitemap = results.docs
       ? results.docs
-          .filter((page: any) => Boolean(page?.slug))
+          .filter((page: any) => {
+            const slug = page?.slug as string | undefined
+            if (!slug) return false
+            // Exclude denylisted slugs and non-canonical placeholders
+            if (DENYLIST.has(slug)) return false
+            return true
+          })
           .map((page: any) => {
             return {
               loc: page?.slug === 'home' ? `${SITE_URL}/` : `${SITE_URL}/${page?.slug}`,
@@ -69,7 +71,7 @@ export async function GET() {
           })
       : []
 
-    return getServerSideSitemap([...defaultSitemap, ...sitemap])
+    return getServerSideSitemap(sitemap)
   } catch (error) {
     console.error('Pages sitemap error:', error)
 
