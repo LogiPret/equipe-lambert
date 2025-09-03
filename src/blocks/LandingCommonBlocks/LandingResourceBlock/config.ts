@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { link as linkField } from '@/fields/link'
 
 export const LandingResourceBlock: Block = {
   slug: 'resourceBlock',
@@ -93,6 +94,28 @@ export const LandingResourceBlock: Block = {
               'Button text will automatically adjust based on mode: "Obtenir mes ressources" for vendre, "Recevoir mes ressources" for acheter. Leave empty to use default.',
           },
         },
+        // New: universal link field for button behavior (internal, external, scroll)
+        linkField({
+          overrides: {
+            name: 'link',
+            label: 'CTA Link',
+            admin: {
+              description:
+                'Configure where the main button points to (internal page, custom URL, or scroll to section).',
+            },
+          },
+          dbNames: {
+            group: 'lnk',
+            type: 't',
+            reference: 'ref',
+            url: 'url',
+            archive: 'arc',
+            scrollTarget: 'scr',
+            appearance: 'app',
+          },
+          appearances: false,
+          disableLabel: true,
+        }),
         {
           name: 'buttonAction',
           type: 'text',
@@ -236,6 +259,28 @@ export const LandingResourceBlock: Block = {
                 description: 'Button text for this resource. Defaults to "Télécharger" if empty.',
               },
             },
+            // New: universal link field for each resource
+            linkField({
+              overrides: {
+                name: 'link',
+                label: 'Resource Link',
+                admin: {
+                  description:
+                    'Configure where this resource button points to (internal page, custom URL, or scroll to section).',
+                },
+              },
+              dbNames: {
+                group: 'lnk',
+                type: 't',
+                reference: 'ref',
+                url: 'url',
+                archive: 'arc',
+                scrollTarget: 'scr',
+                appearance: 'app',
+              },
+              appearances: false,
+              disableLabel: true,
+            }),
             {
               name: 'buttonAction',
               type: 'text',

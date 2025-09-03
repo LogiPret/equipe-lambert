@@ -18,13 +18,26 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
 type LinkType = (options?: {
   appearances?: LinkAppearances[] | false
   disableLabel?: boolean
-  overrides?: Partial<GroupField>
+  overrides?: Partial<GroupField & { dbName?: string }>
+  // Optional compact database names to avoid Postgres 63-char identifier limit
+  dbNames?: Partial<
+    Record<
+      'group' | 'type' | 'reference' | 'url' | 'archive' | 'scrollTarget' | 'newTab' | 'appearance',
+      string
+    >
+  >
 }) => Field
 
-export const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
+export const link: LinkType = ({
+  appearances,
+  disableLabel = false,
+  overrides = {},
+  dbNames = {},
+} = {}) => {
   const linkResult: GroupField = {
     name: 'link',
     type: 'group',
+    ...(dbNames.group ? { dbName: dbNames.group } : {}),
     admin: {
       hideGutter: true,
     },
@@ -35,6 +48,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
           {
             name: 'type',
             type: 'radio',
+            ...(dbNames.type ? { dbName: dbNames.type } : {}),
             admin: {
               layout: 'horizontal',
               width: '50%',
@@ -79,6 +93,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
     {
       name: 'reference',
       type: 'relationship',
+      ...(dbNames.reference ? { dbName: dbNames.reference } : {}),
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'reference',
       },
@@ -89,6 +104,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
     {
       name: 'url',
       type: 'text',
+      ...(dbNames.url ? { dbName: dbNames.url } : {}),
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'custom',
       },
@@ -98,6 +114,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
     {
       name: 'archive',
       type: 'select',
+      ...(dbNames.archive ? { dbName: dbNames.archive } : {}),
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'archive',
       },
@@ -113,6 +130,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
     {
       name: 'scrollTarget',
       type: 'text',
+      ...(dbNames.scrollTarget ? { dbName: dbNames.scrollTarget } : {}),
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'scroll',
         description:
@@ -161,6 +179,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
     linkResult.fields.push({
       name: 'appearance',
       type: 'select',
+      ...(dbNames.appearance ? { dbName: dbNames.appearance } : {}),
       admin: {
         description: 'Choose how the link should be rendered.',
       },

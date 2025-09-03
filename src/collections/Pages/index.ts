@@ -25,12 +25,14 @@ import { MapSectionBlock } from '../../blocks/HomePageBlocks/MapSectionBlock/con
 import { BlogCarouselBlock } from '../../blocks/HomePageBlocks/BlogCarouselBlock/config'
 import { WhyChooseUsBlock } from '../../blocks/LandingCommonBlocks/WhyChooseUsBlock/config'
 import { LandingProcessBlock } from '../../blocks/LandingCommonBlocks/LandingProcessBlock/config'
+import { LandingFAQBlock } from '../../blocks/LandingCommonBlocks/LandingFAQBlock/config'
 import { MortgageCalculatorBlock } from '../../blocks/LandingAcheterBlocks/MortgageCalculatorBlock/config'
 import { LandingCTABlock } from '../../blocks/LandingCommonBlocks/LandingCTABlock/config'
 import { LandingResourceBlock } from '../../blocks/LandingCommonBlocks/LandingResourceBlock/config'
 import { EvaluationGratuiteBlock } from '@/blocks/LandingVendreBlocks/EvaluationGratuiteBlock/config'
 import { LandingHeroBlock } from '../../blocks/LandingCommonBlocks/LandingHeroBlock/config'
 import { InteractivePropertiesBlock } from '../../blocks/InteractivePropertiesBlock/config'
+import { FeaturedListingsBlock } from '../../blocks/LandingAcheterBlocks/FeaturedListings/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -123,12 +125,14 @@ export const Pages: CollectionConfig<'pages'> = {
                 BlogCarouselBlock,
                 WhyChooseUsBlock,
                 LandingProcessBlock,
+                LandingFAQBlock,
                 MortgageCalculatorBlock,
                 LandingCTABlock,
                 LandingResourceBlock,
                 EvaluationGratuiteBlock,
                 LandingHeroBlock,
                 InteractivePropertiesBlock,
+                FeaturedListingsBlock,
               ],
               required: true,
               admin: {

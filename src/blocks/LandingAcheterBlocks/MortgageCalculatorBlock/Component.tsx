@@ -151,7 +151,7 @@ export default function MortgageCalculatorBlock({
   const downPaymentPercent = homePrice > 0 ? (downPayment / homePrice) * 100 : 0
 
   return (
-    <section className="py-20 bg-gradient-to-br from-branding0 to-secondarystatic">
+    <section className="pt-5 pb-10 bg-gradient-to-br from-branding0 to-secondarystatic">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <div className="inline-block bg-accent3static h-1 w-24 mb-6"></div>
@@ -344,25 +344,27 @@ export default function MortgageCalculatorBlock({
         </div>
 
         {/* Summary Stats */}
-        <div className="mt-16 grid md:grid-cols-4 gap-6">
+        <div className="mt-16 grid grid-cols-4 gap-6">
           <div className="text-center">
-            <div className="text-3xl font-bold text-accent3static mb-2">
+            <div className="sm:text-3xl text-2xl font-bold text-accent3static mb-2">
               {formatNumber(loanTerm * 12)}
             </div>
             <div className="text-branding75">Paiements totaux</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-accent3static mb-2">
+            <div className="sm:text-3xl text-2xl font-bold text-accent3static mb-2">
               {downPaymentPercent.toFixed(1)}%
             </div>
             <div className="text-branding75">Mise de fonds</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-accent3static mb-2">{interestRate}%</div>
+            <div className="sm:text-3xl text-2xl font-bold text-accent3static mb-2">
+              {interestRate}%
+            </div>
             <div className="text-branding75">Taux d&apos;intérêt</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-accent3static mb-2">{loanTerm}</div>
+            <div className="sm:text-3xl text-2xl font-bold text-accent3static mb-2">{loanTerm}</div>
             <div className="text-branding75">Années</div>
           </div>
         </div>

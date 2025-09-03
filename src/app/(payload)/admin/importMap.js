@@ -11,6 +11,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { LinkFeatureClient as LinkFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BlockTargetField as BlockTargetField_11e378e6359fd373010a6abdd8988149 } from '@/components/admin/BlockTargetField'
 import { default as default_35c47a228cfe45e09e54c1e42ec4b814 } from '@/blocks/InteractivePropertiesBlock/ServerWrapper'
+import { default as default_35c51f9caba27c8a6e55afb4e4185cb4 } from '@/blocks/LandingAcheterBlocks/FeaturedListings/ServerWrapper'
 import { OverviewComponent as OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
@@ -42,6 +43,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#LinkFeatureClient": LinkFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/components/admin/BlockTargetField#BlockTargetField": BlockTargetField_11e378e6359fd373010a6abdd8988149,
   "@/blocks/InteractivePropertiesBlock/ServerWrapper#default": default_35c47a228cfe45e09e54c1e42ec4b814,
+  "@/blocks/LandingAcheterBlocks/FeaturedListings/ServerWrapper#default": default_35c51f9caba27c8a6e55afb4e4185cb4,
   "@payloadcms/plugin-seo/client#OverviewComponent": OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaTitleComponent": MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,

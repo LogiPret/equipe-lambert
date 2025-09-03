@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Button } from '@/components/ui/button'
+import { CMSLink } from '@/components/Link'
 import { Card } from '@/components/ui/card'
 import { ScrollAnimation } from '@/components/scroll-animations'
 import { CheckSquare, Eye, ArrowRight, Download, FileText, Calculator } from 'lucide-react'
@@ -28,6 +29,16 @@ interface LandingResourceBlockProps {
     description?: string
     highlight?: string
     buttonText?: string
+    // New universal link field (matches CMSLink)
+    link?: {
+      type?: 'custom' | 'reference' | 'archive' | 'scroll' | null
+      url?: string | null
+      archive?: string | null
+      newTab?: boolean | null
+      scrollTarget?: string | null
+      reference?: { relationTo: 'pages' | 'posts'; value: any }
+    }
+    // Legacy fallback action string
     buttonAction?: string
   }
 
@@ -43,7 +54,16 @@ interface LandingResourceBlockProps {
   resources?: {
     title?: string
     subtitle?: string
-    items?: Resource[]
+    items?: (Resource & {
+      link?: {
+        type?: 'custom' | 'reference' | 'archive' | 'scroll' | null
+        url?: string | null
+        archive?: string | null
+        newTab?: boolean | null
+        scrollTarget?: string | null
+        reference?: { relationTo: 'pages' | 'posts'; value: any }
+      }
+    })[]
   }
 }
 
@@ -131,14 +151,12 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
     imageContent?.imageSubcaption ||
     (mode === 'acheter' ? 'Ne manquez aucun détail' : 'Maximisez votre prix de vente')
 
-  // Handle button click
+  // Legacy click handlers retained for backward compatibility if link not provided
   const handleButtonClick = () => {
     if (mainContent?.buttonAction) {
-      // Could implement scroll to section or external link logic here
       console.log('Button clicked:', mainContent.buttonAction)
     }
   }
-
   const handleResourceClick = (resource: Resource) => {
     if (resource.buttonAction) {
       console.log('Resource clicked:', resource.buttonAction)
@@ -150,7 +168,7 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
   const contentOrder = imagePosition === 'left' ? 'order-last' : 'order-first'
 
   return (
-    <section className={`py-20 bg-gradient-to-br ${currentDefaults.bgGradient}`}>
+    <section className={`pt-20 pb-5 bg-gradient-to-br ${currentDefaults.bgGradient}`}>
       <div className="container mx-auto px-4">
         {/* Main Content Section */}
         <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
@@ -184,14 +202,26 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
             <p className="text-lg text-branding75 mb-8 leading-relaxed">
               <strong>{finalHighlight}</strong>
             </p>
-            <Button
-              size="lg"
-              className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
-              onClick={handleButtonClick}
-            >
-              <Eye className="h-5 w-5 mr-3" />
-              {finalButtonText}
-            </Button>
+            {mainContent?.link ? (
+              <CMSLink
+                {...mainContent.link}
+                appearance="default"
+                size="lg"
+                className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
+              >
+                <ArrowRight className="h-5 w-5 mr-3" />
+                {finalButtonText}
+              </CMSLink>
+            ) : (
+              <Button
+                size="lg"
+                className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
+                onClick={handleButtonClick}
+              >
+                <ArrowRight className="h-5 w-5 mr-3" />
+                {finalButtonText}
+              </Button>
+            )}
           </div>
         </div>
 
@@ -229,13 +259,25 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
                     </div>
                     <h3 className="text-xl font-bold text-branding100 mb-4">{resource.title}</h3>
                     <p className="text-branding75 flex-grow mb-6">{resource.description}</p>
-                    <Button
-                      variant="outline"
-                      className={`mt-auto ${currentDefaults.resourceButtonClass} hover:text-branding0 bg-transparent`}
-                      onClick={() => handleResourceClick(resource)}
-                    >
-                      {resource.buttonText || 'Télécharger'} <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
+                    {'link' in resource && resource.link ? (
+                      <CMSLink
+                        {...(resource as any).link}
+                        appearance="outline"
+                        className={`mt-auto ${currentDefaults.resourceButtonClass} hover:text-branding0 bg-transparent`}
+                      >
+                        {resource.buttonText || 'Télécharger'}
+                        <ArrowRight className="h-4 w-4 ml-2" />
+                      </CMSLink>
+                    ) : (
+                      <Button
+                        variant="outline"
+                        className={`mt-auto ${currentDefaults.resourceButtonClass} hover:text-branding0 bg-transparent`}
+                        onClick={() => handleResourceClick(resource)}
+                      >
+                        {resource.buttonText || 'Télécharger'}{' '}
+                        <ArrowRight className="h-4 w-4 ml-2" />
+                      </Button>
+                    )}
                   </Card>
                 )
               })}

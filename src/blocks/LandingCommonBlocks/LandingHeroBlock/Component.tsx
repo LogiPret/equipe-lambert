@@ -175,6 +175,7 @@ export default function LandingHeroBlock({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState('')
+  const [consentChecked, setConsentChecked] = useState(false)
 
   // Handle background image URL
   const backgroundImageUrl =
@@ -186,6 +187,14 @@ export default function LandingHeroBlock({
 
   // Convert description to HTML string
   const descriptionHTML = effectiveDescription || ''
+
+  // Determine if all required fields are filled (matches server-side validation)
+  const requiredFilled = Boolean(
+    (formData as any).prenom &&
+      (formData as any).nom &&
+      (formData as any).email &&
+      (formData as any).phone,
+  )
 
   // Mode-specific styling and content
   const modeConfig = {
@@ -318,9 +327,9 @@ export default function LandingHeroBlock({
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <ScrollAnimation animation="fadeIn" delay={300}>
-              <div className="mb-8">
+              <div className="mb-8 hidden sm:block">
                 <Badge
-                  className={`${config.badgeClass} text-branding0 px-6 py-3 text-lg font-medium mb-6`}
+                  className={`${config.badgeClass} text-branding0 px-6 py-3 text-md font-medium mb-6`}
                 >
                   <BadgeIcon className="h-5 w-5 mr-2" />
                   {effectiveBadgeText}
@@ -341,7 +350,7 @@ export default function LandingHeroBlock({
             />
 
             {effectiveStats && effectiveStats.length > 0 && (
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="grid grid-cols-3 gap-6 mb-8">
                 {effectiveStats.map((stat, index) => (
                   <div key={index} className="text-center">
                     <div className="text-3xl font-bold text-branding0 mb-2">{stat.value}</div>
@@ -500,7 +509,7 @@ export default function LandingHeroBlock({
                                 : ''
                             }
                             onChange={handleInputChange}
-                            className="border text-branding100 border-branding25 focus:border-branding100 p-4 bg-branding0 rounded-md w-full"
+                            className="border text-branding100 border-branding25 focus:border-branding100 p-2 bg-branding0 rounded-md w-full"
                           >
                             <option value="">
                               {formFields?.propertyTypePlaceholder || 'Type de propriété'}
@@ -538,10 +547,25 @@ export default function LandingHeroBlock({
                         </div>
                       )}
 
+                      {/* Consent checkbox */}
+                      <div className="flex items-start gap-3 text-sm text-branding75">
+                        <input
+                          id="contact-consent"
+                          type="checkbox"
+                          className="mt-1 h-4 w-4 border border-branding25 accent-branding100"
+                          checked={consentChecked}
+                          onChange={(e) => setConsentChecked(e.target.checked)}
+                          required
+                        />
+                        <label htmlFor="contact-consent" className="cursor-pointer">
+                          J’accepte d’être contacté(e) par l’Équipe Lambert concernant ma demande.
+                        </label>
+                      </div>
+
                       <Button
                         type="submit"
-                        disabled={isSubmitting}
-                        className="w-full bg-branding100 hover:bg-accent2static text-branding0 py-4 font-medium text-lg disabled:opacity-50"
+                        disabled={isSubmitting || !consentChecked || !requiredFilled}
+                        className="w-full bg-branding100 hover:bg-accent2static text-branding0 py-4 font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <FormButtonIcon className="h-5 w-5 mr-2" />
                         {isSubmitting

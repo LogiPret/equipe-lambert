@@ -28,7 +28,7 @@ export interface TransformedProperty {
 }
 
 // Function to map Centris property types to our internal types
-function mapPropertyType(centrisType: string): TransformedProperty['propType'] {
+export function mapPropertyType(centrisType: string): TransformedProperty['propType'] {
   const type = centrisType.toLowerCase()
 
   if (type.includes('house') || type.includes('maison')) return 'maison'

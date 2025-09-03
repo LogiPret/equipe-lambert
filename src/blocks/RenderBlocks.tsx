@@ -25,12 +25,14 @@ import ButtonBlock from '@/blocks/Button/Component'
 import BlogCarouselBlock from '@/blocks/HomePageBlocks/BlogCarouselBlock/ServerComponent'
 import WhyChooseUsBlock from '@/blocks/LandingCommonBlocks/WhyChooseUsBlock/Component'
 import LandingProcessBlock from '@/blocks/LandingCommonBlocks/LandingProcessBlock/Component'
+import LandingFAQBlock from '@/blocks/LandingCommonBlocks/LandingFAQBlock/Component'
 import MortgageCalculatorBlock from '@/blocks/LandingAcheterBlocks/MortgageCalculatorBlock/Component'
 import { LandingCTABlockComponent } from '@/blocks/LandingCommonBlocks/LandingCTABlock/Component'
 import { LandingResourceBlockComponent } from '@/blocks/LandingCommonBlocks/LandingResourceBlock/Component'
 import EvaluationGratuiteBlock from './LandingVendreBlocks/EvaluationGratuiteBlock/Component'
 import LandingHeroBlock from '@/blocks/LandingCommonBlocks/LandingHeroBlock/Component'
 import InteractivePropertiesBlock from '@/blocks/InteractivePropertiesBlock/ServerWrapper'
+import FeaturedListingsBlock from '@/blocks/LandingAcheterBlocks/FeaturedListings/ServerWrapper'
 import { TableByColumnsBlock } from '@/blocks/TableByColumns/Component'
 import { TableByRowsBlock } from '@/blocks/TableByRows/Component'
 import BlogInlineCTA from '@/blocks/BlogInlineCTA/Component'
@@ -57,6 +59,7 @@ const blockComponents = {
   blogCarousel: BlogCarouselBlock,
   whyChooseUs: WhyChooseUsBlock,
   landingProcess: LandingProcessBlock,
+  landingFAQBlock: LandingFAQBlock,
   blogInlineCTA: BlogInlineCTA,
   mortgageCalculator: MortgageCalculatorBlock,
   vendreWhyChooseUs: WhyChooseUsBlock,
@@ -65,6 +68,7 @@ const blockComponents = {
   evaluationGratuite: EvaluationGratuiteBlock,
   landingHero: LandingHeroBlock,
   interactivePropBlock: InteractivePropertiesBlock,
+  featuredListings: FeaturedListingsBlock,
   tableByColumns: TableByColumnsBlock,
   tableByRows: TableByRowsBlock,
 }

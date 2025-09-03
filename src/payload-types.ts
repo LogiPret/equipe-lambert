@@ -652,6 +652,20 @@ export interface Page {
       }
     | {
         title: string;
+        description: string;
+        faqs?:
+          | {
+              question: string;
+              answer: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'landingFAQBlock';
+      }
+    | {
+        title: string;
         subtitle: string;
         description: string;
         defaultValues?: {
@@ -732,6 +746,28 @@ export interface Page {
            */
           buttonText?: string | null;
           /**
+           * Configure where the main button points to (internal page, custom URL, or scroll to section).
+           */
+          link?: {
+            type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: number | Post;
+                } | null);
+            url?: string | null;
+            archive?: 'posts' | null;
+            /**
+             * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+             */
+            scrollTarget?: string | null;
+          };
+          /**
            * Action to perform when button is clicked (e.g., scroll target, external URL, etc.)
            */
           buttonAction?: string | null;
@@ -776,6 +812,28 @@ export interface Page {
                  * Button text for this resource. Defaults to "Télécharger" if empty.
                  */
                 buttonText?: string | null;
+                /**
+                 * Configure where this resource button points to (internal page, custom URL, or scroll to section).
+                 */
+                link?: {
+                  type?: ('reference' | 'custom' | 'archive' | 'scroll') | null;
+                  newTab?: boolean | null;
+                  reference?:
+                    | ({
+                        relationTo: 'pages';
+                        value: number | Page;
+                      } | null)
+                    | ({
+                        relationTo: 'posts';
+                        value: number | Post;
+                      } | null);
+                  url?: string | null;
+                  archive?: 'posts' | null;
+                  /**
+                   * Enter the ID of the section to scroll to (e.g., contact-block, services, testimonials)
+                   */
+                  scrollTarget?: string | null;
+                };
                 /**
                  * Action to perform when this resource button is clicked (e.g., download URL, scroll target, etc.)
                  */
@@ -933,6 +991,7 @@ export interface Page {
         blockType: 'landingHero';
       }
     | InteractivePropertiesBlock
+    | FeaturedListingsBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1611,39 +1670,18 @@ export interface InteractivePropertiesBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pdf".
+ * via the `definition` "FeaturedListingsBlock".
  */
-export interface Pdf {
-  id: number;
-  title: string;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+export interface FeaturedListingsBlock {
+  title?: string | null;
+  subtitle?: string | null;
+  /**
+   * Choisissez jusqu’à 4 propriétés (l’ordre sera respecté).
+   */
+  selectedProperties: (number | ScrapedProperty)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuredListings';
 }
 /**
  * Properties automatically scraped from Centris
@@ -1712,6 +1750,42 @@ export interface ScrapedProperty {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pdf".
+ */
+export interface Pdf {
+  id: number;
+  title: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2430,6 +2504,21 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        landingFAQBlock?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              faqs?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         mortgageCalculator?:
           | T
           | {
@@ -2474,6 +2563,16 @@ export interface PagesSelect<T extends boolean = true> {
                     description?: T;
                     highlight?: T;
                     buttonText?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          archive?: T;
+                          scrollTarget?: T;
+                        };
                     buttonAction?: T;
                   };
               imageContent?:
@@ -2497,6 +2596,16 @@ export interface PagesSelect<T extends boolean = true> {
                           icon?: T;
                           color?: T;
                           buttonText?: T;
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                archive?: T;
+                                scrollTarget?: T;
+                              };
                           buttonAction?: T;
                           id?: T;
                         };
@@ -2608,6 +2717,7 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         interactivePropBlock?: T | InteractivePropertiesBlockSelect<T>;
+        featuredListings?: T | FeaturedListingsBlockSelect<T>;
       };
   meta?:
     | T
@@ -2769,6 +2879,17 @@ export interface InteractivePropertiesBlockSelect<T extends boolean = true> {
         propStatus?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedListingsBlock_select".
+ */
+export interface FeaturedListingsBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  selectedProperties?: T;
   id?: T;
   blockName?: T;
 }

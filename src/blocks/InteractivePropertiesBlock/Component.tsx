@@ -52,6 +52,8 @@ interface InteractivePropertiesBlockProps {
   props?: Property[]
   calculatorBlockId?: string
   hoverButtonIcon?: 'eye' | 'external-link' | 'arrow-right' | 'plus' | 'heart'
+  // Optional override for grid columns classes (e.g., "grid-cols-2 md:grid-cols-2 lg:grid-cols-3")
+  gridColsClass?: string
 }
 
 // Mock data for properties
@@ -174,6 +176,7 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
   props: cmsProperties,
   calculatorBlockId = 'mortgageCalculator',
   hoverButtonIcon = 'eye',
+  gridColsClass,
 }) => {
   const [hoveredProperty, setHoveredProperty] = useState<string | null>(null)
 
@@ -378,7 +381,9 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
           <p className="text-xl text-branding75 max-w-3xl mx-auto">{subtitle}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          className={`grid ${gridColsClass || 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'} gap-6 md:gap-8`}
+        >
           {properties && properties.length > 0 ? (
             properties.map((property, _index) => {
               // Ensure property has required fields
@@ -399,11 +404,11 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
                       alt={getImageAlt(property.image, property.address)}
                       width={400}
                       height={300}
-                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-48 sm:h-56 md:h-64 object-cover group-hover:scale-110 transition-transform duration-700"
                     />
 
                     {/* Property Status Badge */}
-                    <div className="absolute top-4 left-4">
+                    <div className="absolute top-4 left-4 hidden sm:block">
                       <Badge
                         variant={property.propStatus === 'vendu' ? 'secondary' : 'default'}
                         className={`${
@@ -463,24 +468,24 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
                     )}
                   </div>
 
-                  <CardContent className="p-6 flex flex-col flex-grow min-w-0">
+                  <CardContent className="p-4 sm:p-5 md:p-6 flex flex-col flex-grow min-w-0">
                     <div className="mb-4 min-w-0">
-                      <h3 className="text-2xl font-general-sans font-medium text-accent3static mb-2 break-words">
+                      <h3 className="text-xl sm:text-2xl font-general-sans font-medium text-accent3static mb-2 break-words">
                         {formatCurrency(property.price)}
                       </h3>
                       <div className="flex items-center text-branding75 mb-2">
                         <MapPin className="h-4 w-4 mr-2 text-accent3static flex-shrink-0" />
-                        <p className="text-sm break-words">{property.address}</p>
+                        <p className="text-xs sm:text-sm break-words">{property.address}</p>
                       </div>
                       {property.description && (
                         <p
-                          className="text-branding75 text-sm mb-4 break-words overflow-hidden"
+                          className="text-branding75 text-xs sm:text-sm mb-3 sm:mb-4 break-words overflow-hidden"
                           style={{
                             display: '-webkit-box',
-                            WebkitLineClamp: 3,
+                            WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
                             lineHeight: '1.4em',
-                            maxHeight: '4.2em', // 3 lines × 1.4em line height
+                            maxHeight: '2.8em', // 2 lines × 1.4em line height
                           }}
                         >
                           {property.description}
@@ -488,24 +493,24 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
                       )}
                     </div>
 
-                    <div className="mt-auto flex justify-between items-center pt-4 border-t border-borderprimarystatic mb-4">
-                      <div className="flex items-center space-x-4 text-sm text-branding75">
+                    <div className="mt-auto flex justify-between items-center pt-3 sm:pt-4 border-t border-borderprimarystatic mb-3 sm:mb-4">
+                      <div className="flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-2 text-xs sm:text-sm text-branding75">
                         {property.beds > 0 && (
-                          <div className="flex items-center">
-                            <Bed className="h-4 w-4 mr-1 text-accent3static" />
+                          <div className="flex items-center whitespace-nowrap">
+                            <Bed className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-accent3static" />
                             <span>{property.beds}</span>
                           </div>
                         )}
                         {property.baths > 0 && (
-                          <div className="flex items-center">
-                            <Bath className="h-4 w-4 mr-1 text-accent3static" />
+                          <div className="flex items-center whitespace-nowrap">
+                            <Bath className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-accent3static" />
                             <span>{property.baths}</span>
                           </div>
                         )}
                         {property.sqft && property.sqft.trim() !== '' && property.sqft !== '0' && (
-                          <div className="flex items-center">
-                            <Square className="h-4 w-4 mr-1 text-accent3static" />
-                            <span>{property.sqft} pi²</span>
+                          <div className="flex items-center whitespace-nowrap">
+                            <Square className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-accent3static" />
+                            <span className="whitespace-nowrap">{property.sqft} pi²</span>
                           </div>
                         )}
                       </div>
@@ -515,10 +520,10 @@ export const InteractivePropertiesBlockComponent: React.FC<InteractiveProperties
                     {property.propStatus === 'a_vendre' && (
                       <Button
                         onClick={() => handleCalculatorClick(property)}
-                        className="w-full bg-accent3static hover:bg-branding100 text-branding0 font-semibold py-2.5 transition-all duration-200"
+                        className="w-full bg-accent3static hover:bg-branding100 text-branding0 font-semibold py-2.5 transition-all duration-200 text-sm sm:text-base truncate"
                       >
                         <Calculator className="h-4 w-4 mr-2" />
-                        Calculer les paiements
+                        Calculer <span className="hidden sm:inline ml-1"> les paiements</span>
                       </Button>
                     )}
                   </CardContent>
