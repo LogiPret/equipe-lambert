@@ -25,9 +25,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
       <head>
         <InitTheme />
-        <meta name="google-site-verification" content="ubJWhCFHH81FWokcg86zoqxallVYcc0bT37LSAOc340" />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
+        <meta
+          name="google-site-verification"
+          content="ubJWhCFHH81FWokcg86zoqxallVYcc0bT37LSAOc340"
+        />
+        <link href="/favicon.svg" rel="icon" sizes="32x32" type="image/svg+xml" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <link href="/favicon.svg" rel="shortcut icon" type="image/svg+xml" />
+        <link href="/equipelambert_logo.png" rel="apple-touch-icon" sizes="180x180" />
+        <meta name="theme-color" content="#1a1a1a" />
         <link
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
           rel="stylesheet"
@@ -56,9 +62,46 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
-  openGraph: mergeOpenGraph(),
+  title: {
+    default: 'Équipe Lambert - Courtiers Immobiliers Montréal',
+    template: '%s | Équipe Lambert',
+  },
+  description:
+    'Équipe Lambert - Courtiers immobiliers professionnels à Montréal. Achat, vente et accompagnement personnalisé pour tous vos projets immobiliers.',
+  openGraph: mergeOpenGraph({
+    title: 'Équipe Lambert - Courtiers Immobiliers Montréal',
+    description:
+      'Équipe Lambert - Courtiers immobiliers professionnels à Montréal. Achat, vente et accompagnement personnalisé pour tous vos projets immobiliers.',
+    images: [
+      {
+        url: '/equipelambert_logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Équipe Lambert - Courtiers Immobiliers Montréal',
+      },
+    ],
+    siteName: 'Équipe Lambert',
+    locale: 'fr_CA',
+  }),
   twitter: {
     card: 'summary_large_image',
-    creator: '@payloadcms',
+    title: 'Équipe Lambert - Courtiers Immobiliers Montréal',
+    description:
+      'Équipe Lambert - Courtiers immobiliers professionnels à Montréal. Achat, vente et accompagnement personnalisé pour tous vos projets immobiliers.',
+    images: ['/equipelambert_logo.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'ubJWhCFHH81FWokcg86zoqxallVYcc0bT37LSAOc340',
   },
 }
