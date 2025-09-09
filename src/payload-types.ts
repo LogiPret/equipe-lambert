@@ -992,6 +992,7 @@ export interface Page {
       }
     | InteractivePropertiesBlock
     | FeaturedListingsBlock
+    | QuizFormBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1750,6 +1751,74 @@ export interface ScrapedProperty {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuizFormBlock".
+ */
+export interface QuizFormBlock {
+  title?: string | null;
+  subtitle?: string | null;
+  steps: {
+    /**
+     * Unique identifier for this step
+     */
+    id: string;
+    title: string;
+    subtitle?: string | null;
+    fields: {
+      /**
+       * Unique identifier for this field
+       */
+      id: string;
+      type: 'text' | 'phone' | 'email' | 'dropdown' | 'slider' | 'checkboxGroup';
+      label: string;
+      placeholder?: string | null;
+      required?: boolean | null;
+      width: 'full' | 'half';
+      options?:
+        | {
+            label: string;
+            value: string;
+            id?: string | null;
+          }[]
+        | null;
+      min?: number | null;
+      max?: number | null;
+      step?: number | null;
+      defaultValue?: number | null;
+      checkboxOptions?:
+        | {
+            label: string;
+            id?: string | null;
+          }[]
+        | null;
+      /**
+       * When disabled, only one option can be selected at a time (radio-like behavior)
+       */
+      allowMultiple?: boolean | null;
+    }[];
+  }[];
+  submitButtonText?: string | null;
+  successMessage?: string | null;
+  ctaAfterSubmit?: {
+    text?: string | null;
+    link?: string | null;
+  };
+  appearance?: {
+    /**
+     * CSS color value (e.g., #3B82F6, rgb(59, 130, 246))
+     */
+    primaryColor?: string | null;
+    /**
+     * CSS color value for the form background
+     */
+    backgroundColor?: string | null;
+    borderRadius?: ('small' | 'medium' | 'large') | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'quizForm';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2718,6 +2787,7 @@ export interface PagesSelect<T extends boolean = true> {
             };
         interactivePropBlock?: T | InteractivePropertiesBlockSelect<T>;
         featuredListings?: T | FeaturedListingsBlockSelect<T>;
+        quizForm?: T | QuizFormBlockSelect<T>;
       };
   meta?:
     | T
@@ -2890,6 +2960,66 @@ export interface FeaturedListingsBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   selectedProperties?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuizFormBlock_select".
+ */
+export interface QuizFormBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        id?: T;
+        title?: T;
+        subtitle?: T;
+        fields?:
+          | T
+          | {
+              id?: T;
+              type?: T;
+              label?: T;
+              placeholder?: T;
+              required?: T;
+              width?: T;
+              options?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              min?: T;
+              max?: T;
+              step?: T;
+              defaultValue?: T;
+              checkboxOptions?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              allowMultiple?: T;
+            };
+      };
+  submitButtonText?: T;
+  successMessage?: T;
+  ctaAfterSubmit?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+      };
+  appearance?:
+    | T
+    | {
+        primaryColor?: T;
+        backgroundColor?: T;
+        borderRadius?: T;
+      };
   id?: T;
   blockName?: T;
 }

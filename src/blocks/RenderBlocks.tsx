@@ -36,6 +36,8 @@ import FeaturedListingsBlock from '@/blocks/LandingAcheterBlocks/FeaturedListing
 import { TableByColumnsBlock } from '@/blocks/TableByColumns/Component'
 import { TableByRowsBlock } from '@/blocks/TableByRows/Component'
 import BlogInlineCTA from '@/blocks/BlogInlineCTA/Component'
+import { QuizFormBlock } from '@/blocks/LandingCommonBlocks/QuizFormBlock/Component'
+// import { QuizFormBlock } from '@/blocks/LandingCommonBlocks/QuizFormBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -71,6 +73,7 @@ const blockComponents = {
   featuredListings: FeaturedListingsBlock,
   tableByColumns: TableByColumnsBlock,
   tableByRows: TableByRowsBlock,
+  quizForm: QuizFormBlock,
 }
 
 export const RenderBlocks: React.FC<{

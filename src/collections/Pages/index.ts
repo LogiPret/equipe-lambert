@@ -33,6 +33,7 @@ import { EvaluationGratuiteBlock } from '@/blocks/LandingVendreBlocks/Evaluation
 import { LandingHeroBlock } from '../../blocks/LandingCommonBlocks/LandingHeroBlock/config'
 import { InteractivePropertiesBlock } from '../../blocks/InteractivePropertiesBlock/config'
 import { FeaturedListingsBlock } from '../../blocks/LandingAcheterBlocks/FeaturedListings/config'
+import { QuizFormBlock } from '../../blocks/LandingCommonBlocks/QuizFormBlock/config'
 
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
@@ -133,6 +134,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 LandingHeroBlock,
                 InteractivePropertiesBlock,
                 FeaturedListingsBlock,
+                QuizFormBlock,
               ],
               required: true,
               admin: {
