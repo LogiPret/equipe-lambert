@@ -139,6 +139,151 @@ const ProgressBar = ({ current, total }: { current: number; total: number }) => 
   )
 }
 
+// City select combobox component (uses hooks at top level)
+const CitySelect = ({
+  value,
+  onChange,
+  placeholder,
+}: {
+  value: string
+  onChange: (v: string) => void
+  placeholder?: string
+}) => {
+  const cities = [
+    'Beaconsfield',
+    'Blainville',
+    'Bois-des-Filion',
+    'Boisbriand',
+    'Boucherville',
+    'Brossard',
+    'Candiac',
+    'Carignan',
+    'Charlemagne',
+    'Châteauguay',
+    'Chomedey (Laval)',
+    'Contrecoeur',
+    'Côte-Saint-Luc',
+    'Delson',
+    'Deux-Montagnes',
+    'Dollard-des-Ormeaux',
+    'Dorval',
+    'Fabreville (Laval)',
+    'Greenfield Park (Longueuil)',
+    'Hampstead',
+    'Kirkland',
+    'La Prairie',
+    'Lachine (Montréal)',
+    'L’Assomption',
+    'Laval',
+    'Laval-des-Rapides (Laval)',
+    'L’Île-Bizard–Sainte-Geneviève (Montréal)',
+    'Longueuil',
+    'Lorraine',
+    'Mascouche',
+    'McMasterville',
+    'Mercier–Hochelaga-Maisonneuve (Montréal)',
+    'Mirabel',
+    'Montréal',
+    'Montréal-Est',
+    'Montréal-Nord (Montréal)',
+    'Montréal-Ouest',
+    'Mont-Royal',
+    'Mont-Saint-Hilaire',
+    'Notre-Dame-de-Grâce–Côte-des-Neiges (Montréal)',
+    'Outremont (Montréal)',
+    'Pierrefonds-Roxboro (Montréal)',
+    'Pointe-Claire',
+    'Rivière-des-Prairies–Pointe-aux-Trembles (Montréal)',
+    'Repentigny',
+    'Rosemère',
+    'Rosemont–La Petite-Patrie (Montréal)',
+    'Saint-Amable',
+    'Saint-Basile-le-Grand',
+    'Saint-Bruno-de-Montarville',
+    'Saint-Constant',
+    'Sainte-Anne-de-Bellevue',
+    'Sainte-Anne-des-Plaines',
+    'Sainte-Catherine',
+    'Sainte-Julie',
+    'Sainte-Marthe-sur-le-Lac',
+    'Sainte-Rose (Laval)',
+    'Sainte-Thérèse',
+    'Saint-Eustache',
+    'Saint-Laurent (Montréal)',
+    'Saint-Lambert',
+    'Saint-Léonard (Montréal)',
+    'Saint-Michel (Montréal)',
+    'Saint-Vincent-de-Paul (Laval)',
+    'Salaberry-de-Valleyfield',
+    'Senneville',
+    'Terrebonne',
+    'Varennes',
+    'Vaudreuil-Dorion',
+    'Verdun (Montréal)',
+    'Verchères',
+    'Ville-Marie (Montréal)',
+    'Villeray–Saint-Michel–Parc-Extension (Montréal)',
+    'Westmount',
+  ]
+
+  const [query, setQuery] = React.useState(value || '')
+  const [open, setOpen] = React.useState(false)
+
+  // Keep input in sync when value prop changes
+  React.useEffect(() => {
+    setQuery(value || '')
+  }, [value])
+
+  const filtered = query
+    ? cities.filter((c) => c.toLowerCase().includes(query.toLowerCase()))
+    : cities
+
+  return (
+    <div className="space-y-2">
+      <Input
+        value={query}
+        onChange={(e) => {
+          setQuery(e.target.value)
+          if (!open) setOpen(true)
+        }}
+        onFocus={() => setOpen(true)}
+        onBlur={() => setTimeout(() => setOpen(false), 100)}
+        placeholder={placeholder || 'Rechercher une ville'}
+        className="bg-branding0 text-branding100 border border-branding100 focus:border-branding0 focus-visible:ring-branding0 placeholder:text-branding50"
+      />
+      {open && (
+        <div className="max-h-56 overflow-auto rounded-md border border-branding100 bg-branding0">
+          {filtered.length === 0 ? (
+            <div className="p-2 text-sm text-branding25">Aucune ville</div>
+          ) : (
+            <ul className="divide-y divide-branding100/20">
+              {filtered.map((city) => (
+                <li key={city}>
+                  <button
+                    type="button"
+                    className={cn(
+                      'w-full text-left px-3 py-2 hover:bg-branding90',
+                      query === city ? 'bg-branding90 text-branding0' : 'text-branding100',
+                    )}
+                    onMouseDown={(e) => {
+                      e.preventDefault()
+                      setQuery(city)
+                      onChange(city)
+                      setOpen(false)
+                    }}
+                  >
+                    {city}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // Field Component
 const FormField = ({
   field,
@@ -153,142 +298,14 @@ const FormField = ({
 }): React.JSX.Element => {
   const renderFieldInput = () => {
     switch (field.type) {
-      case 'city': {
-        const cities = [
-          'Beaconsfield',
-          'Blainville',
-          'Bois-des-Filion',
-          'Boisbriand',
-          'Boucherville',
-          'Brossard',
-          'Candiac',
-          'Carignan',
-          'Charlemagne',
-          'Châteauguay',
-          'Chomedey (Laval)',
-          'Contrecoeur',
-          'Côte-Saint-Luc',
-          'Delson',
-          'Deux-Montagnes',
-          'Dollard-des-Ormeaux',
-          'Dorval',
-          'Fabreville (Laval)',
-          'Greenfield Park (Longueuil)',
-          'Hampstead',
-          'Kirkland',
-          'La Prairie',
-          'Lachine (Montréal)',
-          'L’Assomption',
-          'Laval',
-          'Laval-des-Rapides (Laval)',
-          'L’Île-Bizard–Sainte-Geneviève (Montréal)',
-          'Longueuil',
-          'Lorraine',
-          'Mascouche',
-          'McMasterville',
-          'Mercier–Hochelaga-Maisonneuve (Montréal)',
-          'Mirabel',
-          'Montréal',
-          'Montréal-Est',
-          'Montréal-Nord (Montréal)',
-          'Montréal-Ouest',
-          'Mont-Royal',
-          'Mont-Saint-Hilaire',
-          'Notre-Dame-de-Grâce–Côte-des-Neiges (Montréal)',
-          'Outremont (Montréal)',
-          'Pierrefonds-Roxboro (Montréal)',
-          'Pointe-Claire',
-          'Rivière-des-Prairies–Pointe-aux-Trembles (Montréal)',
-          'Repentigny',
-          'Rosemère',
-          'Rosemont–La Petite-Patrie (Montréal)',
-          'Saint-Amable',
-          'Saint-Basile-le-Grand',
-          'Saint-Bruno-de-Montarville',
-          'Saint-Constant',
-          'Sainte-Anne-de-Bellevue',
-          'Sainte-Anne-des-Plaines',
-          'Sainte-Catherine',
-          'Sainte-Julie',
-          'Sainte-Marthe-sur-le-Lac',
-          'Sainte-Rose (Laval)',
-          'Sainte-Thérèse',
-          'Saint-Eustache',
-          'Saint-Laurent (Montréal)',
-          'Saint-Lambert',
-          'Saint-Léonard (Montréal)',
-          'Saint-Michel (Montréal)',
-          'Saint-Vincent-de-Paul (Laval)',
-          'Salaberry-de-Valleyfield',
-          'Senneville',
-          'Terrebonne',
-          'Varennes',
-          'Vaudreuil-Dorion',
-          'Verdun (Montréal)',
-          'Verchères',
-          'Ville-Marie (Montréal)',
-          'Villeray–Saint-Michel–Parc-Extension (Montréal)',
-          'Westmount',
-        ]
-
-        const current = (value as string) || ''
-        const [query, setQuery] = React.useState('')
-        const [open, setOpen] = React.useState(false)
-
-        // Keep input in sync when value comes from outside (e.g., going back a step)
-        React.useEffect(() => {
-          setQuery(current)
-        }, [current])
-
-        const filtered = query
-          ? cities.filter((c) => c.toLowerCase().includes(query.toLowerCase()))
-          : cities
-
+      case 'city':
         return (
-          <div className="space-y-2">
-            <Input
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value)
-                if (!open) setOpen(true)
-              }}
-              onFocus={() => setOpen(true)}
-              onBlur={() => setTimeout(() => setOpen(false), 100)}
-              placeholder={field.placeholder || 'Rechercher une ville'}
-              className="bg-branding0 text-branding100 border border-branding100 focus:border-branding0 focus-visible:ring-branding0 placeholder:text-branding50"
-            />
-            {open && (
-              <div className="max-h-56 overflow-auto rounded-md border border-branding100 bg-branding0">
-                {filtered.length === 0 ? (
-                  <div className="p-2 text-sm text-branding25">Aucune ville</div>
-                ) : (
-                  <ul className="divide-y divide-branding100/20">
-                    {filtered.map((city) => (
-                      <li key={city}>
-                        <button
-                          type="button"
-                          className={cn(
-                            'w-full text-left px-3 py-2 hover:bg-branding90',
-                            query === city ? 'bg-branding90 text-branding0' : 'text-branding100',
-                          )}
-                          onMouseDown={(e) => {
-                            e.preventDefault()
-                            setQuery(city)
-                            onChange(city)
-                            setOpen(false)
-                          }}
-                        >
-                          {city}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            )}
-          </div>
+          <CitySelect
+            value={(value as string) || ''}
+            onChange={(v) => onChange(v)}
+            placeholder={field.placeholder}
+          />
         )
-      }
       case 'optionCards': {
         const selected = Array.isArray(value) ? (value as string[]) : value ? [String(value)] : []
         const isMulti = !!field.allowMultiple

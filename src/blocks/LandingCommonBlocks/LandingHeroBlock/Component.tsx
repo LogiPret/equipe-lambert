@@ -102,6 +102,7 @@ export default function LandingHeroBlock({
   backgroundImage,
 }: LandingHeroBlockProps) {
   const router = useRouter()
+  const isFormVisible = showForm
 
   // Mode-specific defaults that override database values
   const modeDefaults = {
@@ -326,10 +327,16 @@ export default function LandingHeroBlock({
       ></div>
 
       <div className="relative container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
+        <div
+          className={`grid gap-16 items-center ${
+            isFormVisible ? 'lg:grid-cols-2' : 'lg:grid-cols-1 justify-items-center'
+          }`}
+        >
+          <div className={`${!isFormVisible ? 'text-center' : ''}`}>
             <ScrollAnimation animation="fadeIn" delay={300}>
-              <div className="mb-8 hidden sm:block">
+              <div
+                className={`mb-8 hidden sm:block ${!isFormVisible ? 'sm:flex sm:justify-center' : ''}`}
+              >
                 <Badge
                   className={`${config.badgeClass} text-branding0 px-6 py-3 text-md font-medium mb-6`}
                 >
@@ -347,7 +354,9 @@ export default function LandingHeroBlock({
             </h1>
 
             <div
-              className="text-xl md:text-2xl mb-8 leading-relaxed text-branding0 max-w-2xl"
+              className={`text-xl md:text-2xl mb-8 leading-relaxed text-branding0 max-w-2xl ${
+                !isFormVisible ? 'mx-auto' : ''
+              }`}
               dangerouslySetInnerHTML={{ __html: descriptionHTML }}
             />
 
@@ -362,7 +371,9 @@ export default function LandingHeroBlock({
               </div>
             )}
 
-            <div className="flex flex-col sm:flex-row gap-6">
+            <div
+              className={`flex flex-col sm:flex-row gap-6 ${!isFormVisible ? 'justify-center' : ''}`}
+            >
               <Button
                 size="lg"
                 className={`${config.primaryButtonClass} text-branding0 px-8 py-4 font-medium text-lg`}
