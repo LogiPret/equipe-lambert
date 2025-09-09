@@ -1686,81 +1686,9 @@ export interface InteractivePropertiesBlock {
 export interface FeaturedListingsBlock {
   title?: string | null;
   subtitle?: string | null;
-  /**
-   * Choisissez jusqu’à 4 propriétés (l’ordre sera respecté).
-   */
-  selectedProperties: (number | ScrapedProperty)[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'featuredListings';
-}
-/**
- * Properties automatically scraped from Centris
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "scrapedProperties".
- */
-export interface ScrapedProperty {
-  id: number;
-  /**
-   * Unique MLS identifier from Centris
-   */
-  mlsNumber: string;
-  /**
-   * Price as scraped from Centris (e.g., "$649,000")
-   */
-  price: string;
-  address: string;
-  /**
-   * Type as scraped from Centris (e.g., "House for sale")
-   */
-  type: string;
-  /**
-   * Number of bedrooms (can be null from scraper)
-   */
-  bedrooms?: string | null;
-  /**
-   * Number of bathrooms (can be null from scraper)
-   */
-  bathrooms?: string | null;
-  /**
-   * Lot area in square feet (can be null from scraper)
-   */
-  lotArea?: string | null;
-  /**
-   * Number of photos available for this property
-   */
-  photoCount?: number | null;
-  /**
-   * Direct URL to property image from Centris
-   */
-  imageUrl: string;
-  /**
-   * Link to the property on Centris website
-   */
-  link: string;
-  /**
-   * Whether this property should be displayed on the website
-   */
-  isActive?: boolean | null;
-  /**
-   * When this property was last scraped from Centris
-   */
-  scrapedAt: string;
-  /**
-   * Original data from scraper for debugging
-   */
-  rawData?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1856,6 +1784,74 @@ export interface Pdf {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * Properties automatically scraped from Centris
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scrapedProperties".
+ */
+export interface ScrapedProperty {
+  id: number;
+  /**
+   * Unique MLS identifier from Centris
+   */
+  mlsNumber: string;
+  /**
+   * Price as scraped from Centris (e.g., "$649,000")
+   */
+  price: string;
+  address: string;
+  /**
+   * Type as scraped from Centris (e.g., "House for sale")
+   */
+  type: string;
+  /**
+   * Number of bedrooms (can be null from scraper)
+   */
+  bedrooms?: string | null;
+  /**
+   * Number of bathrooms (can be null from scraper)
+   */
+  bathrooms?: string | null;
+  /**
+   * Lot area in square feet (can be null from scraper)
+   */
+  lotArea?: string | null;
+  /**
+   * Number of photos available for this property
+   */
+  photoCount?: number | null;
+  /**
+   * Direct URL to property image from Centris
+   */
+  imageUrl: string;
+  /**
+   * Link to the property on Centris website
+   */
+  link: string;
+  /**
+   * Whether this property should be displayed on the website
+   */
+  isActive?: boolean | null;
+  /**
+   * When this property was last scraped from Centris
+   */
+  scrapedAt: string;
+  /**
+   * Original data from scraper for debugging
+   */
+  rawData?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2961,7 +2957,6 @@ export interface InteractivePropertiesBlockSelect<T extends boolean = true> {
 export interface FeaturedListingsBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
-  selectedProperties?: T;
   id?: T;
   blockName?: T;
 }

@@ -77,7 +77,19 @@ export async function scrollToBlock(
     return false
   }
   const rect = el.getBoundingClientRect()
-  const targetY = (window.scrollY || window.pageYOffset) + rect.top - (options.offset || 0)
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight
+  // Center the element in the viewport by default
+  let targetY =
+    (window.scrollY || window.pageYOffset) + rect.top + rect.height / 2 - viewportHeight / 2
+  // Apply optional offset (positive offset moves element further up)
+  if (options.offset) targetY -= options.offset
+  // Clamp to valid scroll range
+  const maxScroll = Math.max(
+    0,
+    (document.documentElement.scrollHeight || document.body.scrollHeight) - viewportHeight,
+  )
+  if (targetY < 0) targetY = 0
+  if (targetY > maxScroll) targetY = maxScroll
   await smoothScrollTo(targetY, options)
   if (options.focus) {
     const focusable = el as HTMLElement
