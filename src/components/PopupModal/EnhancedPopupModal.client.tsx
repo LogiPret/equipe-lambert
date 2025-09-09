@@ -147,7 +147,7 @@ export const EnhancedPopupModal: React.FC<EnhancedPopupModalProps> = ({
     }
 
     if (props.popupType === 'blocks') {
-      const { title, content } = props
+      const { content } = props
 
       return (
         <>
