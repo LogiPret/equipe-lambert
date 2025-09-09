@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import PopupModal from '@/components/PopupModal/Component.client'
+import EnhancedPopupModal from '@/components/PopupModal/EnhancedPopupModal.client'
 import { Button, type ButtonProps } from '@/components/ui/button'
 
 export type ClientButtonProps = {
@@ -9,7 +9,8 @@ export type ClientButtonProps = {
   size?: ButtonProps['size']
 }
 
-export type PopupData = {
+export type SimplePopupData = {
+  popupType: 'form'
   title?: string | null
   firstNameLabel?: string | null
   lastNameLabel?: string | null
@@ -17,6 +18,14 @@ export type PopupData = {
   buttonText?: string | null
   pdfName?: string | null
 }
+
+export type BlocksPopupData = {
+  popupType: 'blocks'
+  title?: string | null
+  content: any[]
+}
+
+export type PopupData = SimplePopupData | BlocksPopupData
 
 export const ClientButton: React.FC<ClientButtonProps & { popup?: PopupData | null }> = ({
   text,
@@ -32,16 +41,14 @@ export const ClientButton: React.FC<ClientButtonProps & { popup?: PopupData | nu
         {text}
       </Button>
 
-      <PopupModal
-        open={open}
-        onClose={() => setOpen(false)}
-        title={popup?.title || 'Contact'}
-        firstNameLabel={popup?.firstNameLabel || 'Prénom'}
-        lastNameLabel={popup?.lastNameLabel || 'Nom'}
-        phoneLabel={popup?.phoneLabel || 'Téléphone'}
-        buttonText={popup?.buttonText || 'Envoyer'}
-        pdfName={popup?.pdfName || undefined}
-      />
+      {popup && (
+        <EnhancedPopupModal
+          open={open}
+          onClose={() => setOpen(false)}
+          {...popup}
+          title={popup.title || 'Contact'}
+        />
+      )}
     </>
   )
 }

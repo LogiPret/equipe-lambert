@@ -94,6 +94,26 @@ export const LandingResourceBlock: Block = {
               'Button text will automatically adjust based on mode: "Obtenir mes ressources" for vendre, "Recevoir mes ressources" for acheter. Leave empty to use default.',
           },
         },
+        // Action type selector for the main button
+        {
+          name: 'actionType',
+          type: 'radio',
+          label: 'Button Action Type',
+          defaultValue: 'link',
+          options: [
+            {
+              label: 'Link',
+              value: 'link',
+            },
+            {
+              label: 'Popup',
+              value: 'popup',
+            },
+          ],
+          admin: {
+            description: 'Choose whether the button should navigate to a link or open a popup.',
+          },
+        },
         // New: universal link field for button behavior (internal, external, scroll)
         linkField({
           overrides: {
@@ -102,6 +122,7 @@ export const LandingResourceBlock: Block = {
             admin: {
               description:
                 'Configure where the main button points to (internal page, custom URL, or scroll to section).',
+              condition: (data: any, siblingData: any) => siblingData?.actionType === 'link',
             },
           },
           dbNames: {
@@ -116,6 +137,17 @@ export const LandingResourceBlock: Block = {
           appearances: false,
           disableLabel: true,
         }),
+        // Popup reference field
+        {
+          name: 'popupRef',
+          type: 'relationship',
+          relationTo: 'popups',
+          label: 'Select Popup',
+          admin: {
+            condition: (data, siblingData) => siblingData?.actionType === 'popup',
+            description: 'Choose which popup to display when the button is clicked.',
+          },
+        },
         {
           name: 'buttonAction',
           type: 'text',
@@ -259,6 +291,26 @@ export const LandingResourceBlock: Block = {
                 description: 'Button text for this resource. Defaults to "Télécharger" if empty.',
               },
             },
+            // Action type selector for resource buttons
+            {
+              name: 'actionType',
+              type: 'radio',
+              label: 'Button Action Type',
+              defaultValue: 'link',
+              options: [
+                {
+                  label: 'Link',
+                  value: 'link',
+                },
+                {
+                  label: 'Popup',
+                  value: 'popup',
+                },
+              ],
+              admin: {
+                description: 'Choose whether the button should navigate to a link or open a popup.',
+              },
+            },
             // New: universal link field for each resource
             linkField({
               overrides: {
@@ -267,6 +319,7 @@ export const LandingResourceBlock: Block = {
                 admin: {
                   description:
                     'Configure where this resource button points to (internal page, custom URL, or scroll to section).',
+                  condition: (data: any, siblingData: any) => siblingData?.actionType === 'link',
                 },
               },
               dbNames: {
@@ -281,6 +334,17 @@ export const LandingResourceBlock: Block = {
               appearances: false,
               disableLabel: true,
             }),
+            // Popup reference field for resources
+            {
+              name: 'popupRef',
+              type: 'relationship',
+              relationTo: 'popups',
+              label: 'Select Popup',
+              admin: {
+                condition: (data: any, siblingData: any) => siblingData?.actionType === 'popup',
+                description: 'Choose which popup to display when the resource button is clicked.',
+              },
+            },
             {
               name: 'buttonAction',
               type: 'text',

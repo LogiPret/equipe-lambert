@@ -30,6 +30,48 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({
 }) => {
   if (actionType === 'popup') {
     const popup = typeof popupRef === 'object' ? popupRef : null
+
+    if (popup) {
+      // Handle both popup types
+      if (popup.popupType === 'blocks') {
+        return (
+          <div className="my-8 flex justify-center">
+            <ClientButton
+              text={text}
+              appearance={link.appearance || 'default'}
+              size={size}
+              popup={{
+                popupType: 'blocks',
+                title: popup.title ?? 'Contact',
+                content: popup.content ?? [],
+              }}
+            />
+          </div>
+        )
+      } else {
+        // Default to form popup for backwards compatibility
+        return (
+          <div className="my-8 flex justify-center">
+            <ClientButton
+              text={text}
+              appearance={link.appearance || 'default'}
+              size={size}
+              popup={{
+                popupType: 'form',
+                title: popup.title ?? 'Contact',
+                firstNameLabel: popup.firstNameLabel ?? 'Prénom',
+                lastNameLabel: popup.lastNameLabel ?? 'Nom',
+                phoneLabel: popup.phoneLabel ?? 'Téléphone',
+                buttonText: popup.buttonText ?? 'Envoyer',
+                pdfName: popup.pdfName ?? null,
+              }}
+            />
+          </div>
+        )
+      }
+    }
+
+    // Fallback if popup is null
     return (
       <div className="my-8 flex justify-center">
         <ClientButton
@@ -37,12 +79,13 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({
           appearance={link.appearance || 'default'}
           size={size}
           popup={{
-            title: popup?.title ?? 'Contact',
-            firstNameLabel: popup?.firstNameLabel ?? 'Prénom',
-            lastNameLabel: popup?.lastNameLabel ?? 'Nom',
-            phoneLabel: popup?.phoneLabel ?? 'Téléphone',
-            buttonText: popup?.buttonText ?? 'Envoyer',
-            pdfName: popup?.pdfName ?? null,
+            popupType: 'form',
+            title: 'Contact',
+            firstNameLabel: 'Prénom',
+            lastNameLabel: 'Nom',
+            phoneLabel: 'Téléphone',
+            buttonText: 'Envoyer',
+            pdfName: null,
           }}
         />
       </div>

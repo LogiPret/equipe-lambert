@@ -746,6 +746,10 @@ export interface Page {
            */
           buttonText?: string | null;
           /**
+           * Choose whether the button should navigate to a link or open a popup.
+           */
+          actionType?: ('link' | 'popup') | null;
+          /**
            * Configure where the main button points to (internal page, custom URL, or scroll to section).
            */
           link?: {
@@ -767,6 +771,10 @@ export interface Page {
              */
             scrollTarget?: string | null;
           };
+          /**
+           * Choose which popup to display when the button is clicked.
+           */
+          popupRef?: (number | null) | Popup;
           /**
            * Action to perform when button is clicked (e.g., scroll target, external URL, etc.)
            */
@@ -813,6 +821,10 @@ export interface Page {
                  */
                 buttonText?: string | null;
                 /**
+                 * Choose whether the button should navigate to a link or open a popup.
+                 */
+                actionType?: ('link' | 'popup') | null;
+                /**
                  * Configure where this resource button points to (internal page, custom URL, or scroll to section).
                  */
                 link?: {
@@ -834,6 +846,10 @@ export interface Page {
                    */
                   scrollTarget?: string | null;
                 };
+                /**
+                 * Choose which popup to display when the resource button is clicked.
+                 */
+                popupRef?: (number | null) | Popup;
                 /**
                  * Action to perform when this resource button is clicked (e.g., download URL, scroll target, etc.)
                  */
@@ -1267,7 +1283,7 @@ export interface CallToActionBlock {
   blockType: 'cta';
 }
 /**
- * Manage reusable popups. Buttons configured with type "Popup" can reference one of these.
+ * Manage reusable popups. You can create simple form popups or use blocks for more complex content.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "popups".
@@ -1276,15 +1292,82 @@ export interface Popup {
   id: number;
   title: string;
   /**
+   * Choose between a simple form popup or a block-based popup for more complex content
+   */
+  popupType: 'form' | 'blocks';
+  /**
    * Name of the PDF associated to this popup (not rendered, sent to n8n).
    */
   pdfName?: string | null;
-  buttonText: string;
+  buttonText?: string | null;
   firstNameLabel?: string | null;
   lastNameLabel?: string | null;
   phoneLabel?: string | null;
+  /**
+   * Add blocks to create your popup content. You can combine different blocks like Quiz Forms, Content, and Media.
+   */
+  content?: (QuizFormBlock | ContentBlock | MediaBlock)[] | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuizFormBlock".
+ */
+export interface QuizFormBlock {
+  title?: string | null;
+  subtitle?: string | null;
+  steps: {
+    /**
+     * Unique identifier for this step
+     */
+    id: string;
+    title: string;
+    subtitle?: string | null;
+    fields: {
+      /**
+       * Unique identifier for this field
+       */
+      id: string;
+      type: 'text' | 'phone' | 'email' | 'dropdown' | 'slider' | 'optionCards' | 'city';
+      label: string;
+      placeholder?: string | null;
+      required?: boolean | null;
+      width: 'full' | 'half';
+      options?:
+        | {
+            label: string;
+            value: string;
+            id?: string | null;
+          }[]
+        | null;
+      allowMultiple?: boolean | null;
+      min?: number | null;
+      max?: number | null;
+      step?: number | null;
+      defaultValue?: number | null;
+    }[];
+  }[];
+  submitButtonText?: string | null;
+  successMessage?: string | null;
+  ctaAfterSubmit?: {
+    text?: string | null;
+    link?: string | null;
+  };
+  appearance?: {
+    /**
+     * CSS color value (e.g., #3B82F6, rgb(59, 130, 246))
+     */
+    primaryColor?: string | null;
+    /**
+     * CSS color value for the form background
+     */
+    backgroundColor?: string | null;
+    borderRadius?: ('small' | 'medium' | 'large') | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'quizForm';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1689,65 +1772,6 @@ export interface FeaturedListingsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'featuredListings';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "QuizFormBlock".
- */
-export interface QuizFormBlock {
-  title?: string | null;
-  subtitle?: string | null;
-  steps: {
-    /**
-     * Unique identifier for this step
-     */
-    id: string;
-    title: string;
-    subtitle?: string | null;
-    fields: {
-      /**
-       * Unique identifier for this field
-       */
-      id: string;
-      type: 'text' | 'phone' | 'email' | 'dropdown' | 'slider' | 'optionCards' | 'city';
-      label: string;
-      placeholder?: string | null;
-      required?: boolean | null;
-      width: 'full' | 'half';
-      options?:
-        | {
-            label: string;
-            value: string;
-            id?: string | null;
-          }[]
-        | null;
-      allowMultiple?: boolean | null;
-      min?: number | null;
-      max?: number | null;
-      step?: number | null;
-      defaultValue?: number | null;
-    }[];
-  }[];
-  submitButtonText?: string | null;
-  successMessage?: string | null;
-  ctaAfterSubmit?: {
-    text?: string | null;
-    link?: string | null;
-  };
-  appearance?: {
-    /**
-     * CSS color value (e.g., #3B82F6, rgb(59, 130, 246))
-     */
-    primaryColor?: string | null;
-    /**
-     * CSS color value for the form background
-     */
-    backgroundColor?: string | null;
-    borderRadius?: ('small' | 'medium' | 'large') | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'quizForm';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2629,6 +2653,7 @@ export interface PagesSelect<T extends boolean = true> {
                     description?: T;
                     highlight?: T;
                     buttonText?: T;
+                    actionType?: T;
                     link?:
                       | T
                       | {
@@ -2639,6 +2664,7 @@ export interface PagesSelect<T extends boolean = true> {
                           archive?: T;
                           scrollTarget?: T;
                         };
+                    popupRef?: T;
                     buttonAction?: T;
                   };
               imageContent?:
@@ -2662,6 +2688,7 @@ export interface PagesSelect<T extends boolean = true> {
                           icon?: T;
                           color?: T;
                           buttonText?: T;
+                          actionType?: T;
                           link?:
                             | T
                             | {
@@ -2672,6 +2699,7 @@ export interface PagesSelect<T extends boolean = true> {
                                 archive?: T;
                                 scrollTarget?: T;
                               };
+                          popupRef?: T;
                           buttonAction?: T;
                           id?: T;
                         };
@@ -3208,11 +3236,19 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface PopupsSelect<T extends boolean = true> {
   title?: T;
+  popupType?: T;
   pdfName?: T;
   buttonText?: T;
   firstNameLabel?: T;
   lastNameLabel?: T;
   phoneLabel?: T;
+  content?:
+    | T
+    | {
+        quizForm?: T | QuizFormBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

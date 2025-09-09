@@ -1,13 +1,14 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { CMSLink } from '@/components/Link'
 import { Card } from '@/components/ui/card'
 import { ScrollAnimation } from '@/components/scroll-animations'
 import { CheckSquare, Eye, ArrowRight, Download, FileText, Calculator } from 'lucide-react'
 import Image from 'next/image'
-import type { Media } from '@/payload-types'
+import type { Media, Popup } from '@/payload-types'
+import EnhancedPopupModal from '@/components/PopupModal/EnhancedPopupModal.client'
 
 interface Resource {
   title: string
@@ -15,6 +16,16 @@ interface Resource {
   icon: 'download' | 'fileText' | 'calculator' | 'checkSquare'
   color: 'blue' | 'emerald' | 'indigo' | 'amber' | 'red'
   buttonText?: string
+  actionType?: 'link' | 'popup'
+  link?: {
+    type?: 'custom' | 'reference' | 'archive' | 'scroll' | null
+    url?: string | null
+    archive?: string | null
+    newTab?: boolean | null
+    scrollTarget?: string | null
+    reference?: { relationTo: 'pages' | 'posts'; value: any }
+  }
+  popupRef?: number | Popup | null
   buttonAction?: string
 }
 
@@ -29,6 +40,7 @@ interface LandingResourceBlockProps {
     description?: string
     highlight?: string
     buttonText?: string
+    actionType?: 'link' | 'popup'
     // New universal link field (matches CMSLink)
     link?: {
       type?: 'custom' | 'reference' | 'archive' | 'scroll' | null
@@ -38,6 +50,7 @@ interface LandingResourceBlockProps {
       scrollTarget?: string | null
       reference?: { relationTo: 'pages' | 'posts'; value: any }
     }
+    popupRef?: number | Popup | null
     // Legacy fallback action string
     buttonAction?: string
   }
@@ -89,6 +102,36 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
   imageContent,
   resources,
 }) => {
+  const [openPopup, setOpenPopup] = useState<{
+    isOpen: boolean
+    popupData: any
+  }>({ isOpen: false, popupData: null })
+
+  // Helper function to create popup data from popup reference
+  const createPopupData = (popupRef: number | Popup | null) => {
+    if (!popupRef) return null
+
+    const popup = typeof popupRef === 'object' ? popupRef : null
+    if (!popup) return null
+
+    if (popup.popupType === 'blocks') {
+      return {
+        popupType: 'blocks' as const,
+        title: popup.title ?? 'Contact',
+        content: popup.content ?? [],
+      }
+    } else {
+      return {
+        popupType: 'form' as const,
+        title: popup.title ?? 'Contact',
+        firstNameLabel: popup.firstNameLabel ?? 'Prénom',
+        lastNameLabel: popup.lastNameLabel ?? 'Nom',
+        phoneLabel: popup.phoneLabel ?? 'Téléphone',
+        buttonText: popup.buttonText ?? 'Envoyer',
+        pdfName: popup.pdfName ?? null,
+      }
+    }
+  }
   // Mode-specific defaults
   const modeDefaults = {
     vendre: {
@@ -153,11 +196,28 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
 
   // Legacy click handlers retained for backward compatibility if link not provided
   const handleButtonClick = () => {
+    if (mainContent?.actionType === 'popup' && mainContent?.popupRef) {
+      const popupData = createPopupData(mainContent.popupRef)
+      if (popupData) {
+        setOpenPopup({ isOpen: true, popupData })
+        return
+      }
+    }
+
     if (mainContent?.buttonAction) {
       console.log('Button clicked:', mainContent.buttonAction)
     }
   }
+
   const handleResourceClick = (resource: Resource) => {
+    if (resource.actionType === 'popup' && resource.popupRef) {
+      const popupData = createPopupData(resource.popupRef)
+      if (popupData) {
+        setOpenPopup({ isOpen: true, popupData })
+        return
+      }
+    }
+
     if (resource.buttonAction) {
       console.log('Resource clicked:', resource.buttonAction)
     }
@@ -202,7 +262,16 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
             <p className="text-lg text-branding75 mb-8 leading-relaxed">
               <strong>{finalHighlight}</strong>
             </p>
-            {mainContent?.link ? (
+            {mainContent?.actionType === 'popup' ? (
+              <Button
+                size="lg"
+                className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
+                onClick={handleButtonClick}
+              >
+                <ArrowRight className="h-5 w-5 mr-3" />
+                {finalButtonText}
+              </Button>
+            ) : mainContent?.link ? (
               <CMSLink
                 {...mainContent.link}
                 appearance="default"
@@ -259,7 +328,16 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
                     </div>
                     <h3 className="text-xl font-bold text-branding100 mb-4">{resource.title}</h3>
                     <p className="text-branding75 flex-grow mb-6">{resource.description}</p>
-                    {'link' in resource && resource.link ? (
+                    {resource.actionType === 'popup' ? (
+                      <Button
+                        variant="outline"
+                        className={`mt-auto ${currentDefaults.resourceButtonClass} hover:text-branding0 bg-transparent`}
+                        onClick={() => handleResourceClick(resource)}
+                      >
+                        {resource.buttonText || 'Télécharger'}{' '}
+                        <ArrowRight className="h-4 w-4 ml-2" />
+                      </Button>
+                    ) : 'link' in resource && resource.link ? (
                       <CMSLink
                         {...(resource as any).link}
                         appearance="outline"
@@ -285,6 +363,15 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
           </div>
         )}
       </div>
+
+      {/* Enhanced Popup Modal */}
+      {openPopup.popupData && (
+        <EnhancedPopupModal
+          open={openPopup.isOpen}
+          onClose={() => setOpenPopup({ isOpen: false, popupData: null })}
+          {...openPopup.popupData}
+        />
+      )}
     </section>
   )
 }

@@ -23,14 +23,37 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
                   text={buttonText || link?.label || 'Learn more'}
                   appearance={(link?.appearance as any) || 'default'}
                   size="lg"
-                  popup={{
-                    title: popupRef?.title ?? 'Contact',
-                    firstNameLabel: popupRef?.firstNameLabel ?? 'Prénom',
-                    lastNameLabel: popupRef?.lastNameLabel ?? 'Nom',
-                    phoneLabel: popupRef?.phoneLabel ?? 'Téléphone',
-                    buttonText: popupRef?.buttonText ?? 'Envoyer',
-                    pdfName: popupRef?.pdfName ?? null,
-                  }}
+                  popup={(() => {
+                    if (!popupRef) {
+                      return {
+                        popupType: 'form' as const,
+                        title: 'Contact',
+                        firstNameLabel: 'Prénom',
+                        lastNameLabel: 'Nom',
+                        phoneLabel: 'Téléphone',
+                        buttonText: 'Envoyer',
+                        pdfName: null,
+                      }
+                    }
+
+                    if (popupRef.popupType === 'blocks') {
+                      return {
+                        popupType: 'blocks' as const,
+                        title: popupRef.title ?? 'Contact',
+                        content: popupRef.content ?? [],
+                      }
+                    } else {
+                      return {
+                        popupType: 'form' as const,
+                        title: popupRef.title ?? 'Contact',
+                        firstNameLabel: popupRef.firstNameLabel ?? 'Prénom',
+                        lastNameLabel: popupRef.lastNameLabel ?? 'Nom',
+                        phoneLabel: popupRef.phoneLabel ?? 'Téléphone',
+                        buttonText: popupRef.buttonText ?? 'Envoyer',
+                        pdfName: popupRef.pdfName ?? null,
+                      }
+                    }
+                  })()}
                 />
               )
             }
