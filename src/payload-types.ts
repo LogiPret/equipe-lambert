@@ -877,6 +877,10 @@ export interface Page {
          */
         mode: 'vendre' | 'acheter';
         /**
+         * Enable or disable the form display in the hero section
+         */
+        showForm?: boolean | null;
+        /**
          * Badge text will automatically adjust based on mode: "VENDEZ VOTRE PROPRIÉTÉ" for vendre mode, "ACCÈS PRIVILÉGIÉ AUX NOUVEAUTÉS" for acheter mode
          */
         badgeText: string;
@@ -939,7 +943,13 @@ export interface Page {
             url?: string | null;
           };
         };
-        formTitle: string;
+        /**
+         * Title for the form section
+         */
+        formTitle?: string | null;
+        /**
+         * Configuration for form fields (only shown when form is enabled)
+         */
         formFields?: {
           /**
            * Placeholder for the property address field (Vendre mode only)
@@ -1771,7 +1781,7 @@ export interface QuizFormBlock {
        * Unique identifier for this field
        */
       id: string;
-      type: 'text' | 'phone' | 'email' | 'dropdown' | 'slider' | 'checkboxGroup';
+      type: 'text' | 'phone' | 'email' | 'dropdown' | 'slider' | 'optionCards' | 'city';
       label: string;
       placeholder?: string | null;
       required?: boolean | null;
@@ -1783,20 +1793,11 @@ export interface QuizFormBlock {
             id?: string | null;
           }[]
         | null;
+      allowMultiple?: boolean | null;
       min?: number | null;
       max?: number | null;
       step?: number | null;
       defaultValue?: number | null;
-      checkboxOptions?:
-        | {
-            label: string;
-            id?: string | null;
-          }[]
-        | null;
-      /**
-       * When disabled, only one option can be selected at a time (radio-like behavior)
-       */
-      allowMultiple?: boolean | null;
     }[];
   }[];
   submitButtonText?: string | null;
@@ -2713,6 +2714,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               mode?: T;
+              showForm?: T;
               badgeText?: T;
               title?: T;
               subtitle?: T;
@@ -2992,17 +2994,11 @@ export interface QuizFormBlockSelect<T extends boolean = true> {
                     value?: T;
                     id?: T;
                   };
+              allowMultiple?: T;
               min?: T;
               max?: T;
               step?: T;
               defaultValue?: T;
-              checkboxOptions?:
-                | T
-                | {
-                    label?: T;
-                    id?: T;
-                  };
-              allowMultiple?: T;
             };
       };
   submitButtonText?: T;

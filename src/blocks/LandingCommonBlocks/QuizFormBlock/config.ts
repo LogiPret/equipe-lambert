@@ -74,7 +74,8 @@ export const QuizFormBlock: Block = {
                 { label: 'Email Address', value: 'email' },
                 { label: 'Dropdown', value: 'dropdown' },
                 { label: 'Number Slider', value: 'slider' },
-                { label: 'Checkbox Group (Multiple Choice)', value: 'checkboxGroup' },
+                { label: 'Option Cards', value: 'optionCards' },
+                { label: 'City Select (searchable)', value: 'city' },
               ],
             },
             {
@@ -116,7 +117,10 @@ export const QuizFormBlock: Block = {
               type: 'array',
               label: 'Dropdown Options',
               admin: {
-                condition: (data, siblingData) => siblingData.type === 'dropdown',
+                condition: (data, siblingData) =>
+                  siblingData.type === 'dropdown' ||
+                  siblingData.type === 'optionCards' ||
+                  siblingData.type === 'city',
               },
               fields: [
                 {
@@ -132,6 +136,14 @@ export const QuizFormBlock: Block = {
                   required: true,
                 },
               ],
+            },
+            {
+              name: 'allowMultiple',
+              type: 'checkbox',
+              label: 'Allow multiple selections',
+              admin: {
+                condition: (data, siblingData) => siblingData.type === 'optionCards',
+              },
             },
             // Slider specific fields
             {
@@ -167,34 +179,6 @@ export const QuizFormBlock: Block = {
               label: 'Default Value',
               admin: {
                 condition: (data, siblingData) => siblingData.type === 'slider',
-              },
-            },
-            // Checkbox group specific fields (simplified - label only)
-            {
-              name: 'checkboxOptions',
-              type: 'array',
-              label: 'Checkbox Options',
-              admin: {
-                condition: (data, siblingData) => siblingData.type === 'checkboxGroup',
-              },
-              fields: [
-                {
-                  name: 'label',
-                  type: 'text',
-                  label: 'Option Label',
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: 'allowMultiple',
-              type: 'checkbox',
-              label: 'Allow Multiple Selections',
-              defaultValue: true,
-              admin: {
-                condition: (data, siblingData) => siblingData.type === 'checkboxGroup',
-                description:
-                  'When disabled, only one option can be selected at a time (radio-like behavior)',
               },
             },
           ],

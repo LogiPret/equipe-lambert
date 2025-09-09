@@ -29,6 +29,15 @@ export const LandingHeroBlock: Block = {
       },
     },
     {
+      name: 'showForm',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Enable or disable the form display in the hero section',
+      },
+    },
+    {
       name: 'badgeText',
       type: 'text',
       required: true,
@@ -298,10 +307,18 @@ export const LandingHeroBlock: Block = {
       name: 'formTitle',
       type: 'text',
       required: true,
+      admin: {
+        condition: (data, siblingData) => siblingData?.showForm || data?.showForm,
+        description: 'Title for the form section',
+      },
     },
     {
       name: 'formFields',
       type: 'group',
+      admin: {
+        condition: (data, siblingData) => siblingData?.showForm || data?.showForm,
+        description: 'Configuration for form fields (only shown when form is enabled)',
+      },
       fields: [
         // Vendre-specific fields
         {

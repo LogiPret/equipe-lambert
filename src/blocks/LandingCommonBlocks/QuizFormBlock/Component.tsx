@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent, useRef, useEffect } from 'react'
+import React, { useState, FormEvent, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -13,11 +13,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import type { QuizFormBlockProps, QuizFormData, QuizField, QuizStep } from './types'
+import { insertAcheterFormSubmission } from '@/lib/supabase'
 
 // Utility functions for phone and email validation
 const formatPhoneNumber = (value: string): string => {
@@ -47,6 +47,30 @@ const validateEmail = (email: string): boolean => {
 const validatePhoneNumber = (phone: string): boolean => {
   const cleaned = phone.replace(/\D/g, '')
   return cleaned.length === 10
+}
+
+// Helpers to map form values to strings/numbers acceptable by Supabase
+const toStringOrNull = (v: unknown): string | null => {
+  if (v === undefined || v === null) return null
+  if (Array.isArray(v)) return v.length ? v.join(', ') : null
+  if (typeof v === 'string') return v.trim() ? v.trim() : null
+  return String(v)
+}
+
+const toNumberOrNull = (v: unknown): number | null => {
+  if (v === undefined || v === null) return null
+  if (typeof v === 'number' && Number.isFinite(v)) return v
+  const parsed = parseFloat(String(v).replace(/[^\d.-]/g, ''))
+  return Number.isFinite(parsed) ? parsed : null
+}
+
+// Direct key-based mapping from formData with a tiny alias list
+const getFirst = (obj: Record<string, any>, keys: string[]) => {
+  for (const k of keys) {
+    const v = obj?.[k]
+    if (v !== undefined && v !== null && (typeof v !== 'string' || v.trim() !== '')) return v
+  }
+  return undefined
 }
 
 // Animated height wrapper component
@@ -98,14 +122,14 @@ const ProgressBar = ({ current, total }: { current: number; total: number }) => 
   return (
     <div className="w-full mb-8">
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-medium text-muted-foreground">
-          Step {current + 1} of {total}
+        <span className="text-sm font-medium text-branding25">
+          Étape {current + 1} sur {total}
         </span>
-        <span className="text-sm font-medium text-muted-foreground">{Math.round(progress)}%</span>
+        <span className="text-sm font-medium text-branding25">{Math.round(progress)}%</span>
       </div>
-      <div className="w-full bg-muted rounded-full h-2.5">
+      <div className="w-full bg-branding100 rounded-full h-2.5">
         <motion.div
-          className="bg-primary h-2.5 rounded-full"
+          className="bg-accent3static h-2.5 rounded-full"
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -126,9 +150,195 @@ const FormField = ({
   value: string | number | boolean | string[]
   onChange: (value: string | number | boolean | string[]) => void
   error?: string
-}) => {
+}): React.JSX.Element => {
   const renderFieldInput = () => {
     switch (field.type) {
+      case 'city': {
+        const cities = [
+          'Beaconsfield',
+          'Blainville',
+          'Bois-des-Filion',
+          'Boisbriand',
+          'Boucherville',
+          'Brossard',
+          'Candiac',
+          'Carignan',
+          'Charlemagne',
+          'Châteauguay',
+          'Chomedey (Laval)',
+          'Contrecoeur',
+          'Côte-Saint-Luc',
+          'Delson',
+          'Deux-Montagnes',
+          'Dollard-des-Ormeaux',
+          'Dorval',
+          'Fabreville (Laval)',
+          'Greenfield Park (Longueuil)',
+          'Hampstead',
+          'Kirkland',
+          'La Prairie',
+          'Lachine (Montréal)',
+          'L’Assomption',
+          'Laval',
+          'Laval-des-Rapides (Laval)',
+          'L’Île-Bizard–Sainte-Geneviève (Montréal)',
+          'Longueuil',
+          'Lorraine',
+          'Mascouche',
+          'McMasterville',
+          'Mercier–Hochelaga-Maisonneuve (Montréal)',
+          'Mirabel',
+          'Montréal',
+          'Montréal-Est',
+          'Montréal-Nord (Montréal)',
+          'Montréal-Ouest',
+          'Mont-Royal',
+          'Mont-Saint-Hilaire',
+          'Notre-Dame-de-Grâce–Côte-des-Neiges (Montréal)',
+          'Outremont (Montréal)',
+          'Pierrefonds-Roxboro (Montréal)',
+          'Pointe-Claire',
+          'Rivière-des-Prairies–Pointe-aux-Trembles (Montréal)',
+          'Repentigny',
+          'Rosemère',
+          'Rosemont–La Petite-Patrie (Montréal)',
+          'Saint-Amable',
+          'Saint-Basile-le-Grand',
+          'Saint-Bruno-de-Montarville',
+          'Saint-Constant',
+          'Sainte-Anne-de-Bellevue',
+          'Sainte-Anne-des-Plaines',
+          'Sainte-Catherine',
+          'Sainte-Julie',
+          'Sainte-Marthe-sur-le-Lac',
+          'Sainte-Rose (Laval)',
+          'Sainte-Thérèse',
+          'Saint-Eustache',
+          'Saint-Laurent (Montréal)',
+          'Saint-Lambert',
+          'Saint-Léonard (Montréal)',
+          'Saint-Michel (Montréal)',
+          'Saint-Vincent-de-Paul (Laval)',
+          'Salaberry-de-Valleyfield',
+          'Senneville',
+          'Terrebonne',
+          'Varennes',
+          'Vaudreuil-Dorion',
+          'Verdun (Montréal)',
+          'Verchères',
+          'Ville-Marie (Montréal)',
+          'Villeray–Saint-Michel–Parc-Extension (Montréal)',
+          'Westmount',
+        ]
+
+        const current = (value as string) || ''
+        const [query, setQuery] = React.useState('')
+        const [open, setOpen] = React.useState(false)
+
+        // Keep input in sync when value comes from outside (e.g., going back a step)
+        React.useEffect(() => {
+          setQuery(current)
+        }, [current])
+
+        const filtered = query
+          ? cities.filter((c) => c.toLowerCase().includes(query.toLowerCase()))
+          : cities
+
+        return (
+          <div className="space-y-2">
+            <Input
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value)
+                if (!open) setOpen(true)
+              }}
+              onFocus={() => setOpen(true)}
+              onBlur={() => setTimeout(() => setOpen(false), 100)}
+              placeholder={field.placeholder || 'Rechercher une ville'}
+              className="bg-branding0 text-branding100 border border-branding100 focus:border-branding0 focus-visible:ring-branding0 placeholder:text-branding50"
+            />
+            {open && (
+              <div className="max-h-56 overflow-auto rounded-md border border-branding100 bg-branding0">
+                {filtered.length === 0 ? (
+                  <div className="p-2 text-sm text-branding25">Aucune ville</div>
+                ) : (
+                  <ul className="divide-y divide-branding100/20">
+                    {filtered.map((city) => (
+                      <li key={city}>
+                        <button
+                          type="button"
+                          className={cn(
+                            'w-full text-left px-3 py-2 hover:bg-branding90',
+                            query === city ? 'bg-branding90 text-branding0' : 'text-branding100',
+                          )}
+                          onMouseDown={(e) => {
+                            e.preventDefault()
+                            setQuery(city)
+                            onChange(city)
+                            setOpen(false)
+                          }}
+                        >
+                          {city}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+          </div>
+        )
+      }
+      case 'optionCards': {
+        const selected = Array.isArray(value) ? (value as string[]) : value ? [String(value)] : []
+        const isMulti = !!field.allowMultiple
+        const toggle = (val: string) => {
+          if (isMulti) {
+            const next = selected.includes(val)
+              ? selected.filter((v) => v !== val)
+              : [...selected, val]
+            onChange(next)
+          } else {
+            onChange(val)
+          }
+        }
+
+        return (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {field.options?.map((opt) => {
+              const active = selected.includes(opt.value)
+              return (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => toggle(opt.value)}
+                  className={cn(
+                    'flex w-full items-center gap-3 rounded-lg border p-4 text-left',
+                    'bg-branding100',
+                    active ? 'border-branding0 bg-branding90' : 'border-branding100',
+                    error && 'border-destructive',
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'inline-flex h-5 w-5 flex-none items-center justify-center rounded-full',
+                      active ? 'bg-branding0' : 'bg-branding90',
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'h-2 w-2 rounded-full bg-branding100',
+                        active ? 'opacity-100' : 'opacity-0',
+                      )}
+                    />
+                  </span>
+                  <span className="font-medium text-branding0">{opt.label}</span>
+                </button>
+              )
+            })}
+          </div>
+        )
+      }
       case 'text':
         return (
           <Input
@@ -136,7 +346,10 @@ const FormField = ({
             placeholder={field.placeholder}
             value={value as string}
             onChange={(e) => onChange(e.target.value)}
-            className={cn(error && 'border-destructive')}
+            className={cn(
+              'bg-branding0 text-branding100 border border-branding100 focus:border-branding0 focus-visible:ring-branding0 placeholder:text-branding50',
+              error && 'border-destructive',
+            )}
           />
         )
 
@@ -151,7 +364,10 @@ const FormField = ({
               const formatted = formatPhoneNumber(e.target.value)
               onChange(formatted)
             }}
-            className={cn(error && 'border-destructive')}
+            className={cn(
+              'bg-branding0 text-branding100 border border-branding100 focus:border-branding0 focus-visible:ring-branding0 placeholder:text-branding50',
+              error && 'border-destructive',
+            )}
             maxLength={14}
           />
         )
@@ -164,19 +380,31 @@ const FormField = ({
             placeholder={field.placeholder || 'email@example.com'}
             value={value as string}
             onChange={(e) => onChange(e.target.value)}
-            className={cn(error && 'border-destructive')}
+            className={cn(
+              'bg-branding0 text-branding100 border border-branding100 focus:border-branding0 focus-visible:ring-branding0 placeholder:text-branding50',
+              error && 'border-destructive',
+            )}
           />
         )
 
       case 'dropdown':
         return (
           <Select value={value as string} onValueChange={onChange}>
-            <SelectTrigger className={cn(error && 'border-destructive')}>
+            <SelectTrigger
+              className={cn(
+                'bg-branding0 text-branding100 border border-branding100 focus:border-branding0 focus-visible:ring-branding0',
+                error && 'border-destructive',
+              )}
+            >
               <SelectValue placeholder="Select an option" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-branding0 text-branding100 border border-branding100">
               {field.options?.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
+                <SelectItem
+                  key={option.value}
+                  value={option.value}
+                  className="text-branding100 focus:bg-branding90 focus:text-branding0"
+                >
                   {option.label}
                 </SelectItem>
               ))}
@@ -195,90 +423,11 @@ const FormField = ({
               step={field.step || 1}
               className="w-full"
             />
-            <div className="flex justify-between text-sm text-muted-foreground">
+            <div className="flex justify-between text-sm text-branding25">
               <span>{field.min || 0}</span>
               <span className="font-medium">{value}</span>
               <span>{field.max || 100}</span>
             </div>
-          </div>
-        )
-
-      case 'checkbox':
-        return (
-          <div className="flex items-center space-x-2">
-            <Checkbox id={field.id} checked={value as boolean} onCheckedChange={onChange} />
-            <Label
-              htmlFor={field.id}
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              {field.label}
-            </Label>
-          </div>
-        )
-
-      case 'checkboxGroup':
-        const currentValues = Array.isArray(value) ? value : []
-
-        // Use checkbox options directly (label as both label and value)
-        const checkboxOptions = field.checkboxOptions || []
-
-        const handleCheckboxGroupChange = (optionLabel: string, checked: boolean) => {
-          if (field.allowMultiple !== false) {
-            // Multiple selection allowed
-            if (checked) {
-              onChange([...currentValues, optionLabel])
-            } else {
-              onChange(currentValues.filter((v) => v !== optionLabel))
-            }
-          } else {
-            // Single selection (radio-like behavior)
-            if (checked) {
-              onChange([optionLabel])
-            } else {
-              onChange([])
-            }
-          }
-        }
-
-        return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {checkboxOptions.map((option: any) => {
-              const isSelected = currentValues.includes(option.label)
-              return (
-                <div
-                  key={option.label}
-                  className={cn(
-                    'relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-200',
-                    'hover:border-blue-300 hover:shadow-md',
-                    isSelected
-                      ? 'border-blue-500 bg-blue-50 shadow-md'
-                      : 'border-gray-200 bg-white',
-                  )}
-                  onClick={() => handleCheckboxGroupChange(option.label, !isSelected)}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div
-                        className={cn(
-                          'w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all',
-                          isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-300 bg-white',
-                        )}
-                      >
-                        {isSelected && <div className="w-2 h-2 rounded-full bg-white"></div>}
-                      </div>
-                      <span
-                        className={cn(
-                          'text-base font-medium transition-colors',
-                          isSelected ? 'text-blue-900' : 'text-gray-700',
-                        )}
-                      >
-                        {option.label}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
           </div>
         )
 
@@ -289,12 +438,10 @@ const FormField = ({
 
   return (
     <div className="space-y-2 w-full">
-      {field.type !== 'checkbox' && (
-        <Label htmlFor={field.id} className="text-sm font-medium">
-          {field.label}
-          {field.required && <span className="text-destructive ml-1">*</span>}
-        </Label>
-      )}
+      <Label htmlFor={field.id} className="text-sm font-medium text-branding0">
+        {field.label}
+        {field.required && <span className="text-destructive ml-1">*</span>}
+      </Label>
       {renderFieldInput()}
       {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
@@ -341,8 +488,8 @@ const QuizFormStep = ({
       className="space-y-6"
     >
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-foreground mb-2">{step.title}</h3>
-        {step.subtitle && <p className="text-muted-foreground">{step.subtitle}</p>}
+        <h3 className="text-2xl font-bold text-branding0 mb-2">{step.title}</h3>
+        {step.subtitle && <p className="text-branding25">{step.subtitle}</p>}
       </div>
 
       <div className="flex flex-wrap -mx-2">
@@ -355,13 +502,7 @@ const QuizFormStep = ({
               field={field}
               value={
                 formData[field.id] ??
-                (field.type === 'checkboxGroup'
-                  ? [] // Start with empty array for checkbox groups
-                  : field.type === 'checkbox'
-                    ? (field.defaultChecked ?? false)
-                    : field.type === 'slider'
-                      ? (field.defaultValue ?? field.min ?? 0)
-                      : '')
+                (field.type === 'slider' ? (field.defaultValue ?? field.min ?? 0) : '')
               }
               onChange={(value) => onFieldChange(field.id, value)}
               error={errors[field.id]}
@@ -392,22 +533,12 @@ const SuccessStep = ({
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-        className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
+        className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6"
       >
-        <Check className="w-8 h-8 text-green-600" />
+        <Check className="w-8 h-8 text-green-100" />
       </motion.div>
 
-      <h3 className="text-2xl font-bold text-foreground mb-4">Thank You!</h3>
-
-      <p className="text-muted-foreground mb-8 max-w-md mx-auto">{message}</p>
-
-      {cta && (
-        <Button asChild size="lg">
-          <a href={cta.link} target="_blank" rel="noopener noreferrer">
-            {cta.text}
-          </a>
-        </Button>
-      )}
+      <p className="text-branding50 mb-8 max-w-md mx-auto">{message}</p>
     </motion.div>
   )
 }
@@ -465,7 +596,7 @@ export const QuizFormBlock = (props: QuizFormBlockProps) => {
       } else if (typeof value === 'number') {
         isEmpty = false // numbers are always valid if present
       } else if (typeof value === 'boolean') {
-        isEmpty = false // checkboxes are always valid (can be unchecked)
+        isEmpty = false // booleans are always valid (false is a valid state)
       }
 
       // Check required fields
@@ -476,10 +607,10 @@ export const QuizFormBlock = (props: QuizFormBlockProps) => {
       else if (!isEmpty && typeof value === 'string') {
         if (field.type === 'email' && !validateEmail(value)) {
           hasFormatError = true
-          newErrors[field.id] = 'Please enter a valid email address'
+          newErrors[field.id] = 'Veuillez entrer une adresse e-mail valide'
         } else if (field.type === 'phone' && !validatePhoneNumber(value)) {
           hasFormatError = true
-          newErrors[field.id] = 'Please enter a valid phone number'
+          newErrors[field.id] = 'Veuillez entrer un numéro de téléphone valide'
         }
       }
     })
@@ -488,6 +619,49 @@ export const QuizFormBlock = (props: QuizFormBlockProps) => {
       setErrors(newErrors)
     }
     return Object.keys(newErrors).length === 0
+  }
+
+  // Validate all steps before final submission
+  const validateAllSteps = (
+    showErrors = true,
+  ): { isValid: boolean; firstErrorStepIndex: number | null } => {
+    const newErrors: Record<string, string> = {}
+    let firstErrorStepIndex: number | null = null
+
+    steps.forEach((step, stepIndex) => {
+      step.fields.forEach((field) => {
+        const value = formData[field.id]
+        let isEmpty = false
+
+        if (value === undefined || value === null) {
+          isEmpty = true
+        } else if (Array.isArray(value)) {
+          isEmpty = value.length === 0
+        } else if (typeof value === 'string') {
+          isEmpty = value.trim() === ''
+        } else if (typeof value === 'number') {
+          isEmpty = false
+        } else if (typeof value === 'boolean') {
+          isEmpty = false
+        }
+
+        if (field.required && isEmpty) {
+          newErrors[field.id] = `${field.label} est requis`
+          if (firstErrorStepIndex === null) firstErrorStepIndex = stepIndex
+        } else if (!isEmpty && typeof value === 'string') {
+          if (field.type === 'email' && !validateEmail(value)) {
+            newErrors[field.id] = 'Veuillez entrer une adresse e-mail valide'
+            if (firstErrorStepIndex === null) firstErrorStepIndex = stepIndex
+          } else if (field.type === 'phone' && !validatePhoneNumber(value)) {
+            newErrors[field.id] = 'Veuillez entrer un numéro de téléphone valide'
+            if (firstErrorStepIndex === null) firstErrorStepIndex = stepIndex
+          }
+        }
+      })
+    })
+
+    if (showErrors) setErrors(newErrors)
+    return { isValid: Object.keys(newErrors).length === 0, firstErrorStepIndex }
   }
 
   const handleNext = () => {
@@ -511,21 +685,146 @@ export const QuizFormBlock = (props: QuizFormBlockProps) => {
     }
   }
 
+  // Prevent form submission when pressing Enter on non-final steps
+  const handleFormKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === 'Enter') {
+      if (currentStep < steps.length - 1) {
+        e.preventDefault()
+        // Optional: attempt next step on Enter if valid
+        handleNext()
+      }
+    }
+  }
+
+  // Ensure Next button never triggers form submit implicitly
+  const handleNextClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    handleNext()
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    if (!validateCurrentStep(true)) {
+    // Only submit if we're on the final step
+    if (currentStep !== steps.length - 1) {
+      return
+    }
+
+    const { isValid, firstErrorStepIndex } = validateAllSteps(true)
+    if (!isValid) {
+      if (firstErrorStepIndex !== null && firstErrorStepIndex !== currentStep) {
+        setDirection(firstErrorStepIndex < currentStep ? 'backward' : 'forward')
+        setCurrentStep(firstErrorStepIndex)
+      }
       return
     }
 
     setIsSubmitting(true)
 
     try {
-      // Here you would typically send the form data to your backend
-      // For now, we'll simulate an API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      // Map formData to Supabase table columns
+      const fd = formData as Record<string, any>
+      const directRow = {
+        firstname: toStringOrNull(
+          getFirst(fd, ['firstname', 'first_name', 'firstName', 'prenom', 'prénom']),
+        ),
+        lastname: toStringOrNull(getFirst(fd, ['lastname', 'last_name', 'lastName', 'nom'])),
+        phone: toStringOrNull(getFirst(fd, ['phone', 'telephone', 'tel', 'téléphone'])),
+        email: toStringOrNull(getFirst(fd, ['email', 'courriel', 'e-mail'])),
+        budget: toNumberOrNull(getFirst(fd, ['budget', 'budget_max', 'price', 'prix', 'montant'])),
+        when_interested: toStringOrNull(
+          getFirst(fd, [
+            'when_interested',
+            'whenInterested',
+            'delais',
+            'délai',
+            'timeline',
+            'achat_quand',
+            'quand',
+            'temps',
+            'mois',
+          ]),
+        ),
+        type_property: toStringOrNull(
+          getFirst(fd, ['type_property', 'propertyType', 'type_property_wanted', 'type']),
+        ),
+        area_wanted: toStringOrNull(
+          getFirst(fd, ['area_wanted', 'city', 'ville', 'area', 'quartier', 'secteur']),
+        ),
+      }
 
-      console.log('Quiz form data:', formData)
+      // Fallback mapping using steps (types/labels) if direct values are null
+      const lower = (s?: string) => (s ? s.toLowerCase() : '')
+      const allFields = steps.flatMap((s) => s.fields)
+      const valByField = (f?: QuizField) => (f ? (fd as any)[f.id] : undefined)
+      const pick = (cond: (f: QuizField) => boolean) => allFields.find(cond)
+
+      const fallback = {
+        firstname:
+          directRow.firstname ||
+          toStringOrNull(valByField(pick((f) => /first|prenom|prénom/i.test(f.id + f.label)))) ||
+          null,
+        lastname:
+          directRow.lastname ||
+          toStringOrNull(valByField(pick((f) => /last|nom/i.test(f.id + f.label)))) ||
+          null,
+        phone:
+          directRow.phone ||
+          toStringOrNull(valByField(pick((f) => f.type === 'phone'))) ||
+          toStringOrNull(valByField(pick((f) => /phone|tel|télé/i.test(f.id + f.label)))) ||
+          null,
+        email:
+          directRow.email ||
+          toStringOrNull(valByField(pick((f) => f.type === 'email'))) ||
+          toStringOrNull(valByField(pick((f) => /mail|courriel/i.test(f.id + f.label)))) ||
+          null,
+        budget:
+          directRow.budget ??
+          toNumberOrNull(valByField(pick((f) => f.type === 'slider'))) ??
+          toNumberOrNull(
+            valByField(pick((f) => /budget|prix|price|montant/i.test(f.id + f.label))),
+          ) ??
+          null,
+        when_interested:
+          directRow.when_interested ||
+          toStringOrNull(
+            valByField(
+              pick((f) =>
+                /when|quand|delai|délai|timeline|temps|mois/i.test(lower(f.id) + lower(f.label)),
+              ),
+            ),
+          ) ||
+          null,
+        type_property:
+          directRow.type_property ||
+          toStringOrNull(
+            valByField(pick((f) => /type|property|propri/i.test(lower(f.id) + lower(f.label)))),
+          ) ||
+          null,
+        area_wanted:
+          directRow.area_wanted ||
+          toStringOrNull(
+            valByField(
+              pick((f) =>
+                /area|ville|city|secteur|quartier|zone/i.test(lower(f.id) + lower(f.label)),
+              ),
+            ),
+          ) ||
+          null,
+      }
+
+      const row = fallback
+
+      console.log('[Quiz Submit] Raw formData:', formData)
+      console.log('[Quiz Submit] Direct row:', directRow)
+      console.log('[Quiz Submit] Fallback row:', row)
+
+      const res = await insertAcheterFormSubmission(row)
+      if (!res || (res as any).success === false) {
+        throw new Error('Insertion Supabase échouée')
+      }
+
       setIsCompleted(true)
     } catch (error) {
       console.error('Failed to submit quiz:', error)
@@ -537,9 +836,9 @@ export const QuizFormBlock = (props: QuizFormBlockProps) => {
 
   if (isCompleted) {
     return (
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 bg-branding100">
         <div className="max-w-2xl mx-auto">
-          <Card className="p-8">
+          <Card className="p-8 bg-branding0 border-none">
             <SuccessStep message={successMessage} cta={ctaAfterSubmit} />
           </Card>
         </div>
@@ -548,19 +847,17 @@ export const QuizFormBlock = (props: QuizFormBlockProps) => {
   }
 
   return (
-    <section className="py-16 px-4">
+    <section className="py-16 px-4 bg-branding100">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{title}</h2>
-          {subtitle && (
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{subtitle}</p>
-          )}
+          <h2 className="text-3xl md:text-4xl font-bold text-branding0 mb-4">{title}</h2>
+          {subtitle && <p className="text-lg text-branding25 max-w-2xl mx-auto">{subtitle}</p>}
         </div>
 
-        <Card className="p-8">
+        <Card className="p-8 bg-branding90 border-none">
           <ProgressBar current={currentStep} total={steps.length} />
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onKeyDown={handleFormKeyDown}>
             <AnimatedHeightWrapper currentStep={currentStep}>
               <AnimatePresence mode="wait" custom={direction}>
                 <QuizFormStep
@@ -574,33 +871,40 @@ export const QuizFormBlock = (props: QuizFormBlockProps) => {
               </AnimatePresence>
             </AnimatedHeightWrapper>
 
-            <div className="flex justify-between items-center mt-8 pt-6 border-t">
+            <div className="flex justify-between items-center mt-8 pt-6">
               <Button
                 type="button"
-                variant="outline"
                 onClick={handlePrevious}
                 disabled={currentStep === 0}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 bg-branding100 text-branding0"
               >
                 <ChevronLeft className="w-4 h-4" />
-                Previous
+                Retour
               </Button>
 
               {currentStep < steps.length - 1 ? (
-                <Button type="button" onClick={handleNext} className="flex items-center gap-2">
-                  Next
+                <Button
+                  type="button"
+                  onClick={handleNextClick}
+                  className="flex items-center gap-2 bg-branding0 text-branding100"
+                >
+                  Continuer
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               ) : (
-                <Button type="submit" disabled={isSubmitting} className="flex items-center gap-2">
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex items-center gap-2 bg-accent3static text-branding0"
+                >
                   {isSubmitting ? (
                     <>
                       <motion.div
-                        className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                        className="w-4 h-4  rounded-full"
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                       />
-                      Submitting...
+                      ...
                     </>
                   ) : (
                     <>

@@ -77,3 +77,60 @@ export async function insertContactSubmission(data: ContactFormData) {
     throw error
   }
 }
+
+// ==========================
+// Equipe Lambert: Acheter Form
+// ==========================
+
+export interface AcheterFormRow {
+  firstname?: string | null
+  lastname?: string | null
+  phone?: string | null
+  email?: string | null
+  budget?: number | null
+  when_interested?: string | null
+  type_property?: string | null
+  area_wanted?: string | null
+}
+
+export async function insertAcheterFormSubmission(row: AcheterFormRow) {
+  try {
+    if (!isSupabaseAvailable()) {
+      console.warn('Supabase is not available - skipping database insertion')
+      return { success: false, reason: 'Supabase not configured' }
+    }
+
+    const payload = {
+      firstname: row.firstname ?? null,
+      lastname: row.lastname ?? null,
+      phone: row.phone ?? null,
+      email: row.email ?? null,
+      budget: row.budget ?? null,
+      when_interested: row.when_interested ?? null,
+      type_property: row.type_property ?? null,
+      area_wanted: row.area_wanted ?? null,
+    }
+
+    // Debug: print the supabase insert payload
+    console.log(
+      '[Supabase] INSERT equipe_lambert_landing_acheter_form payload:',
+      JSON.parse(JSON.stringify(payload)),
+    )
+
+    const { data: result, error } = await supabase!
+      .from('equipe_lambert_landing_acheter_form')
+      .insert([payload])
+      .select()
+
+    if (error) {
+      console.error('Error inserting acheter form submission:', error)
+      throw error
+    }
+
+    console.log('[Supabase] INSERT result:', result)
+    return { success: true, data: result }
+  } catch (error) {
+    console.error('Failed to save acheter form to Supabase:', error)
+    throw error
+  }
+}

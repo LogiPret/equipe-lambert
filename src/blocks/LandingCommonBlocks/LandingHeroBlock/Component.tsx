@@ -42,6 +42,7 @@ interface LandingHeroBlockProps {
   stats: Stat[]
   primaryButton: ButtonData
   secondaryButton: ButtonData
+  showForm?: boolean
   formTitle: string
   formFields?: {
     // Vendre-specific
@@ -93,6 +94,7 @@ export default function LandingHeroBlock({
   stats,
   primaryButton,
   secondaryButton,
+  showForm = true,
   formTitle,
   formFields,
   timeframeOptions,
@@ -380,214 +382,216 @@ export default function LandingHeroBlock({
             </div>
           </div>
 
-          <ScrollAnimation animation="slideLeft" delay={200}>
-            <div className="relative">
-              <Card className="bg-secondarystatic p-8 backdrop-blur-sm">
-                {isSubmitted ? (
-                  <div className="text-center py-8">
-                    <div className="text-accent5static text-xl font-semibold mb-2">
-                      {config.successTitle}
-                    </div>
-                    <p className="text-gray-600 mb-4">{config.successMessage}</p>
-                    <p className="pt-4">Cliquez ci-dessous pour en savoir plus</p>
-                    <Button
-                      className="bg-branding100 hover:bg-accent2static text-branding0 py-4 font-medium text-lg disabled:opacity-50"
-                      onClick={() => router.push(config.successButtonLink)}
-                    >
-                      {config.successButtonText}
-                    </Button>
-                  </div>
-                ) : (
-                  <>
-                    <h3 className="text-2xl font-serif font-bold text-branding100 mb-6">
-                      {effectiveFormTitle}
-                    </h3>
-                    {error && (
-                      <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded mb-4">
-                        {error}
+          {showForm && (
+            <ScrollAnimation animation="slideLeft" delay={200}>
+              <div className="relative">
+                <Card className="bg-secondarystatic p-8 backdrop-blur-sm">
+                  {isSubmitted ? (
+                    <div className="text-center py-8">
+                      <div className="text-accent5static text-xl font-semibold mb-2">
+                        {config.successTitle}
                       </div>
-                    )}
-
-                    <form onSubmit={handleFormSubmit} className="space-y-4">
-                      {/* Vendre-specific address field */}
-                      {mode === 'vendre' && (
-                        <Input
-                          name="vendre_address"
-                          value={
-                            mode === 'vendre' ? (formData as VendreFormData).vendre_address : ''
-                          }
-                          onChange={handleInputChange}
-                          placeholder={
-                            formFields?.addressPlaceholder || 'Adresse de votre propriété'
-                          }
-                          className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 text-lg bg-branding0"
-                        />
+                      <p className="text-gray-600 mb-4">{config.successMessage}</p>
+                      <p className="pt-4">Cliquez ci-dessous pour en savoir plus</p>
+                      <Button
+                        className="bg-branding100 hover:bg-accent2static text-branding0 py-4 font-medium text-lg disabled:opacity-50"
+                        onClick={() => router.push(config.successButtonLink)}
+                      >
+                        {config.successButtonText}
+                      </Button>
+                    </div>
+                  ) : (
+                    <>
+                      <h3 className="text-2xl font-serif font-bold text-branding100 mb-6">
+                        {effectiveFormTitle}
+                      </h3>
+                      {error && (
+                        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded mb-4">
+                          {error}
+                        </div>
                       )}
 
-                      {/* Common name fields */}
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <Input
-                          name="prenom"
-                          value={formData.prenom}
-                          onChange={handleInputChange}
-                          placeholder={formFields?.firstNamePlaceholder || 'Prénom *'}
-                          className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
-                          required
-                        />
-                        <Input
-                          name="nom"
-                          value={formData.nom}
-                          onChange={handleInputChange}
-                          placeholder={formFields?.lastNamePlaceholder || 'Nom *'}
-                          className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
-                          required
-                        />
-                      </div>
-
-                      {/* Common contact fields */}
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <Input
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          placeholder={formFields?.emailPlaceholder || 'Email *'}
-                          type="email"
-                          className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
-                          required
-                        />
-                        <Input
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder={formFields?.phonePlaceholder || 'Téléphone *'}
-                          className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
-                          required
-                        />
-                      </div>
-
-                      {/* Mode-specific additional fields */}
-                      {mode === 'vendre' ? (
-                        <select
-                          name="vendre_delais"
-                          value={
-                            mode === 'vendre' ? (formData as VendreFormData).vendre_delais : ''
-                          }
-                          onChange={handleInputChange}
-                          className="w-full border border-branding25 focus:border-branding100 p-4 bg-branding0 text-branding50"
-                        >
-                          <option value="">
-                            {formFields?.timeframePlaceholder || 'Délai souhaité pour la vente'}
-                          </option>
-                          {timeframeOptions && timeframeOptions.length > 0
-                            ? timeframeOptions.map((option, index) => (
-                                <option key={index} value={option.option}>
-                                  {option.option}
-                                </option>
-                              ))
-                            : [
-                                <option key="default-1" value="Moins de 30 jours">
-                                  Moins de 30 jours
-                                </option>,
-                                <option key="default-2" value="1-3 mois">
-                                  1-3 mois
-                                </option>,
-                                <option key="default-3" value="3-6 mois">
-                                  3-6 mois
-                                </option>,
-                                <option key="default-4" value="Plus de 6 mois">
-                                  Plus de 6 mois
-                                </option>,
-                              ]}
-                        </select>
-                      ) : (
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <select
-                            name="acheter_propertyType"
+                      <form onSubmit={handleFormSubmit} className="space-y-4">
+                        {/* Vendre-specific address field */}
+                        {mode === 'vendre' && (
+                          <Input
+                            name="vendre_address"
                             value={
-                              mode === 'acheter'
-                                ? (formData as AcheterFormData).acheter_propertyType
-                                : ''
+                              mode === 'vendre' ? (formData as VendreFormData).vendre_address : ''
                             }
                             onChange={handleInputChange}
-                            className="border text-branding100 border-branding25 focus:border-branding100 p-2 bg-branding0 rounded-md w-full"
+                            placeholder={
+                              formFields?.addressPlaceholder || 'Adresse de votre propriété'
+                            }
+                            className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 text-lg bg-branding0"
+                          />
+                        )}
+
+                        {/* Common name fields */}
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <Input
+                            name="prenom"
+                            value={formData.prenom}
+                            onChange={handleInputChange}
+                            placeholder={formFields?.firstNamePlaceholder || 'Prénom *'}
+                            className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
+                            required
+                          />
+                          <Input
+                            name="nom"
+                            value={formData.nom}
+                            onChange={handleInputChange}
+                            placeholder={formFields?.lastNamePlaceholder || 'Nom *'}
+                            className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
+                            required
+                          />
+                        </div>
+
+                        {/* Common contact fields */}
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <Input
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            placeholder={formFields?.emailPlaceholder || 'Email *'}
+                            type="email"
+                            className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
+                            required
+                          />
+                          <Input
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            placeholder={formFields?.phonePlaceholder || 'Téléphone *'}
+                            className="border border-borderprimarystatic focus:border-bordersecondarystatic p-4 bg-branding0"
+                            required
+                          />
+                        </div>
+
+                        {/* Mode-specific additional fields */}
+                        {mode === 'vendre' ? (
+                          <select
+                            name="vendre_delais"
+                            value={
+                              mode === 'vendre' ? (formData as VendreFormData).vendre_delais : ''
+                            }
+                            onChange={handleInputChange}
+                            className="w-full border border-branding25 focus:border-branding100 p-4 bg-branding0 text-branding50"
                           >
                             <option value="">
-                              {formFields?.propertyTypePlaceholder || 'Type de propriété'}
+                              {formFields?.timeframePlaceholder || 'Délai souhaité pour la vente'}
                             </option>
-                            {propertyTypeOptions && propertyTypeOptions.length > 0
-                              ? propertyTypeOptions.map((option, index) => (
+                            {timeframeOptions && timeframeOptions.length > 0
+                              ? timeframeOptions.map((option, index) => (
                                   <option key={index} value={option.option}>
                                     {option.option}
                                   </option>
                                 ))
                               : [
-                                  <option key="default-1" value="Maison">
-                                    Maison
+                                  <option key="default-1" value="Moins de 30 jours">
+                                    Moins de 30 jours
                                   </option>,
-                                  <option key="default-2" value="Condo">
-                                    Condo
+                                  <option key="default-2" value="1-3 mois">
+                                    1-3 mois
                                   </option>,
-                                  <option key="default-3" value="Townhouse">
-                                    Townhouse
+                                  <option key="default-3" value="3-6 mois">
+                                    3-6 mois
                                   </option>,
-                                  <option key="default-4" value="Loft">
-                                    Loft
+                                  <option key="default-4" value="Plus de 6 mois">
+                                    Plus de 6 mois
                                   </option>,
                                 ]}
                           </select>
-                          <Input
-                            name="acheter_city"
-                            value={
-                              mode === 'acheter' ? (formData as AcheterFormData).acheter_city : ''
-                            }
-                            onChange={handleInputChange}
-                            placeholder={formFields?.cityPlaceholder || 'Ville'}
-                            className="border border-branding25 focus:border-branding100 p-4 bg-branding0"
+                        ) : (
+                          <div className="grid md:grid-cols-2 gap-4">
+                            <select
+                              name="acheter_propertyType"
+                              value={
+                                mode === 'acheter'
+                                  ? (formData as AcheterFormData).acheter_propertyType
+                                  : ''
+                              }
+                              onChange={handleInputChange}
+                              className="border text-branding100 border-branding25 focus:border-branding100 p-2 bg-branding0 rounded-md w-full"
+                            >
+                              <option value="">
+                                {formFields?.propertyTypePlaceholder || 'Type de propriété'}
+                              </option>
+                              {propertyTypeOptions && propertyTypeOptions.length > 0
+                                ? propertyTypeOptions.map((option, index) => (
+                                    <option key={index} value={option.option}>
+                                      {option.option}
+                                    </option>
+                                  ))
+                                : [
+                                    <option key="default-1" value="Maison">
+                                      Maison
+                                    </option>,
+                                    <option key="default-2" value="Condo">
+                                      Condo
+                                    </option>,
+                                    <option key="default-3" value="Townhouse">
+                                      Townhouse
+                                    </option>,
+                                    <option key="default-4" value="Loft">
+                                      Loft
+                                    </option>,
+                                  ]}
+                            </select>
+                            <Input
+                              name="acheter_city"
+                              value={
+                                mode === 'acheter' ? (formData as AcheterFormData).acheter_city : ''
+                              }
+                              onChange={handleInputChange}
+                              placeholder={formFields?.cityPlaceholder || 'Ville'}
+                              className="border border-branding25 focus:border-branding100 p-4 bg-branding0"
+                            />
+                          </div>
+                        )}
+
+                        {/* Consent checkbox */}
+                        <div className="flex items-start gap-3 text-sm text-branding75">
+                          <input
+                            id="contact-consent"
+                            type="checkbox"
+                            className="mt-1 h-4 w-4 border border-branding25 accent-branding100"
+                            checked={consentChecked}
+                            onChange={(e) => setConsentChecked(e.target.checked)}
+                            required
                           />
+                          <label htmlFor="contact-consent" className="cursor-pointer">
+                            J’accepte d’être contacté(e) par l’Équipe Lambert concernant ma demande.
+                          </label>
                         </div>
-                      )}
 
-                      {/* Consent checkbox */}
-                      <div className="flex items-start gap-3 text-sm text-branding75">
-                        <input
-                          id="contact-consent"
-                          type="checkbox"
-                          className="mt-1 h-4 w-4 border border-branding25 accent-branding100"
-                          checked={consentChecked}
-                          onChange={(e) => setConsentChecked(e.target.checked)}
-                          required
-                        />
-                        <label htmlFor="contact-consent" className="cursor-pointer">
-                          J’accepte d’être contacté(e) par l’Équipe Lambert concernant ma demande.
-                        </label>
-                      </div>
+                        <Button
+                          type="submit"
+                          disabled={isSubmitting || !consentChecked || !requiredFilled}
+                          className="w-full bg-branding100 hover:bg-accent2static text-branding0 py-4 font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <FormButtonIcon className="h-5 w-5 mr-2" />
+                          {isSubmitting
+                            ? 'Envoi en cours...'
+                            : formFields?.submitButtonText ||
+                              (mode === 'vendre'
+                                ? 'Obtenir mon évaluation gratuite'
+                                : 'Recevoir les nouvelles propriétés')}
+                        </Button>
+                      </form>
+                    </>
+                  )}
 
-                      <Button
-                        type="submit"
-                        disabled={isSubmitting || !consentChecked || !requiredFilled}
-                        className="w-full bg-branding100 hover:bg-accent2static text-branding0 py-4 font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <FormButtonIcon className="h-5 w-5 mr-2" />
-                        {isSubmitting
-                          ? 'Envoi en cours...'
-                          : formFields?.submitButtonText ||
-                            (mode === 'vendre'
-                              ? 'Obtenir mon évaluation gratuite'
-                              : 'Recevoir les nouvelles propriétés')}
-                      </Button>
-                    </form>
-                  </>
-                )}
-
-                <p className="text-xs text-branding50 mt-4 text-center">
-                  {formFields?.disclaimerText ||
-                    (mode === 'vendre'
-                      ? '* Évaluation professionnelle sans engagement'
-                      : '* Accès privilégié aux inscriptions exclusives')}
-                </p>
-              </Card>
-            </div>
-          </ScrollAnimation>
+                  <p className="text-xs text-branding50 mt-4 text-center">
+                    {formFields?.disclaimerText ||
+                      (mode === 'vendre'
+                        ? '* Évaluation professionnelle sans engagement'
+                        : '* Accès privilégié aux inscriptions exclusives')}
+                  </p>
+                </Card>
+              </div>
+            </ScrollAnimation>
+          )}
         </div>
       </div>
     </section>

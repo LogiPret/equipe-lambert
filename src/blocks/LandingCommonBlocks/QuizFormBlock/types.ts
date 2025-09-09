@@ -1,20 +1,9 @@
-export type FieldType =
-  | 'text'
-  | 'phone'
-  | 'email'
-  | 'dropdown'
-  | 'slider'
-  | 'checkbox'
-  | 'checkboxGroup'
+export type FieldType = 'text' | 'phone' | 'email' | 'dropdown' | 'slider' | 'optionCards' | 'city'
 export type FieldWidth = 'full' | 'half'
 
 export interface DropdownOption {
   label: string
   value: string
-}
-
-export interface CheckboxOption {
-  label: string
 }
 
 export interface QuizField {
@@ -26,16 +15,13 @@ export interface QuizField {
   width: FieldWidth
   // Dropdown specific
   options?: DropdownOption[]
+  // Option Cards specific
+  allowMultiple?: boolean
   // Slider specific
   min?: number
   max?: number
   step?: number
   defaultValue?: number
-  // Single checkbox specific
-  defaultChecked?: boolean
-  // Checkbox group specific
-  checkboxOptions?: CheckboxOption[]
-  allowMultiple?: boolean // for checkbox groups
 }
 
 export interface QuizStep {
