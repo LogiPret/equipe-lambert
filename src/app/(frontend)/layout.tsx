@@ -29,9 +29,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           name="google-site-verification"
           content="ubJWhCFHH81FWokcg86zoqxallVYcc0bT37LSAOc340"
         />
-        <link href="/favicon.svg" rel="icon" sizes="32x32" type="image/svg+xml" />
+        <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-        <link href="/favicon.svg" rel="shortcut icon" type="image/svg+xml" />
+        <link href="/favicon.ico" rel="shortcut icon" />
         <link href="/equipelambert_logo.png" rel="apple-touch-icon" sizes="180x180" />
         <meta name="theme-color" content="#1a1a1a" />
         <link
