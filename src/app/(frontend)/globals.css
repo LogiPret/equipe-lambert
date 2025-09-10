@@ -5,108 +5,120 @@
 /* General Sans font family with all weights */
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Light.woff2') format('woff2'),
-       url('/fonts/GeneralSans-Light.woff') format('woff'),
-       url('/fonts/GeneralSans-Light.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-Light.woff2') format('woff2'),
+    url('/fonts/GeneralSans-Light.woff') format('woff'),
+    url('/fonts/GeneralSans-Light.ttf') format('truetype');
   font-weight: 300;
   font-display: swap;
   font-style: normal;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-LightItalic.woff2') format('woff2'),
-       url('/fonts/GeneralSans-LightItalic.woff') format('woff'),
-       url('/fonts/GeneralSans-LightItalic.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-LightItalic.woff2') format('woff2'),
+    url('/fonts/GeneralSans-LightItalic.woff') format('woff'),
+    url('/fonts/GeneralSans-LightItalic.ttf') format('truetype');
   font-weight: 300;
   font-display: swap;
   font-style: italic;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Regular.woff2') format('woff2'),
-       url('/fonts/GeneralSans-Regular.woff') format('woff'),
-       url('/fonts/GeneralSans-Regular.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-Regular.woff2') format('woff2'),
+    url('/fonts/GeneralSans-Regular.woff') format('woff'),
+    url('/fonts/GeneralSans-Regular.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
   font-style: normal;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Italic.woff2') format('woff2'),
-       url('/fonts/GeneralSans-Italic.woff') format('woff'),
-       url('/fonts/GeneralSans-Italic.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-Italic.woff2') format('woff2'),
+    url('/fonts/GeneralSans-Italic.woff') format('woff'),
+    url('/fonts/GeneralSans-Italic.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
   font-style: italic;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Medium.woff2') format('woff2'),
-       url('/fonts/GeneralSans-Medium.woff') format('woff'),
-       url('/fonts/GeneralSans-Medium.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-Medium.woff2') format('woff2'),
+    url('/fonts/GeneralSans-Medium.woff') format('woff'),
+    url('/fonts/GeneralSans-Medium.ttf') format('truetype');
   font-weight: 500;
   font-display: swap;
   font-style: normal;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-MediumItalic.woff2') format('woff2'),
-       url('/fonts/GeneralSans-MediumItalic.woff') format('woff'),
-       url('/fonts/GeneralSans-MediumItalic.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-MediumItalic.woff2') format('woff2'),
+    url('/fonts/GeneralSans-MediumItalic.woff') format('woff'),
+    url('/fonts/GeneralSans-MediumItalic.ttf') format('truetype');
   font-weight: 500;
   font-display: swap;
   font-style: italic;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Semibold.woff2') format('woff2'),
-       url('/fonts/GeneralSans-Semibold.woff') format('woff'),
-       url('/fonts/GeneralSans-Semibold.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-Semibold.woff2') format('woff2'),
+    url('/fonts/GeneralSans-Semibold.woff') format('woff'),
+    url('/fonts/GeneralSans-Semibold.ttf') format('truetype');
   font-weight: 600;
   font-display: swap;
   font-style: normal;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-SemiboldItalic.woff2') format('woff2'),
-       url('/fonts/GeneralSans-SemiboldItalic.woff') format('woff'),
-       url('/fonts/GeneralSans-SemiboldItalic.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-SemiboldItalic.woff2') format('woff2'),
+    url('/fonts/GeneralSans-SemiboldItalic.woff') format('woff'),
+    url('/fonts/GeneralSans-SemiboldItalic.ttf') format('truetype');
   font-weight: 600;
   font-display: swap;
   font-style: italic;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Bold.woff2') format('woff2'),
-       url('/fonts/GeneralSans-Bold.woff') format('woff'),
-       url('/fonts/GeneralSans-Bold.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-Bold.woff2') format('woff2'),
+    url('/fonts/GeneralSans-Bold.woff') format('woff'),
+    url('/fonts/GeneralSans-Bold.ttf') format('truetype');
   font-weight: 700;
   font-display: swap;
   font-style: normal;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-BoldItalic.woff2') format('woff2'),
-       url('/fonts/GeneralSans-BoldItalic.woff') format('woff'),
-       url('/fonts/GeneralSans-BoldItalic.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-BoldItalic.woff2') format('woff2'),
+    url('/fonts/GeneralSans-BoldItalic.woff') format('woff'),
+    url('/fonts/GeneralSans-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   font-display: swap;
   font-style: italic;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Variable.woff2') format('woff2'),
-       url('/fonts/GeneralSans-Variable.woff') format('woff'),
-       url('/fonts/GeneralSans-Variable.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-Variable.woff2') format('woff2'),
+    url('/fonts/GeneralSans-Variable.woff') format('woff'),
+    url('/fonts/GeneralSans-Variable.ttf') format('truetype');
   font-weight: 200 700;
   font-display: swap;
   font-style: normal;
 }
 @font-face {
   font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-VariableItalic.woff2') format('woff2'),
-       url('/fonts/GeneralSans-VariableItalic.woff') format('woff'),
-       url('/fonts/GeneralSans-VariableItalic.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-VariableItalic.woff2') format('woff2'),
+    url('/fonts/GeneralSans-VariableItalic.woff') format('woff'),
+    url('/fonts/GeneralSans-VariableItalic.ttf') format('truetype');
   font-weight: 200 700;
   font-display: swap;
   font-style: italic;
@@ -115,19 +127,23 @@
 /* Specific font families for Tailwind utility classes */
 @font-face {
   font-family: 'General Sans Light';
-  src: url('/fonts/GeneralSans-Light.woff2') format('woff2'),
-       url('/fonts/GeneralSans-Light.woff') format('woff'),
-       url('/fonts/GeneralSans-Light.ttf') format('truetype');
+  src:
+    url('/fonts/GeneralSans-Light.woff2') format('woff2'),
+    url('/fonts/GeneralSans-Light.woff') format('woff'),
+    url('/fonts/GeneralSans-Light.ttf') format('truetype');
   font-weight: 300;
   font-display: swap;
   font-style: normal;
 }
 
-
 @layer base {
   /* Set default body font to General Sans Light */
   body {
-    font-family: 'General Sans', system-ui, -apple-system, sans-serif;
+    font-family:
+      'General Sans',
+      system-ui,
+      -apple-system,
+      sans-serif;
     font-weight: 300; /* Light weight */
   }
 
@@ -143,13 +159,24 @@
     font-size: unset;
   }
 
-  p, span, div, a, button, input, textarea, label {
-    font-family: 'General Sans', system-ui, -apple-system, sans-serif;
+  p,
+  span,
+  div,
+  a,
+  button,
+  input,
+  textarea,
+  label {
+    font-family:
+      'General Sans',
+      system-ui,
+      -apple-system,
+      sans-serif;
     font-weight: 300;
   }
 
   /* future prompt: looking at how the colors are set using globals.css and tailwind.config.mjs, look at the datamanipulation folder, there is a new homepage that only changed the colors, use the blocks in the homepageblocks to only cretae the new colors in the globals.css, cerate their respective colors link in the config.mjs and replace the bg-(color), text-(color), border-(color), from(color) via(color) and to(color),; */
- /* https://www.radix-ui.com/colors/custom */
+  /* https://www.radix-ui.com/colors/custom */
   :root {
     --primary-static: hsl(222.2 47.4% 11.2%);
     --secondary-static: hsl(234 7.69% 94%);
@@ -165,7 +192,7 @@
 
     --text-primary-static: hsl(222.2 84% 4.9%);
     --text-secondary-static: hsl(234 7.69% 94%);
-    --text-lightblue: hsl(226 70% 55%); 
+    --text-lightblue: hsl(226 70% 55%);
 
     --accent1-static: hsl(209, 44%, 86%);
     --accent2-static: hsl(203 48% 34%);
@@ -188,82 +215,79 @@
   }
 
   :root {
-  --bg: #0B1C2A;
-  --surface: #121F2E;
-  --border: #1E2C3B;
-  --text-primary: #E6EAF0;
-  --text-secondary: #A7B0BC;
-  --muted: #3A4C5C;
-  --accent: #4B82E4;
+    --bg: #0b1c2a;
+    --surface: #121f2e;
+    --border: #1e2c3b;
+    --text-primary: #e6eaf0;
+    --text-secondary: #a7b0bc;
+    --muted: #3a4c5c;
+    --accent: #4b82e4;
 
-  --btn-bg: #1D4F7B;
-  --btn-text: #E6F0FB;
+    --btn-bg: #1d4f7b;
+    --btn-text: #e6f0fb;
 
+    --branding-theme: hsl(202 69% 16%);
+    --branding-foreground: hsl(0, 0%, 96%);
+    --branding1: hsl(202 69% 16%);
+    --branding2: hsl(218 19% 33%);
+    --branding3: hsl(226 9% 52%);
+    --branding4: hsl(234 8% 75%);
 
-  --branding-theme:hsl(202 69% 16%);
-  --branding-foreground: hsl(0, 0%, 96%);
-  --branding1: hsl(202 69% 16%);
-  --branding2: hsl(218 19% 33%);
-  --branding3: hsl(226 9% 52%);
-  --branding4: hsl(234 8% 75%);
+    --text-white: hsl(210 40% 96.1%);
+    --background: hsl(0, 0%, 96%);
+    --foreground: hsl(222.2 84% 4.9%);
 
-  --text-white: hsl(210 40% 96.1%);
-  --background: hsl(0, 0%, 96%);
-  --foreground: hsl(222.2 84% 4.9%);
+    --text-primary: hsl(222.2 84% 4.9%);
+    --text-secondary: hsl(234 7.69% 94%);
 
-  --text-primary: hsl(222.2 84% 4.9%);
-  --text-secondary: hsl(234 7.69% 94%);
+    --button-primary: hsl(0, 47%, 11%);
+    --button-secondary: hsl(210 40% 96.1%);
+    --button-transparent: hsl(0 0% 0%);
 
-  --button-primary: hsl(0, 47%, 11%);
-  --button-secondary: hsl(210 40% 96.1%);
-  --button-transparent: hsl(0 0% 0%);
+    --card: hsl(60, 5%, 96%);
+    --card-foreground: hsl(203 45% 24%);
+    --card-var1: hsl(202 69% 16%);
 
-  --card: hsl(60, 5%, 96%);
-  --card-foreground:hsl(203 45% 24%);
-  --card-var1: hsl(202 69% 16%);
+    --popover: hsl(0 0% 100%);
+    --popover-foreground: hsl(222.2 84% 4.9%);
 
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(222.2 84% 4.9%);
+    --primary: hsl(222.2 47.4% 11.2%);
+    --primary-foreground: hsl(210 40% 98%);
 
-  --primary: hsl(222.2 47.4% 11.2%);
-  --primary-foreground: hsl(210 40% 98%);
+    --secondary: hsl(210 40% 96.1%);
+    --secondary-foreground: hsl(222.2 47.4% 11.2%);
 
-  --secondary: hsl(210 40% 96.1%);
-  --secondary-foreground: hsl(222.2 47.4% 11.2%);
+    --muted: hsl(210 40% 96.1%);
+    --muted-foreground: hsl(215.4 16.3% 46.9%);
 
-  --muted: hsl(210 40% 96.1%);
-  --muted-foreground: hsl(215.4 16.3% 46.9%);
+    --accent: hsl(210 40% 96.1%);
+    --accent-foreground: hsl(222.2 47.4% 11.2%);
 
-  --accent: hsl(210 40% 96.1%);
-  --accent-foreground: hsl(222.2 47.4% 11.2%);
+    --destructive: hsl(0 84.2% 60.2%);
+    --destructive-foreground: hsl(210 40% 98%);
 
-  --destructive: hsl(0 84.2% 60.2%);
-  --destructive-foreground: hsl(210 40% 98%);
+    --border: hsl(240 6% 80%);
+    --border-static: hsl(234 7.69% 94%);
+    --input: hsl(214.3 31.8% 91.4%);
+    --ring: hsl(222.2 84% 4.9%);
 
-  --border: hsl(240 6% 80%);
-  --border-static: hsl(234 7.69% 94%);
-  --input: hsl(214.3 31.8% 91.4%);
-  --ring: hsl(222.2 84% 4.9%);
+    --radius: 0.2rem;
 
-  --radius: 0.2rem;
+    --success: hsl(196 52% 74%);
+    --warning: hsl(34 89% 85%);
+    --error: hsl(10 100% 86%);
 
-  --success: hsl(196 52% 74%);
-  --warning: hsl(34 89% 85%);
-  --error: hsl(10 100% 86%);
-
-
-  --gradient-start: hsl(0 0% 85%); 
-  --gradient-via: hsl(220 25% 25%); 
-  --gradient-end: hsl(210 40% 45%); 
+    --gradient-start: hsl(0 0% 85%);
+    --gradient-via: hsl(220 25% 25%);
+    --gradient-end: hsl(210 40% 45%);
   }
 
   [data-theme='dark'] {
     --background: hsl(202 69% 16%);
     --foreground: hsl(210 40% 98%);
 
-
-    --branding-theme:hsl(0, 0%, 96%);
-    --branding-foreground: hsl(202 69% 16%);;
+    --branding-theme: hsl(0, 0%, 96%);
+    --branding-foreground: hsl(202 69% 16%);
 
     --text-primary: hsl(234 7.69% 94%);
     --text-secondary: hsl(222.2 84% 4.9%);
@@ -300,7 +324,6 @@
     --success: hsl(196 100% 14%);
     --warning: hsl(34 51% 25%);
     --error: hsl(10 39% 43%);
-
 
     --gradient-start: hsl(0 0% 12.94%);
     --gradient-via: hsl(204 65% 17%);

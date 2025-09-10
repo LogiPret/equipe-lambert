@@ -33,8 +33,8 @@ Go to your Vercel project dashboard at vercel.com and add these environment vari
    - Don't set NEXT_PUBLIC_SERVER_URL manually - Vercel will auto-set this
 
 ## Steps:
+
 1. Go to your Vercel project
 2. Click Settings → Environment Variables
 3. Add each variable above for "Production" environment
 4. Redeploy your project
-

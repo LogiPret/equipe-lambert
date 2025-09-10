@@ -15,7 +15,8 @@ export const TableByColumns: Block = {
       type: 'textarea',
       label: 'Table Description',
       admin: {
-        description: 'Optional description text that will appear below the title and above the table',
+        description:
+          'Optional description text that will appear below the title and above the table',
       },
     },
     {

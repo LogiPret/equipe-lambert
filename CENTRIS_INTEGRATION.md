@@ -1,17 +1,21 @@
 # Centris Scraper Integration with N8N
 
 ## Overview
+
 This document describes how to set up the N8N workflow to automatically update property listings from Centris to the Équipe Lambert website.
 
 ## Setup Components
 
 ### 1. **API Endpoint**
+
 - **URL**: `https://www.equipelambert.ca/api/scraped-properties`
 - **Method**: `POST`
 - **Authentication**: Bearer Token
 
 ### 2. **Environment Variables**
+
 Add to your deployment environment (Vercel, etc.):
+
 ```bash
 SCRAPER_SECRET=scraper_auth_key_2025_equipe_lambert_secure_endpoint
 ```
@@ -19,6 +23,7 @@ SCRAPER_SECRET=scraper_auth_key_2025_equipe_lambert_secure_endpoint
 ### 3. **N8N Workflow Configuration**
 
 #### Step 1: Trigger (Cron)
+
 ```json
 {
   "node": "Cron Trigger",
@@ -35,9 +40,11 @@ SCRAPER_SECRET=scraper_auth_key_2025_equipe_lambert_secure_endpoint
   }
 }
 ```
-*This runs daily at 6 AM*
+
+_This runs daily at 6 AM_
 
 #### Step 2: Centris Scraper Node
+
 ```json
 {
   "node": "Centris Scraper",
@@ -50,6 +57,7 @@ SCRAPER_SECRET=scraper_auth_key_2025_equipe_lambert_secure_endpoint
 ```
 
 #### Step 3: HTTP Request to Website API
+
 ```json
 {
   "node": "Update Website Properties",
@@ -67,6 +75,7 @@ SCRAPER_SECRET=scraper_auth_key_2025_equipe_lambert_secure_endpoint
 ```
 
 #### Step 4: Error Handling
+
 ```json
 {
   "node": "Error Handler",
@@ -106,7 +115,7 @@ The API expects data in this format:
       "link": "https://www.centris.ca/en/houses~for-sale~laval-auteuil/27301782",
       "mlsNumber": "27301782",
       "bedrooms": "3",
-      "bathrooms": "2", 
+      "bathrooms": "2",
       "imageUrl": "https://mspublic.centris.ca/media.ashx?id=..."
     }
   ],
@@ -118,6 +127,7 @@ The API expects data in this format:
 ## Response Format
 
 ### Success Response (200)
+
 ```json
 {
   "success": true,
@@ -132,6 +142,7 @@ The API expects data in this format:
 ```
 
 ### Error Response (400/401/500)
+
 ```json
 {
   "error": "Error description",
@@ -142,6 +153,7 @@ The API expects data in this format:
 ## Testing the Integration
 
 ### Local Testing
+
 ```bash
 # Start the development server
 npm run dev
@@ -151,6 +163,7 @@ node test-scraper-api.js
 ```
 
 ### Production Testing
+
 ```bash
 # Test with production URL
 API_URL=https://www.equipelambert.ca node test-scraper-api.js
@@ -166,11 +179,13 @@ API_URL=https://www.equipelambert.ca node test-scraper-api.js
 ## Website Integration
 
 ### Admin Panel
+
 - Navigate to **Collections** → **Scraped Properties** to view imported data
 - Individual properties can be activated/deactivated
 - Raw scraper data is stored for debugging
 
 ### Interactive Properties Block
+
 - Add the block to any page in the CMS
 - Toggle "Utiliser les données du scraper Centris" to use scraped data
 - Falls back to manual properties if scraped data unavailable
@@ -178,11 +193,13 @@ API_URL=https://www.equipelambert.ca node test-scraper-api.js
 ## Monitoring & Maintenance
 
 ### Logs to Monitor
+
 - N8N workflow execution logs
 - Website API response logs (`/api/scraped-properties`)
 - Payload CMS admin panel for property updates
 
 ### Common Issues
+
 1. **Authentication Errors**: Check `SCRAPER_SECRET` environment variable
 2. **Data Format Errors**: Verify scraper output matches expected format
 3. **Database Errors**: Check Payload CMS connection and permissions
