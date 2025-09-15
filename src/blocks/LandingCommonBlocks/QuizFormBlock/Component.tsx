@@ -776,56 +776,58 @@ export const QuizFormBlock = (props: QuizFormBlockProps) => {
       const valByField = (f?: QuizField) => (f ? (fd as any)[f.id] : undefined)
       const pick = (cond: (f: QuizField) => boolean) => allFields.find(cond)
 
+      // Normalize helper and safer matchers to avoid 'nom' matching within 'prénom'
+      const norm = (s?: string) =>
+        (s || '')
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/\p{Diacritic}+/gu, '') // strip accents
+      const labelText = (f: QuizField) => `${norm(f.id)} ${norm(f.label)}`
+      const reFirst = /\b(first(\s*name)?|prenom)\b/i
+      const reLast = /\b(last(\s*name)?|nom(\s*de\s*famille)?)\b/i
+
       const fallback = {
         firstname:
           directRow.firstname ||
-          toStringOrNull(valByField(pick((f) => /first|prenom|prénom/i.test(f.id + f.label)))) ||
+          toStringOrNull(valByField(pick((f) => reFirst.test(labelText(f))))) ||
           null,
         lastname:
           directRow.lastname ||
-          toStringOrNull(valByField(pick((f) => /last|nom/i.test(f.id + f.label)))) ||
+          toStringOrNull(valByField(pick((f) => reLast.test(labelText(f))))) ||
           null,
         phone:
           directRow.phone ||
           toStringOrNull(valByField(pick((f) => f.type === 'phone'))) ||
-          toStringOrNull(valByField(pick((f) => /phone|tel|télé/i.test(f.id + f.label)))) ||
+          toStringOrNull(valByField(pick((f) => /phone|tel|t[eé]l[eé]/i.test(labelText(f))))) ||
           null,
         email:
           directRow.email ||
           toStringOrNull(valByField(pick((f) => f.type === 'email'))) ||
-          toStringOrNull(valByField(pick((f) => /mail|courriel/i.test(f.id + f.label)))) ||
+          toStringOrNull(valByField(pick((f) => /mail|courriel/i.test(labelText(f))))) ||
           null,
         budget:
           directRow.budget ??
           toNumberOrNull(valByField(pick((f) => f.type === 'slider'))) ??
           toNumberOrNull(
-            valByField(pick((f) => /budget|prix|price|montant/i.test(f.id + f.label))),
+            valByField(pick((f) => /budget|prix|price|montant/i.test(labelText(f)))),
           ) ??
           null,
         when_interested:
           directRow.when_interested ||
           toStringOrNull(
             valByField(
-              pick((f) =>
-                /when|quand|delai|délai|timeline|temps|mois/i.test(lower(f.id) + lower(f.label)),
-              ),
+              pick((f) => /when|quand|delai|d[eé]lai|timeline|temps|mois/i.test(labelText(f))),
             ),
           ) ||
           null,
         type_property:
           directRow.type_property ||
-          toStringOrNull(
-            valByField(pick((f) => /type|property|propri/i.test(lower(f.id) + lower(f.label)))),
-          ) ||
+          toStringOrNull(valByField(pick((f) => /type|property|propri/i.test(labelText(f))))) ||
           null,
         area_wanted:
           directRow.area_wanted ||
           toStringOrNull(
-            valByField(
-              pick((f) =>
-                /area|ville|city|secteur|quartier|zone/i.test(lower(f.id) + lower(f.label)),
-              ),
-            ),
+            valByField(pick((f) => /area|ville|city|secteur|quartier|zone/i.test(labelText(f)))),
           ) ||
           null,
       }
