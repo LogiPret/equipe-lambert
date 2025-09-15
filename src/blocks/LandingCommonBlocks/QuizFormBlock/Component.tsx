@@ -17,7 +17,6 @@ import { Label } from '@/components/ui/label'
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import type { QuizFormBlockProps, QuizFormData, QuizField, QuizStep } from './types'
-import { insertAcheterFormSubmission } from '@/lib/supabase'
 
 // Utility functions for phone and email validation
 const formatPhoneNumber = (value: string): string => {
@@ -837,15 +836,46 @@ export const QuizFormBlock = (props: QuizFormBlockProps) => {
       console.log('[Quiz Submit] Direct row:', directRow)
       console.log('[Quiz Submit] Fallback row:', row)
 
-      const res = await insertAcheterFormSubmission(row)
-      if (!res || (res as any).success === false) {
-        throw new Error('Insertion Supabase échouée')
+      // Send data to n8n webhook via internal API route
+      try {
+        const webhookResponse = await fetch('/api/quiz-webhook', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstname: row.firstname,
+            lastname: row.lastname,
+            phone: row.phone,
+            email: row.email,
+            budget: row.budget,
+            when_interested: row.when_interested,
+            type_property: row.type_property,
+            area_wanted: row.area_wanted,
+          }),
+        })
+
+        if (!webhookResponse.ok) {
+          const errorData = await webhookResponse.json().catch(() => ({ error: 'Unknown error' }))
+          console.error(
+            `Webhook failed: ${webhookResponse.status} ${webhookResponse.statusText}`,
+            errorData,
+          )
+        } else {
+          const responseData = await webhookResponse.json()
+          console.log('[Quiz Submit] Webhook successful:', responseData)
+        }
+      } catch (fetchError) {
+        console.error('[Quiz Submit] Webhook error:', fetchError)
+        // Continue execution even if webhook fails - don't block user experience
       }
 
       setIsCompleted(true)
     } catch (error) {
       console.error('Failed to submit quiz:', error)
-      // Handle error appropriately
+      // Still complete the form to not block user experience
+      // The webhook error is already logged above
+      setIsCompleted(true)
     } finally {
       setIsSubmitting(false)
     }

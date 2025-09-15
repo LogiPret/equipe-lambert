@@ -40,7 +40,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   return (
     <header
-      className={`${isHomePage ? 'sticky top-0 pt-4 sm:absolute sm:top-0 sm:left-0 sm:right-0 z-50 bg-brandingtheme-foreground sm:bg-transparent w-full max-w-full pb-2' : 'container relative z-20'}`}
+      className={`${isHomePage ? 'sticky top-0 pt-4 sm:absolute sm:top-0 sm:left-0 sm:right-0 z-50 bg-brandingtheme-foreground sm:bg-transparent w-full max-w-full pb-2' : 'container relative z-20 pt-4'}`}
       {...(theme ? { 'data-theme': theme } : {})}
     >
       {isHomePage && <div className="absolute inset-0 bg-transparent pointer-events-none"></div>}

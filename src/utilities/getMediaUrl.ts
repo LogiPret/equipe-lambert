@@ -1,20 +1,15 @@
-import { getClientSideURL } from '@/utilities/getURL'
-
 /**
- * Processes media resource URL to ensure proper formatting
- * @param url The original URL from the resource
- * @param _cacheTag Optional cache tag to append to the URL (ignored for performance)
- * @returns Properly formatted URL without cache tagging
+ * Normalize media URLs so SSR and CSR render the same string.
+ * - If absolute (http/https), return as-is.
+ * - Otherwise, return a relative path (ensuring a single leading slash).
  */
 export const getMediaUrl = (url: string | null | undefined, _cacheTag?: string | null): string => {
   if (!url) return ''
 
-  // Check if URL already has http/https protocol
-  if (url.startsWith('http://') || url.startsWith('https://')) {
-    return url // No cache tagging to avoid timeouts
-  }
+  // Absolute URL: leave untouched
+  if (/^https?:\/\//i.test(url)) return url
 
-  // Otherwise prepend client-side URL
-  const baseUrl = getClientSideURL()
-  return `${baseUrl}${url}` // No cache tagging to avoid timeouts
+  // Ensure a single leading slash for relative paths
+  const cleaned = url.replace(/^\/+/, '')
+  return `/${cleaned}`
 }
