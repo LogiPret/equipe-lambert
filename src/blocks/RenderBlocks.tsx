@@ -98,7 +98,7 @@ export const RenderBlocks: React.FC<{
 
               // Remove all spacing for now - will add back selectively later
               return (
-                <div key={index} id={blockId}>
+                <div key={index} id={blockId} data-block-type={blockType} data-block-index={index}>
                   {/* @ts-expect-error Block component props mismatch with server component types */}
                   <Block {...block} blockId={blockId} disableInnerContainer />
                 </div>
