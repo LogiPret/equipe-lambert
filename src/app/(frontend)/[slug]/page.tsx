@@ -14,6 +14,7 @@ import { BlockIDHelper } from '@/components/BlockIDHelper'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import MetaPixel from '@/components/MetaPixel'
+import AcheterTracking from '@/analytics/AcheterTracking.client'
 
 // Revalidate this page periodically so data-driven blocks (like the blog carousel) stay fresh
 export const revalidate = 600
@@ -77,6 +78,8 @@ export default async function Page({ params: paramsPromise }: Args) {
     <article className={articleClass}>
       {/* Fire Meta Pixel only on /acheter */}
       {slug === 'acheter' ? <MetaPixel pixelId="703032046728199" /> : null}
+      {/* Client-side analytics for /acheter */}
+      {slug === 'acheter' ? <AcheterTracking /> : null}
       <PageClient />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
