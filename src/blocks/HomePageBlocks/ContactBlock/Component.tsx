@@ -247,7 +247,7 @@ export default function ContactBlock({ title, subtitle, contactInfo, form }: Con
   }
 
   return (
-    <section id="contact-block" className="py-24 bg-secondarystatic overflow-hidden">
+    <section id="contact-block" className="py-24 sm:px-28 bg-secondarystatic overflow-hidden">
       <div className="container mx-auto px-4 max-w-full">
         <ScrollAnimation animation="fadeIn">
           <div className="text-center mb-20">

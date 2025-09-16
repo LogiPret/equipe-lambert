@@ -226,6 +226,9 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
   // Determine grid order based on image position
   const imageOrder = imagePosition === 'left' ? 'order-first' : 'order-last'
   const contentOrder = imagePosition === 'left' ? 'order-last' : 'order-first'
+  // When the layout stacks (below md) and image is configured on the left,
+  // the image will render on top. In that case, center the CTA button for better balance.
+  const centerCTAOnMobile = imagePosition === 'left'
 
   return (
     <section className={`pt-20 pb-5 bg-gradient-to-br ${currentDefaults.bgGradient}`}>
@@ -262,35 +265,37 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
             <p className="text-lg text-branding75 mb-8 leading-relaxed">
               <strong>{finalHighlight}</strong>
             </p>
-            {mainContent?.actionType === 'popup' ? (
-              <Button
-                size="lg"
-                className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
-                onClick={handleButtonClick}
-              >
-                <ArrowRight className="h-5 w-5 mr-3" />
-                {finalButtonText}
-              </Button>
-            ) : mainContent?.link ? (
-              <CMSLink
-                {...mainContent.link}
-                appearance="default"
-                size="lg"
-                className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
-              >
-                <ArrowRight className="h-5 w-5 mr-3" />
-                {finalButtonText}
-              </CMSLink>
-            ) : (
-              <Button
-                size="lg"
-                className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
-                onClick={handleButtonClick}
-              >
-                <ArrowRight className="h-5 w-5 mr-3" />
-                {finalButtonText}
-              </Button>
-            )}
+            <div className={centerCTAOnMobile ? 'text-center md:text-left' : ''}>
+              {mainContent?.actionType === 'popup' ? (
+                <Button
+                  size="xl"
+                  className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
+                  onClick={handleButtonClick}
+                >
+                  <ArrowRight className="h-5 w-5 mr-3" />
+                  {finalButtonText}
+                </Button>
+              ) : mainContent?.link ? (
+                <CMSLink
+                  {...mainContent.link}
+                  appearance="default"
+                  size="lg"
+                  className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
+                >
+                  <ArrowRight className="h-5 w-5 mr-3" />
+                  {finalButtonText}
+                </CMSLink>
+              ) : (
+                <Button
+                  size="lg"
+                  className={`${currentDefaults.buttonClass} text-branding0 px-8 py-4 font-medium text-lg`}
+                  onClick={handleButtonClick}
+                >
+                  <ArrowRight className="h-5 w-5 mr-3" />
+                  {finalButtonText}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
 
