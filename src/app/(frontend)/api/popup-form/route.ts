@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       (N8N_WEBHOOK_URL.includes('/webhook/') || N8N_WEBHOOK_URL.includes('/webhook-test/')) &&
       N8N_WEBHOOK_URL.includes('/equipe-lambert') &&
       !N8N_WEBHOOK_URL.endsWith('/meta-ads')
-    let targetUrl = needsMetaSuffix
+    const targetUrl = needsMetaSuffix
       ? N8N_WEBHOOK_URL.replace(/\/$/, '') + '/meta-ads'
       : N8N_WEBHOOK_URL
 
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
     let responseText = ''
     try {
       responseText = await res.text()
-    } catch (textErr) {
+    } catch (_err) {
       responseText = 'Could not read response'
     }
 
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
       console.log('[Popup Webhook Proxy] n8n retry response status:', retry.status)
       try {
         responseText = await retry.text()
-      } catch (textErr) {
+      } catch (_err) {
         responseText = 'Could not read response'
       }
       if (retry.ok) {
