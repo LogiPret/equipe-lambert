@@ -16,6 +16,10 @@ export const PDF: CollectionConfig = {
     singular: 'PDF',
     plural: 'PDFs',
   },
+  admin: {
+    group: 'Media',
+    useAsTitle: 'title',
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -47,8 +51,5 @@ export const PDF: CollectionConfig = {
       // For PDFs, we'll show the filename since there's no thumbnail for PDFs
       return (doc.filename as string) || 'PDF'
     },
-  },
-  admin: {
-    useAsTitle: 'title',
   },
 }

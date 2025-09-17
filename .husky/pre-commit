@@ -1,16 +1,16 @@
 #!/usr/bin/env sh
 
 # Pre-commit hook for basic code quality checks
-echo "🔍 Running pre-commit checks..."
+echo "🔍 Running pre-commit formatting..."
 
-# Check if code is properly formatted
-npm run format:check
+# run code formatter
+pnpm run format
 
-# If format check fails, offer to fix it
-if [ $? -ne 0 ]; then
-    echo "❌ Code formatting issues detected!"
-    echo "💡 Run 'npm run format' to fix formatting issues."
-    exit 1
+if ! git diff --quiet; then
+    echo "✨ Code was formatted! Adding changes..."
+    git add .
+else
+    echo "✅ Code is already properly formatted!"
 fi
 
-echo "✅ Pre-commit checks passed!"
+echo "✅ Pre-commit formatting done!"

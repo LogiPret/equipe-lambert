@@ -15,7 +15,7 @@ export async function Footer() {
   const description = footerData?.description || ''
 
   return (
-    <footer className="mt-auto border-t border-border bg-branding100 text-branding0">
+    <footer className="mt-auto border-t border-border bg-branding100 pt-8 text-branding0">
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Column 1: Logo and Description */}
@@ -24,7 +24,7 @@ export async function Footer() {
               <Logo />
             </Link>
             {description && (
-              <p className="text-branding25 text-sm leading-relaxed pt-9">{description}</p>
+              <p className="text-branding25 text-sm leading-relaxed pt-16">{description}</p>
             )}
           </div>
 

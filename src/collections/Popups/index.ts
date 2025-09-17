@@ -13,6 +13,7 @@ export const Popups: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+    group: 'Forms',
     description:
       'Manage reusable popups. You can create simple form popups or use blocks for more complex content.',
     defaultColumns: ['title', 'popupType', 'updatedAt'],

@@ -60,6 +60,9 @@ export const plugins: Plugin[] = [
       payment: false,
     },
     formOverrides: {
+      admin: {
+        group: 'Forms',
+      },
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
           if ('name' in field && field.name === 'confirmationMessage') {
@@ -81,6 +84,9 @@ export const plugins: Plugin[] = [
       },
     },
     formSubmissionOverrides: {
+      admin: {
+        group: 'Forms',
+      },
       hooks: {
         afterChange: [
           async ({
