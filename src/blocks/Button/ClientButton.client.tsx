@@ -12,11 +12,27 @@ export type ClientButtonProps = {
 export type SimplePopupData = {
   popupType: 'form'
   title?: string | null
+  description?: string | null
   firstNameLabel?: string | null
   lastNameLabel?: string | null
   phoneLabel?: string | null
+  emailLabel?: string | null
+  includeFirstName?: boolean | null
+  includeLastName?: boolean | null
+  includePhone?: boolean | null
+  includeEmail?: boolean | null
+  firstNameRequired?: boolean | null
+  lastNameRequired?: boolean | null
+  phoneRequired?: boolean | null
+  emailRequired?: boolean | null
+  firstNameWidth?: 'half' | 'full' | null
+  lastNameWidth?: 'half' | 'full' | null
+  phoneWidth?: 'half' | 'full' | null
+  emailWidth?: 'half' | 'full' | null
   buttonText?: string | null
+  successMessage?: string | null
   pdfName?: string | null
+  consentLabel?: string | null
 }
 
 export type BlocksPopupData = {

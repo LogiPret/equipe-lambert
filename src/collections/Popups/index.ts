@@ -50,6 +50,24 @@ export const Popups: CollectionConfig = {
     },
     // Fields for simple form popups
     {
+      name: 'description',
+      label: 'Description',
+      type: 'textarea',
+      admin: { condition: (data) => data.popupType === 'form' },
+    },
+    {
+      name: 'consentLabel',
+      label: 'Consent checkbox label',
+      type: 'textarea',
+      defaultValue:
+        "J'accepte de recevoir des communications concernant des contenus et services d’Équipe Lambert.",
+      admin: {
+        condition: (data) => data.popupType === 'form',
+        description:
+          'Text displayed next to the required consent checkbox. The submit button is enabled only when this is checked.',
+      },
+    },
+    {
       name: 'pdfName',
       label: 'PDF Name',
       type: 'text',
@@ -72,26 +90,112 @@ export const Popups: CollectionConfig = {
       admin: {
         condition: (data) => data.popupType === 'form',
       },
+      validate: (_: unknown, { data }: any) => {
+        if (data.popupType !== 'form') return true
+        const atLeastOneRequired =
+          data.firstNameRequired ||
+          data.lastNameRequired ||
+          data.phoneRequired ||
+          data.emailRequired
+        return atLeastOneRequired ? true : 'At least one field must be required'
+      },
     },
-    // The three input fields are fixed in the UI component, but we allow optional label overrides
+    // Configure which fields to include, labels, and which are required
     {
       type: 'row',
       admin: {
         condition: (data) => data.popupType === 'form',
       },
       fields: [
+        {
+          name: 'includeFirstName',
+          type: 'checkbox',
+          label: 'Include first name',
+          defaultValue: true,
+        },
+        { name: 'firstNameRequired', type: 'checkbox', label: 'Required', defaultValue: false },
         { name: 'firstNameLabel', label: 'First name label', type: 'text', defaultValue: 'Prénom' },
-        { name: 'lastNameLabel', label: 'Last name label', type: 'text', defaultValue: 'Nom' },
+        {
+          name: 'firstNameWidth',
+          label: 'First name width',
+          type: 'select',
+          defaultValue: 'half',
+          options: [
+            { label: 'Half width', value: 'half' },
+            { label: 'Full width', value: 'full' },
+          ],
+        },
       ],
     },
     {
-      name: 'phoneLabel',
-      label: 'Phone label',
-      type: 'text',
-      defaultValue: 'Téléphone',
-      admin: {
-        condition: (data) => data.popupType === 'form',
-      },
+      type: 'row',
+      admin: { condition: (data) => data.popupType === 'form' },
+      fields: [
+        {
+          name: 'includeLastName',
+          type: 'checkbox',
+          label: 'Include last name',
+          defaultValue: true,
+        },
+        { name: 'lastNameRequired', type: 'checkbox', label: 'Required', defaultValue: false },
+        { name: 'lastNameLabel', label: 'Last name label', type: 'text', defaultValue: 'Nom' },
+        {
+          name: 'lastNameWidth',
+          label: 'Last name width',
+          type: 'select',
+          defaultValue: 'half',
+          options: [
+            { label: 'Half width', value: 'half' },
+            { label: 'Full width', value: 'full' },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'row',
+      admin: { condition: (data) => data.popupType === 'form' },
+      fields: [
+        { name: 'includePhone', type: 'checkbox', label: 'Include phone', defaultValue: true },
+        { name: 'phoneRequired', type: 'checkbox', label: 'Required', defaultValue: false },
+        { name: 'phoneLabel', label: 'Phone label', type: 'text', defaultValue: 'Téléphone' },
+        {
+          name: 'phoneWidth',
+          label: 'Phone width',
+          type: 'select',
+          defaultValue: 'full',
+          options: [
+            { label: 'Half width', value: 'half' },
+            { label: 'Full width', value: 'full' },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'row',
+      admin: { condition: (data) => data.popupType === 'form' },
+      fields: [
+        { name: 'includeEmail', type: 'checkbox', label: 'Include email', defaultValue: true },
+        { name: 'emailRequired', type: 'checkbox', label: 'Required', defaultValue: false },
+        { name: 'emailLabel', label: 'Email label', type: 'text', defaultValue: 'Courriel' },
+        {
+          name: 'emailWidth',
+          label: 'Email width',
+          type: 'select',
+          defaultValue: 'full',
+          options: [
+            { label: 'Half width', value: 'half' },
+            { label: 'Full width', value: 'full' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'successMessage',
+      label: 'Success message (shown after submit)',
+      type: 'textarea',
+      defaultValue:
+        "Merci! Nous avons bien reçu vos informations. Un membre de l'équipe vous contactera bientôt.",
+      admin: { condition: (data) => data.popupType === 'form' },
     },
     // Fields for block-based popups
     {

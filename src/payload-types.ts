@@ -1295,14 +1295,33 @@ export interface Popup {
    * Choose between a simple form popup or a block-based popup for more complex content
    */
   popupType: 'form' | 'blocks';
+  description?: string | null;
+  /**
+   * Text displayed next to the required consent checkbox. The submit button is enabled only when this is checked.
+   */
+  consentLabel?: string | null;
   /**
    * Name of the PDF associated to this popup (not rendered, sent to n8n).
    */
   pdfName?: string | null;
   buttonText?: string | null;
+  includeFirstName?: boolean | null;
+  firstNameRequired?: boolean | null;
   firstNameLabel?: string | null;
+  firstNameWidth?: ('half' | 'full') | null;
+  includeLastName?: boolean | null;
+  lastNameRequired?: boolean | null;
   lastNameLabel?: string | null;
+  lastNameWidth?: ('half' | 'full') | null;
+  includePhone?: boolean | null;
+  phoneRequired?: boolean | null;
   phoneLabel?: string | null;
+  phoneWidth?: ('half' | 'full') | null;
+  includeEmail?: boolean | null;
+  emailRequired?: boolean | null;
+  emailLabel?: string | null;
+  emailWidth?: ('half' | 'full') | null;
+  successMessage?: string | null;
   /**
    * Add blocks to create your popup content. You can combine different blocks like Quiz Forms, Content, and Media.
    */
@@ -3237,11 +3256,27 @@ export interface UsersSelect<T extends boolean = true> {
 export interface PopupsSelect<T extends boolean = true> {
   title?: T;
   popupType?: T;
+  description?: T;
+  consentLabel?: T;
   pdfName?: T;
   buttonText?: T;
+  includeFirstName?: T;
+  firstNameRequired?: T;
   firstNameLabel?: T;
+  firstNameWidth?: T;
+  includeLastName?: T;
+  lastNameRequired?: T;
   lastNameLabel?: T;
+  lastNameWidth?: T;
+  includePhone?: T;
+  phoneRequired?: T;
   phoneLabel?: T;
+  phoneWidth?: T;
+  includeEmail?: T;
+  emailRequired?: T;
+  emailLabel?: T;
+  emailWidth?: T;
+  successMessage?: T;
   content?:
     | T
     | {

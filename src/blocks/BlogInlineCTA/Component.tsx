@@ -67,11 +67,23 @@ const BlogInlineCTA: React.FC<BlogInlineCTAProps> = ({
                   return {
                     popupType: 'form' as const,
                     title: popupRef.title ?? 'Contact',
+                    description: popupRef.description ?? null,
                     firstNameLabel: popupRef.firstNameLabel ?? 'Prénom',
                     lastNameLabel: popupRef.lastNameLabel ?? 'Nom',
                     phoneLabel: popupRef.phoneLabel ?? 'Téléphone',
+                    emailLabel: popupRef.emailLabel ?? 'Courriel',
+                    includeFirstName: popupRef.includeFirstName ?? true,
+                    includeLastName: popupRef.includeLastName ?? true,
+                    includePhone: popupRef.includePhone ?? true,
+                    includeEmail: popupRef.includeEmail ?? true,
+                    firstNameRequired: popupRef.firstNameRequired ?? false,
+                    lastNameRequired: popupRef.lastNameRequired ?? false,
+                    phoneRequired: popupRef.phoneRequired ?? false,
+                    emailRequired: popupRef.emailRequired ?? false,
                     buttonText: popupRef.buttonText ?? 'Envoyer',
                     pdfName: popupRef.pdfName ?? null,
+                    successMessage: popupRef.successMessage ?? undefined,
+                    consentLabel: (popupRef as any).consentLabel ?? undefined,
                   }
                 }
               })()}

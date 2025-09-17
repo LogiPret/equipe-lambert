@@ -124,11 +124,27 @@ export const LandingResourceBlockComponent: React.FC<LandingResourceBlockProps> 
       return {
         popupType: 'form' as const,
         title: popup.title ?? 'Contact',
+        description: popup.description ?? null,
         firstNameLabel: popup.firstNameLabel ?? 'Prénom',
         lastNameLabel: popup.lastNameLabel ?? 'Nom',
         phoneLabel: popup.phoneLabel ?? 'Téléphone',
+        emailLabel: popup.emailLabel ?? 'Courriel',
+        includeFirstName: popup.includeFirstName ?? true,
+        includeLastName: popup.includeLastName ?? true,
+        includePhone: popup.includePhone ?? true,
+        includeEmail: popup.includeEmail ?? true,
+        firstNameRequired: popup.firstNameRequired ?? false,
+        lastNameRequired: popup.lastNameRequired ?? false,
+        phoneRequired: popup.phoneRequired ?? false,
+        emailRequired: popup.emailRequired ?? false,
+        firstNameWidth: (popup as any).firstNameWidth ?? 'half',
+        lastNameWidth: (popup as any).lastNameWidth ?? 'half',
+        phoneWidth: (popup as any).phoneWidth ?? 'full',
+        emailWidth: (popup as any).emailWidth ?? 'full',
         buttonText: popup.buttonText ?? 'Envoyer',
         pdfName: popup.pdfName ?? null,
+        successMessage: popup.successMessage ?? undefined,
+        consentLabel: (popup as any).consentLabel ?? undefined,
       }
     }
   }
