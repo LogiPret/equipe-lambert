@@ -53,17 +53,46 @@ export default function HeroBlock({
       <div className="absolute inset-0 bg-black/20"></div>
 
       {backgroundImageUrl && (
-        <div
-          className="absolute inset-0 bg-cover bg-no-repeat"
-          style={{
-            backgroundImage: `url(${backgroundImageUrl})`,
-            backgroundPosition: 'center 5%',
-          }}
-        />
-      )}
+        <>
+          {/* Background for lg and larger screens - fills entire hero */}
+          <div
+            className="absolute inset-0 bg-cover bg-no-repeat hidden md:block"
+            style={{
+              backgroundImage: `url(${backgroundImageUrl})`,
+              backgroundPosition: 'center 5%',
+            }}
+          />
+          {/* Gradient overlay for larger screens */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent hidden md:block"></div>
 
-      {/* Gradient overlay to protect text readability in bottom area */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+          {/* Layout for md and smaller screens */}
+          <div className="absolute inset-0 flex flex-col md:hidden">
+            {/* Background image - fills width without cropping */}
+            <div
+              className="w-full flex-shrink-0 bg-no-repeat bg-top relative"
+              style={{
+                backgroundImage: `url(${backgroundImageUrl})`,
+                backgroundSize: '100% auto', // Fill width, auto height to maintain aspect ratio
+                paddingBottom: '50%', // Approximate fallback height, will be overridden by actual image
+                minHeight: '200px',
+                maxHeight: '60vh',
+              }}
+            >
+              {/* Gradient overlay for small screens - only on the image area */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(to top, var(--branding-90), rgba(0,0,0,0.4) 50%, transparent)',
+                }}
+              ></div>
+            </div>
+
+            {/* Fill div for remaining space */}
+            <div className="flex-1 bg-branding90 min-h-[200px] -mt-px" />
+          </div>
+        </>
+      )}
 
       <div className="container mx-auto px-4 relative z-10 h-full flex flex-col justify-end min-h-[600px]">
         {/* Bottom area - content positioned at very bottom */}
