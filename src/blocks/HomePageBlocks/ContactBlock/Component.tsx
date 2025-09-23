@@ -291,10 +291,10 @@ export default function ContactBlock({ title, subtitle, contactInfo, form }: Con
   }
 
   return (
-    <section id="contact-block" className="py-24 sm:px-28 bg-secondarystatic overflow-hidden">
+    <section id="contact-block" className="py-24 lg:px-28 bg-secondarystatic overflow-hidden">
       <div className="container mx-auto px-4 max-w-full">
         <ScrollAnimation animation="fadeIn">
-          <div className="text-center mb-20">
+          <div className="text-center mb-12 lg:mb-20">
             <div className="inline-block bg-branding100 h-1 w-24 mb-6"></div>
             <h2 className="text-5xl font-serif font-bold text-branding100 mb-6">{title}</h2>
             <p className="text-xl text-branding75 max-w-3xl mx-auto">{subtitle}</p>
@@ -302,7 +302,7 @@ export default function ContactBlock({ title, subtitle, contactInfo, form }: Con
         </ScrollAnimation>
         <div className="grid lg:grid-cols-2 gap-16">
           <ScrollAnimation animation="slideRight" delay={100}>
-            <div>
+            <div className="hidden lg:block">
               <div className="space-y-6 mb-10">
                 {contactInfo.map((info, index) => {
                   const IconComponent = iconMap[info.icon]
@@ -325,82 +325,86 @@ export default function ContactBlock({ title, subtitle, contactInfo, form }: Con
           </ScrollAnimation>
 
           <ScrollAnimation animation="slideLeft" delay={200}>
-            <Card className="border border-borderprimarystatic shadow-xl bg-branding0 hover:border-bordersecondarystatic transition-colors">
-              <CardContent className="p-10">
-                <h3 className="text-2xl font-serif font-bold text-branding100 mb-8">
-                  {form.title}
-                </h3>
+            <div className="lg:col-start-2">
+              <Card className="border border-borderprimarystatic shadow-xl bg-branding0 hover:border-bordersecondarystatic transition-colors">
+                <CardContent className="p-10">
+                  <h3 className="text-2xl font-serif font-bold text-branding100 mb-8">
+                    {form.title}
+                  </h3>
 
-                {isSubmitted ? (
-                  // Success message
-                  <div className="text-center py-12">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6 border border-green-600">
-                      <svg
-                        className="w-8 h-8 text-green-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
+                  {isSubmitted ? (
+                    // Success message
+                    <div className="text-center py-12">
+                      <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6 border border-green-600">
+                        <svg
+                          className="w-8 h-8 text-green-600"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                      <h4 className="text-xl font-semibold text-branding100 mb-4">
+                        Message Envoyé!
+                      </h4>
+                      <p className="text-branding75 leading-relaxed">
+                        {form.successMessage ||
+                          'Merci pour votre message ! Nous vous contacterons bientôt.'}
+                      </p>
+                    </div>
+                  ) : (
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        {formFields.map((field, index) =>
+                          renderFormField(field, index, handleFieldChange, formData),
+                        )}
+                      </div>
+
+                      {/* Simple checkbox with admin-configured text */}
+                      <div className="flex items-start space-x-3">
+                        <input
+                          id="agreement-checkbox"
+                          name="agreement"
+                          type="checkbox"
+                          required
+                          checked={isCheckboxChecked}
+                          onChange={(e) => setIsCheckboxChecked(e.target.checked)}
+                          className="w-5 h-5 mt-0.5 text-branding100 bg-branding0 border-2 border-borderprimarystatic rounded focus:ring-branding100 focus:ring-2"
                         />
-                      </svg>
-                    </div>
-                    <h4 className="text-xl font-semibold text-branding100 mb-4">Message Envoyé!</h4>
-                    <p className="text-branding75 leading-relaxed">
-                      {form.successMessage ||
-                        'Merci pour votre message ! Nous vous contacterons bientôt.'}
-                    </p>
-                  </div>
-                ) : (
-                  <form className="space-y-6" onSubmit={handleSubmit}>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {formFields.map((field, index) =>
-                        renderFormField(field, index, handleFieldChange, formData),
-                      )}
-                    </div>
+                        <label
+                          htmlFor="agreement-checkbox"
+                          className="text-sm text-branding75 leading-relaxed"
+                        >
+                          {form.checkboxText || 'I agree to the terms and conditions'} *
+                        </label>
+                      </div>
 
-                    {/* Simple checkbox with admin-configured text */}
-                    <div className="flex items-start space-x-3">
-                      <input
-                        id="agreement-checkbox"
-                        name="agreement"
-                        type="checkbox"
-                        required
-                        checked={isCheckboxChecked}
-                        onChange={(e) => setIsCheckboxChecked(e.target.checked)}
-                        className="w-5 h-5 mt-0.5 text-branding100 bg-branding0 border-2 border-borderprimarystatic rounded focus:ring-branding100 focus:ring-2"
-                      />
-                      <label
-                        htmlFor="agreement-checkbox"
-                        className="text-sm text-branding75 leading-relaxed"
+                      <Button
+                        type="submit"
+                        disabled={!isSubmitEnabled}
+                        className={`w-full py-4 font-medium text-lg transition-colors ${
+                          !isSubmitEnabled
+                            ? 'bg-branding25 cursor-not-allowed text-branding0'
+                            : 'bg-branding100 hover:bg-accent2static text-branding0'
+                        }`}
                       >
-                        {form.checkboxText || 'I agree to the terms and conditions'} *
-                      </label>
-                    </div>
+                        {isSubmitting ? form.submitButton.loadingText : form.submitButton.text}
+                      </Button>
+                    </form>
+                  )}
 
-                    <Button
-                      type="submit"
-                      disabled={!isSubmitEnabled}
-                      className={`w-full py-4 font-medium text-lg transition-colors ${
-                        !isSubmitEnabled
-                          ? 'bg-branding25 cursor-not-allowed text-branding0'
-                          : 'bg-branding100 hover:bg-accent2static text-branding0'
-                      }`}
-                    >
-                      {isSubmitting ? form.submitButton.loadingText : form.submitButton.text}
-                    </Button>
-                  </form>
-                )}
-
-                {!isSubmitted && (
-                  <p className="text-xs text-branding50 mt-4 text-center">{form.disclaimer}</p>
-                )}
-              </CardContent>
-            </Card>
+                  {!isSubmitted && (
+                    <p className="text-xs text-branding50 mt-4 text-center">{form.disclaimer}</p>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           </ScrollAnimation>
         </div>
       </div>
