@@ -73,9 +73,9 @@ export default function HeroBlock({
               style={{
                 backgroundImage: `url(${backgroundImageUrl})`,
                 backgroundSize: '100% auto', // Fill width, auto height to maintain aspect ratio
-                paddingBottom: '50%', // Approximate fallback height, will be overridden by actual image
+                paddingBottom: '65%', // Approximate fallback height, will be overridden by actual image
                 minHeight: '200px',
-                maxHeight: '60vh',
+                maxHeight: '80vh',
               }}
             >
               {/* Gradient overlay for small screens - only on the image area */}
