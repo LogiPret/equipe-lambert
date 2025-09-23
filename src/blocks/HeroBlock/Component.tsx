@@ -101,7 +101,7 @@ export default function HeroBlock({
             {/* Badge, Title, Buttons */}
             <div className="space-y-8">
               {badgeText && (
-                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+                <div className="hidden md:inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
                   <Award className="h-4 w-4 text-yellow-400" />
                   <span className="text-sm font-medium">{badgeText}</span>
                 </div>
