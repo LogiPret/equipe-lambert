@@ -25,6 +25,26 @@ export function isSupabaseAvailable(): boolean {
   return supabase !== null
 }
 
+// Function to fetch available Supabase tables for admin dropdown
+export async function fetchSupabaseTables(): Promise<{ label: string; value: string }[]> {
+  // Return static list of actual tables in use
+  // These are the three tables currently configured for form submissions
+  return [
+    {
+      label: 'Main Form Submissions (Contact forms)',
+      value: 'david_lambert_form_submissions',
+    },
+    {
+      label: 'Acheter Form Submissions',
+      value: 'equipe_lambert_landing_acheter_form',
+    },
+    {
+      label: 'Vendre Form Submissions',
+      value: 'equipe_lambert_landing_vendre_form',
+    },
+  ]
+}
+
 // Define the type for contact form data
 export interface ContactFormData {
   prenom: string
@@ -32,6 +52,7 @@ export interface ContactFormData {
   email: string
   phone: string
   type: string
+  origin?: string // Admin-only field to track form origin
   vendre_address?: string // Property address for selling forms
   vendre_delais?: string // Selling timeframe for selling forms
   acheter_propertyType?: string // Property type for buying forms
@@ -56,6 +77,7 @@ export async function insertContactSubmission(data: ContactFormData) {
           email: data.email,
           phone: data.phone,
           type: data.type,
+          origin: data.origin || null, // Include origin field
           vendre_address: data.vendre_address || null, // Include property address for selling
           vendre_delais: data.vendre_delais || null, // Include selling timeframe
           acheter_propertyType: data.acheter_propertyType || null, // Include property type for buying
@@ -74,6 +96,30 @@ export async function insertContactSubmission(data: ContactFormData) {
     return { success: true, data: result }
   } catch (error) {
     console.error('Failed to save contact submission to Supabase:', error)
+    throw error
+  }
+}
+
+// Generic function to insert data into any specified table
+export async function insertIntoTable(tableName: string, data: Record<string, any>) {
+  try {
+    if (!isSupabaseAvailable()) {
+      console.warn('Supabase is not available - skipping database insertion')
+      return { success: false, reason: 'Supabase not configured' }
+    }
+
+    // Don't automatically add created_at - let the caller decide
+    const { data: result, error } = await supabase!.from(tableName).insert([data]).select()
+
+    if (error) {
+      console.error(`Error inserting into table ${tableName}:`, error)
+      throw error
+    }
+
+    console.log(`Data saved to Supabase table ${tableName}:`, result)
+    return { success: true, data: result }
+  } catch (error) {
+    console.error(`Failed to save data to Supabase table ${tableName}:`, error)
     throw error
   }
 }
@@ -131,6 +177,53 @@ export async function insertAcheterFormSubmission(row: AcheterFormRow) {
     return { success: true, data: result }
   } catch (error) {
     console.error('Failed to save acheter form to Supabase:', error)
+    throw error
+  }
+}
+
+// ==========================
+// Equipe Lambert: Vendre Form
+// ==========================
+
+export interface VendreFormRow {
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+}
+
+export async function insertVendreFormSubmission(row: VendreFormRow) {
+  try {
+    if (!isSupabaseAvailable()) {
+      console.warn('Supabase is not available - skipping database insertion')
+      return { success: false, reason: 'Supabase not configured' }
+    }
+
+    const payload = {
+      firstName: row.firstName ?? null,
+      lastName: row.lastName ?? null,
+      phone: row.phone ?? null,
+    }
+
+    // Debug: print the supabase insert payload
+    console.log(
+      '[Supabase] INSERT equipe_lambert_landing_vendre_form payload:',
+      JSON.parse(JSON.stringify(payload)),
+    )
+
+    const { data: result, error } = await supabase!
+      .from('equipe_lambert_landing_vendre_form')
+      .insert([payload])
+      .select()
+
+    if (error) {
+      console.error('Error inserting vendre form submission:', error)
+      throw error
+    }
+
+    console.log('[Supabase] INSERT result:', result)
+    return { success: true, data: result }
+  } catch (error) {
+    console.error('Failed to save vendre form to Supabase:', error)
     throw error
   }
 }

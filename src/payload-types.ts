@@ -533,6 +533,28 @@ export interface Page {
            */
           successMessage?: string | null;
           disclaimer: string;
+          /**
+           * Admin-only field to track form origin/source
+           */
+          origin?: string | null;
+          /**
+           * Choose where to send form submissions - either to Supabase database or n8n webhook
+           */
+          destination: 'supabase' | 'n8n';
+          /**
+           * Select which Supabase table to save form submissions to (only used when destination is Supabase)
+           */
+          destinationTable?:
+            | (
+                | 'david_lambert_form_submissions'
+                | 'equipe_lambert_landing_acheter_form'
+                | 'equipe_lambert_landing_vendre_form'
+              )
+            | null;
+          /**
+           * URL for the n8n webhook (required when destination is n8n)
+           */
+          n8nWebhookUrl?: string | null;
         };
         id?: string | null;
         blockName?: string | null;
@@ -2493,6 +2515,10 @@ export interface PagesSelect<T extends boolean = true> {
                     checkboxText?: T;
                     successMessage?: T;
                     disclaimer?: T;
+                    origin?: T;
+                    destination?: T;
+                    destinationTable?: T;
+                    n8nWebhookUrl?: T;
                   };
               id?: T;
               blockName?: T;

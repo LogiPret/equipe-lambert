@@ -42,6 +42,10 @@ interface ContactBlockProps {
     checkboxText?: string
     successMessage?: string
     disclaimer: string
+    origin?: string
+    destination?: 'supabase' | 'n8n'
+    destinationTable?: string
+    n8nWebhookUrl?: string
   }
 }
 
@@ -108,10 +112,22 @@ const iconMap = {
   location: MapPin,
 }
 
+// Phone formatter matching the popup modal behavior: (XXX) XXX-XXXX as you type
+const formatPhoneNumber = (value: string): string => {
+  const cleaned = value.replace(/\D/g, '')
+  const limited = cleaned.substring(0, 10)
+
+  if (limited.length === 0) return ''
+  if (limited.length <= 3) return `(${limited}`
+  if (limited.length <= 6) return `(${limited.slice(0, 3)}) ${limited.slice(3)}`
+  return `(${limited.slice(0, 3)}) ${limited.slice(3, 6)}-${limited.slice(6)}`
+}
+
 function renderFormField(
   field: FormField,
   index: number,
   onFieldChange: (name: string, value: string) => void,
+  formData: Record<string, string>,
 ) {
   const baseClassName =
     'border border-gray-300 focus:border-[#0f3046] focus:ring-1 focus:ring-[#0f3046] p-4 text-lg bg-white text-gray-900 rounded-md'
@@ -124,7 +140,6 @@ function renderFormField(
   switch (field.fieldType) {
     case 'text':
     case 'email':
-    case 'tel':
     case 'number':
       return (
         <div key={fieldId} className={widthClassName}>
@@ -135,7 +150,28 @@ function renderFormField(
             placeholder={placeholder}
             required={isRequired}
             className={baseClassName}
+            value={formData[field.name] || ''}
             onChange={(e) => onFieldChange(field.name, e.target.value)}
+          />
+        </div>
+      )
+
+    case 'tel':
+      return (
+        <div key={fieldId} className={widthClassName}>
+          <Input
+            id={fieldId}
+            name={field.name}
+            type="tel"
+            placeholder={placeholder || '(000) 000-0000'}
+            required={isRequired}
+            className={baseClassName}
+            value={formData[field.name] || ''}
+            maxLength={14}
+            onChange={(e) => {
+              const formatted = formatPhoneNumber(e.target.value)
+              onFieldChange(field.name, formatted)
+            }}
           />
         </div>
       )
@@ -150,6 +186,7 @@ function renderFormField(
             required={isRequired}
             rows={field.rows || 4}
             className={baseClassName}
+            value={formData[field.name] || ''}
             onChange={(e) => onFieldChange(field.name, e.target.value)}
           />
         </div>
@@ -164,6 +201,7 @@ function renderFormField(
             required={isRequired}
             className={`${baseClassName} w-full text-gray-900 appearance-none`}
             style={{ minWidth: '100%' }}
+            value={formData[field.name] || ''}
             onChange={(e) => onFieldChange(field.name, e.target.value)}
           >
             <option value="" className="text-gray-500">
@@ -221,7 +259,7 @@ export default function ContactBlock({ title, subtitle, contactInfo, form }: Con
     try {
       // Prepare submission data in the same format as other forms
       const submissionData = formFields.map((field) => ({
-        field: field.name,
+        name: field.name, // Use 'name' instead of 'field' to match API expectations
         value: formData[field.name] || '',
       }))
 
@@ -230,7 +268,13 @@ export default function ContactBlock({ title, subtitle, contactInfo, form }: Con
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ submissionData }),
+        body: JSON.stringify({
+          submissionData,
+          origin: form.origin,
+          destinationTable: form.destinationTable,
+          destination: form.destination,
+          n8nWebhookUrl: form.n8nWebhookUrl,
+        }),
       })
 
       if (!response.ok) {
@@ -315,7 +359,7 @@ export default function ContactBlock({ title, subtitle, contactInfo, form }: Con
                   <form className="space-y-6" onSubmit={handleSubmit}>
                     <div className="grid md:grid-cols-2 gap-4">
                       {formFields.map((field, index) =>
-                        renderFormField(field, index, handleFieldChange),
+                        renderFormField(field, index, handleFieldChange, formData),
                       )}
                     </div>
 

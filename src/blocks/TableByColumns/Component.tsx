@@ -30,7 +30,7 @@ export const TableByColumnsBlock: React.FC<TableByColumnsBlockProps> = (props) =
               {columns.map((column, index) => (
                 <th
                   key={index}
-                  className="border border-brandingtheme-foreground px-4 py-2 text-left font-semibold text-brandingtheme"
+                  className="border border-brandingtheme-foreground px-4 py-2 text-left font-semibold text-brandingtheme-foreground"
                 >
                   {column.name}
                 </th>
