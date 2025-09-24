@@ -17,27 +17,29 @@ export async function Footer() {
   return (
     <footer className="mt-auto border-t border-border bg-branding100 pt-8 text-branding0">
       <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-4 md:gap-8">
           {/* Column 1: Logo and Description */}
           <div className="space-y-4">
             <Link className="flex items-center" href="/">
               <Logo />
             </Link>
             {description && (
-              <p className="text-branding25 text-sm leading-relaxed pt-16">{description}</p>
+              <p className="text-branding25 text-xs md:text-sm leading-relaxed pt-8 md:pt-16">
+                {description}
+              </p>
             )}
           </div>
 
           {/* Column 2: Contact Information */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-branding0">Contact</h3>
+            <h3 className="text-base md:text-lg font-semibold text-branding0">Contact</h3>
             <div className="flex flex-col space-y-3">
               {contactInfo.phone && (
-                <div className="flex items-start gap-3">
-                  <Phone className="h-4 w-4 text-accent3static mt-0.5 flex-shrink-0" />
+                <div className="flex items-start gap-2 md:gap-3">
+                  <Phone className="h-3 w-3 md:h-4 md:w-4 text-accent3static mt-0.5 flex-shrink-0" />
                   <a
                     href={`tel:${contactInfo.phone}`}
-                    className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
+                    className="text-gray-300 hover:text-white transition-colors duration-200 text-xs md:text-sm"
                   >
                     {contactInfo.phone}
                   </a>
@@ -45,11 +47,11 @@ export async function Footer() {
               )}
 
               {contactInfo.email && (
-                <div className="flex items-start gap-3">
-                  <Mail className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                <div className="flex items-start gap-2 md:gap-3">
+                  <Mail className="h-3 w-3 md:h-4 md:w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                   <a
                     href={`mailto:${contactInfo.email}`}
-                    className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
+                    className="text-gray-300 hover:text-white transition-colors duration-200 text-xs md:text-sm"
                   >
                     {contactInfo.email}
                   </a>
@@ -57,9 +59,9 @@ export async function Footer() {
               )}
 
               {contactInfo.address && (
-                <div className="flex items-start gap-3">
-                  <MapPin className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                  <address className="text-gray-300 text-sm not-italic leading-relaxed">
+                <div className="flex items-start gap-2 md:gap-3">
+                  <MapPin className="h-3 w-3 md:h-4 md:w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                  <address className="text-gray-300 text-xs md:text-sm not-italic leading-relaxed">
                     {contactInfo.address.split('\n').map((line, index, array) => (
                       <React.Fragment key={index}>
                         {line}
