@@ -36,69 +36,73 @@ const BlogInlineCTA: React.FC<BlogInlineCTAProps> = ({
       <div className="flex flex-col gap-4 md:gap-6 max-w-[64rem]">
         <h3 className="text-4xl md:text-6xl font-bold text-brandingtheme">{headline}</h3>
         {description ? (
-          <p className="text-brandingtheme leading-relaxed text-2xl">{description}</p>
+          <p className="text-brandingtheme leading-relaxed sm:text-2xl text-lg">{description}</p>
         ) : null}
         <div className="pt-2">
           {actionType === 'popup' ? (
-            <ClientButton
-              text={buttonText || link.label || 'Learn more'}
-              appearance={(link.appearance as any) || 'default'}
-              size="xl"
-              popup={(() => {
-                if (!popupRef) {
-                  return {
-                    popupType: 'form' as const,
-                    title: 'Contact',
-                    firstNameLabel: 'Prénom',
-                    lastNameLabel: 'Nom',
-                    phoneLabel: 'Téléphone',
-                    buttonText: 'Envoyer',
-                    pdfName: null,
+            <div className="[&>button]:whitespace-normal sm:[&>button]:whitespace-nowrap [&>button]:max-w-full [&>button]:break-words">
+              <ClientButton
+                text={buttonText || link.label || 'Learn more'}
+                appearance={(link.appearance as any) || 'default'}
+                size="xl"
+                popup={(() => {
+                  if (!popupRef) {
+                    return {
+                      popupType: 'form' as const,
+                      title: 'Contact',
+                      firstNameLabel: 'Prénom',
+                      lastNameLabel: 'Nom',
+                      phoneLabel: 'Téléphone',
+                      buttonText: 'Envoyer',
+                      pdfName: null,
+                    }
                   }
-                }
 
-                if (popupRef.popupType === 'blocks') {
-                  return {
-                    popupType: 'blocks' as const,
-                    title: popupRef.title ?? 'Contact',
-                    content: popupRef.content ?? [],
+                  if (popupRef.popupType === 'blocks') {
+                    return {
+                      popupType: 'blocks' as const,
+                      title: popupRef.title ?? 'Contact',
+                      content: popupRef.content ?? [],
+                    }
+                  } else {
+                    return {
+                      popupType: 'form' as const,
+                      title: popupRef.title ?? 'Contact',
+                      description: popupRef.description ?? null,
+                      firstNameLabel: popupRef.firstNameLabel ?? 'Prénom',
+                      lastNameLabel: popupRef.lastNameLabel ?? 'Nom',
+                      phoneLabel: popupRef.phoneLabel ?? 'Téléphone',
+                      emailLabel: popupRef.emailLabel ?? 'Courriel',
+                      includeFirstName: popupRef.includeFirstName ?? true,
+                      includeLastName: popupRef.includeLastName ?? true,
+                      includePhone: popupRef.includePhone ?? true,
+                      includeEmail: popupRef.includeEmail ?? true,
+                      firstNameRequired: popupRef.firstNameRequired ?? false,
+                      lastNameRequired: popupRef.lastNameRequired ?? false,
+                      phoneRequired: popupRef.phoneRequired ?? false,
+                      emailRequired: popupRef.emailRequired ?? false,
+                      buttonText: popupRef.buttonText ?? 'Envoyer',
+                      pdfName: popupRef.pdfName ?? null,
+                      successMessage: popupRef.successMessage ?? undefined,
+                      consentLabel: (popupRef as any).consentLabel ?? undefined,
+                    }
                   }
-                } else {
-                  return {
-                    popupType: 'form' as const,
-                    title: popupRef.title ?? 'Contact',
-                    description: popupRef.description ?? null,
-                    firstNameLabel: popupRef.firstNameLabel ?? 'Prénom',
-                    lastNameLabel: popupRef.lastNameLabel ?? 'Nom',
-                    phoneLabel: popupRef.phoneLabel ?? 'Téléphone',
-                    emailLabel: popupRef.emailLabel ?? 'Courriel',
-                    includeFirstName: popupRef.includeFirstName ?? true,
-                    includeLastName: popupRef.includeLastName ?? true,
-                    includePhone: popupRef.includePhone ?? true,
-                    includeEmail: popupRef.includeEmail ?? true,
-                    firstNameRequired: popupRef.firstNameRequired ?? false,
-                    lastNameRequired: popupRef.lastNameRequired ?? false,
-                    phoneRequired: popupRef.phoneRequired ?? false,
-                    emailRequired: popupRef.emailRequired ?? false,
-                    buttonText: popupRef.buttonText ?? 'Envoyer',
-                    pdfName: popupRef.pdfName ?? null,
-                    successMessage: popupRef.successMessage ?? undefined,
-                    consentLabel: (popupRef as any).consentLabel ?? undefined,
-                  }
-                }
-              })()}
-            />
+                })()}
+              />
+            </div>
           ) : (
-            <CMSLink
-              appearance="default"
-              label={link.label || 'Learn more'}
-              newTab={link.newTab}
-              reference={link.reference as any}
-              type={link.type || 'reference'}
-              url={link.url}
-              archive={link.archive || null}
-              size="xl"
-            />
+            <div className="[&>a]:whitespace-normal sm:[&>a]:whitespace-nowrap [&>a]:max-w-full [&>a]:break-words">
+              <CMSLink
+                appearance="default"
+                label={link.label || 'Learn more'}
+                newTab={link.newTab}
+                reference={link.reference as any}
+                type={link.type || 'reference'}
+                url={link.url}
+                archive={link.archive || null}
+                size="xl"
+              />
+            </div>
           )}
         </div>
       </div>

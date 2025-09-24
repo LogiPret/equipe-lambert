@@ -6,10 +6,10 @@ import type { Header as HeaderType } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
 
-export const HeaderNav: React.FC<{ data: HeaderType; isHomePage?: boolean }> = ({
-  data,
-  isHomePage = false,
-}) => {
+export const HeaderNav: React.FC<{
+  data: HeaderType
+  variant?: 'homepage' | 'posts' | 'global'
+}> = ({ data, variant = 'global' }) => {
   const navItems = data?.navItems || []
 
   const scrollToContact = () => {
@@ -19,6 +19,8 @@ export const HeaderNav: React.FC<{ data: HeaderType; isHomePage?: boolean }> = (
     }
   }
 
+  const isHomepage = variant === 'homepage'
+
   return (
     <nav className="flex gap-1 sm:gap-3 items-center flex-shrink-0">
       {navItems.map(({ link }, i) => {
@@ -27,14 +29,14 @@ export const HeaderNav: React.FC<{ data: HeaderType; isHomePage?: boolean }> = (
             key={i}
             {...link}
             appearance="link"
-            className={`hidden sm:block ${isHomePage ? 'text-branding0 sm:text-branding100 drop-shadow-lg' : ''} text-sm sm:text-base whitespace-nowrap`}
+            className={`hidden sm:block ${isHomepage ? 'text-branding0 sm:text-branding100 drop-shadow-lg' : ''} text-sm sm:text-base whitespace-nowrap`}
           />
         )
       })}
       <button
         onClick={scrollToContact}
         className={`px-2 lg:px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base whitespace-nowrap flex-shrink-0 ${
-          isHomePage
+          isHomepage
             ? 'sm:bg-branding100 bg-brandingtheme sm:text-branding0 text-brandingtheme-foreground hover:bg-branding75 drop-shadow-lg'
             : 'bg-primary text-brandingtheme-foreground hover:bg-primary/90'
         }`}
