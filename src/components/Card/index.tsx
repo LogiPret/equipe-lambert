@@ -18,6 +18,7 @@ export const Card: React.FC<{
   showCategories?: boolean
   title?: string
   priority?: boolean
+  'data-related-post'?: string
 }> = (props) => {
   const { card, link } = useClickableCard({})
   const {
@@ -27,6 +28,7 @@ export const Card: React.FC<{
     showCategories,
     title: titleFromProps,
     priority = false,
+    'data-related-post': dataRelatedPost,
   } = props
 
   const { slug, categories, meta, title } = doc || {}
@@ -44,6 +46,7 @@ export const Card: React.FC<{
         className,
       )}
       ref={card.ref}
+      data-related-post={dataRelatedPost}
     >
       <div className="relative w-full ">
         {!metaImage && <div className="">No image</div>}
