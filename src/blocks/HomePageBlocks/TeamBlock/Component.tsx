@@ -36,16 +36,6 @@ const iconMap = {
 }
 
 export default function TeamBlock({ title, subtitle, members, advantages }: TeamBlockProps) {
-  // Dynamic grid classes based on number of members
-  const getGridClass = (memberCount: number) => {
-    if (memberCount === 1) return 'grid grid-cols-1 max-w-sm mx-auto'
-    if (memberCount === 2) return 'grid grid-cols-1 md:grid-cols-2 max-w-2xl mx-auto'
-    if (memberCount === 3) return 'grid grid-cols-1 md:grid-cols-3 max-w-4xl mx-auto'
-    if (memberCount === 4) return 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
-    if (memberCount <= 6) return 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-    return 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-  }
-
   return (
     <section id="equipe" className="py-24 bg-secondarystatic">
       <div className="container mx-auto px-4">
@@ -55,7 +45,7 @@ export default function TeamBlock({ title, subtitle, members, advantages }: Team
           <p className="text-xl text-branding75 max-w-3xl mx-auto leading-relaxed">{subtitle}</p>
         </div>
 
-        <div className={`${getGridClass(members.length)} gap-8 mb-16 justify-items-center`}>
+        <div className="flex flex-wrap justify-center gap-8 mb-16 max-w-6xl mx-auto">
           {members.map((member, index) => {
             const imageUrl =
               typeof member.image === 'object' ? member.image.url : '/placeholder.svg'
@@ -65,7 +55,7 @@ export default function TeamBlock({ title, subtitle, members, advantages }: Team
             return (
               <Card
                 key={index}
-                className="border border-borderprimarystatic hover:shadow-xl transition-all duration-500 bg-gradient-to-br from-branding0 to-secondarystatic hover:border-bordersecondarystatic w-full max-w-sm"
+                className="border border-borderprimarystatic hover:shadow-xl transition-all duration-500 bg-gradient-to-br from-branding0 to-secondarystatic hover:border-bordersecondarystatic w-80 flex-shrink-0"
               >
                 <CardContent className="p-4 text-center">
                   <div className="relative mb-4 w-full aspect-square mx-auto">
@@ -100,13 +90,13 @@ export default function TeamBlock({ title, subtitle, members, advantages }: Team
             <p className="text-lg text-branding75 max-w-2xl mx-auto">{advantages.subtitle}</p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-8">
+          <div className="flex flex-wrap justify-center gap-8 max-w-4xl mx-auto">
             {advantages.items.map((advantage, index) => {
               const IconComponent = iconMap[advantage.icon]
               return (
                 <div
                   key={index}
-                  className="text-center p-6 bg-branding0 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                  className="text-center p-6 bg-branding0 rounded-xl shadow-sm hover:shadow-md transition-shadow w-80 flex-shrink-0"
                 >
                   <div className="bg-branding100 p-4 rounded-full inline-block mb-4">
                     <IconComponent className="h-8 w-8 text-branding0" />
