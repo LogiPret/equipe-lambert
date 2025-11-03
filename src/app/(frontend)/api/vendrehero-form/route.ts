@@ -39,16 +39,16 @@ export async function POST(request: NextRequest) {
       'Délais de vente': formData.vendre_delais || 'Non spécifié',
     }
 
-    // Send email asynchronously
-    sendContactFormEmail(emailData, 'Formulaire Vendre')
-      .then(() => {
-        console.log('[Vendre Form API] Email sent successfully')
-      })
-      .catch((error) => {
-        console.error('[Vendre Form API] Email sending failed:', error)
-      })
+    // Send email and wait for completion (required for Vercel serverless)
+    try {
+      const emailResult = await sendContactFormEmail(emailData, 'Formulaire Vendre')
+      console.log('[Vendre Form API] Email sent successfully:', emailResult.messageId)
+    } catch (error) {
+      console.error('[Vendre Form API] Email sending failed:', error)
+      // Continue anyway - don't fail the user's request
+    }
 
-    // Return success immediately
+    // Return success
     return NextResponse.json(
       { success: true, message: 'Form submitted successfully' },
       { status: 200 },

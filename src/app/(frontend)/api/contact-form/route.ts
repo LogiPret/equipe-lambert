@@ -161,22 +161,24 @@ export async function POST(request: NextRequest) {
       // Default: Send via email only
       console.log('[Contact Form API] Sending via email...')
 
-      // Send email asynchronously (don't wait for it to complete)
-      sendContactFormEmail(dynamicPayload, origin)
-        .then((emailResult) => {
-          console.log('[Contact Form API] Email sent successfully:', emailResult.messageId)
-        })
-        .catch((emailError) => {
-          console.error('[Contact Form API] Email sending failed:', emailError)
-        })
-
-      // Return success immediately without waiting for email
-      result = {
-        success: true,
-        method: 'email',
-        status: 'queued', // Indicates email is being sent in background
+      // Send email and wait for it to complete (required for Vercel serverless)
+      try {
+        const emailResult = await sendContactFormEmail(dynamicPayload, origin)
+        console.log('[Contact Form API] Email sent successfully:', emailResult.messageId)
+        result = {
+          success: true,
+          method: 'email',
+          status: 'sent',
+        }
+      } catch (emailError) {
+        console.error('[Contact Form API] Email sending failed:', emailError)
+        result = {
+          success: false,
+          method: 'email',
+          status: 'failed',
+          error: emailError instanceof Error ? emailError.message : 'Unknown error',
+        }
       }
-      console.log('[Contact Form API] Email queued for sending')
     }
 
     console.log('[Contact Form API] Form submission completed successfully')

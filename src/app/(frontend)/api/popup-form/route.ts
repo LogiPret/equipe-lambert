@@ -46,19 +46,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Phone number is required' }, { status: 400 })
     }
 
-    // Send SMS to the user who filled the form (with PDF link)
-    console.log('[Popup Form API] Sending SMS to user:', phone)
-    sendPopupFormSMS(phone)
-      .then((smsResult: any) => {
-        console.log('[Popup Form API] SMS sent to user successfully:', smsResult.sid)
-      })
-      .catch((smsError: any) => {
-        console.error('[Popup Form API] SMS sending failed:', smsError)
-      })
-
-    // Send email notification to site owner (new lead notification)
-    console.log('[Popup Form API] Sending lead notification email to site owner')
-
     // Build lead data with all available information
     const leadData: Record<string, any> = {
       'Type de lead': 'Publicité Facebook',
@@ -74,13 +61,27 @@ export async function POST(request: NextRequest) {
 
     console.log('[Popup Form API] Lead data being sent:', leadData)
 
-    sendContactFormEmail(leadData, 'Publicité Facebook')
-      .then((emailResult) => {
-        console.log('[Popup Form API] Lead notification email sent:', emailResult.messageId)
-      })
-      .catch((emailError) => {
-        console.error('[Popup Form API] Lead notification email failed:', emailError)
-      })
+    // Send SMS and Email in parallel using Promise.allSettled to ensure both complete
+    console.log('[Popup Form API] Sending SMS to user:', phone)
+    console.log('[Popup Form API] Sending lead notification email to site owner')
+
+    const [smsResult, emailResult] = await Promise.allSettled([
+      sendPopupFormSMS(phone),
+      sendContactFormEmail(leadData, 'Publicité Facebook'),
+    ])
+
+    // Log results
+    if (smsResult.status === 'fulfilled') {
+      console.log('[Popup Form API] SMS sent to user successfully:', smsResult.value.sid)
+    } else {
+      console.error('[Popup Form API] SMS sending failed:', smsResult.reason)
+    }
+
+    if (emailResult.status === 'fulfilled') {
+      console.log('[Popup Form API] Lead notification email sent:', emailResult.value.messageId)
+    } else {
+      console.error('[Popup Form API] Lead notification email failed:', emailResult.reason)
+    }
 
     // Return success immediately
     console.log('[Popup Form API] Popup form processed successfully')
