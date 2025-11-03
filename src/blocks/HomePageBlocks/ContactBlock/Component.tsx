@@ -43,9 +43,6 @@ interface ContactBlockProps {
     successMessage?: string
     disclaimer: string
     origin?: string
-    destination?: 'supabase' | 'n8n'
-    destinationTable?: string
-    n8nWebhookUrl?: string
   }
 }
 
@@ -271,9 +268,6 @@ export default function ContactBlock({ title, subtitle, contactInfo, form }: Con
         body: JSON.stringify({
           submissionData,
           origin: form.origin,
-          destinationTable: form.destinationTable,
-          destination: form.destination,
-          n8nWebhookUrl: form.n8nWebhookUrl,
         }),
       })
 

@@ -48,7 +48,7 @@ const validatePhoneNumber = (phone: string): boolean => {
   return cleaned.length === 10
 }
 
-// Helpers to map form values to strings/numbers acceptable by Supabase
+// Helpers to map form values to strings/numbers
 const toStringOrNull = (v: unknown): string | null => {
   if (v === undefined || v === null) return null
   if (Array.isArray(v)) return v.length ? v.join(', ') : null
@@ -739,7 +739,7 @@ export const QuizFormBlock = (props: QuizFormBlockProps) => {
     setIsSubmitting(true)
 
     try {
-      // Map formData to Supabase table columns
+      // Map form data to webhook format
       const fd = formData as Record<string, any>
       const directRow = {
         firstname: toStringOrNull(

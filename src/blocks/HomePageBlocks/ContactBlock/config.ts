@@ -253,63 +253,6 @@ export const ContactBlock: Block = {
             readOnly: false,
           },
         },
-        {
-          name: 'destination',
-          type: 'select',
-          label: 'Form Destination',
-          required: true,
-          defaultValue: 'supabase',
-          admin: {
-            description:
-              'Choose where to send form submissions - either to Supabase database or n8n webhook',
-          },
-          options: [
-            {
-              label: 'Supabase Database',
-              value: 'supabase',
-            },
-            {
-              label: 'n8n Webhook',
-              value: 'n8n',
-            },
-          ],
-        },
-        {
-          name: 'destinationTable',
-          type: 'select',
-          label: 'Destination Table',
-          required: false,
-          defaultValue: 'david_lambert_form_submissions',
-          admin: {
-            description:
-              'Select which Supabase table to save form submissions to (only used when destination is Supabase)',
-            condition: (data, siblingData) => siblingData.destination === 'supabase',
-          },
-          options: [
-            {
-              label: 'Main Form Submissions (Contact forms)',
-              value: 'david_lambert_form_submissions',
-            },
-            {
-              label: 'Acheter Form Submissions',
-              value: 'equipe_lambert_landing_acheter_form',
-            },
-            {
-              label: 'Vendre Form Submissions',
-              value: 'equipe_lambert_landing_vendre_form',
-            },
-          ],
-        },
-        {
-          name: 'n8nWebhookUrl',
-          type: 'text',
-          label: 'n8n Webhook URL',
-          required: false,
-          admin: {
-            description: 'URL for the n8n webhook (required when destination is n8n)',
-            condition: (data, siblingData) => siblingData.destination === 'n8n',
-          },
-        },
       ],
     },
   ],

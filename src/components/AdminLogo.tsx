@@ -68,7 +68,7 @@ const AdminLogo: React.FC = () => {
         }}
       >
         <img
-          src="/logipret_logo_transparent.png"
+          src="/equipelambert_logo.png"
           alt="Équipe Lambert"
           style={{
             height: isLogin ? '160px' : '28px', // Much larger base size

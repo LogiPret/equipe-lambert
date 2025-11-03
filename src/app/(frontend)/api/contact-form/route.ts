@@ -1,13 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import {
-  insertContactSubmission,
-  insertIntoTable,
-  insertAcheterFormSubmission,
-  insertVendreFormSubmission,
-  type ContactFormData,
-  type AcheterFormRow,
-  type VendreFormRow,
-} from '@/lib/supabase'
+import { sendContactFormEmail } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
   console.log('[Contact Form API] Starting POST request processing')
@@ -70,11 +62,18 @@ export async function POST(request: NextRequest) {
     // Build dynamic payload using only the form fields that were actually submitted
     const dynamicPayload: Record<string, any> = {}
 
-    // Add form fields as they are (preserving original field names)
+    // Map field names to match database schema
+    const fieldNameMappings: Record<string, string> = {
+      projectType: 'type', // Map projectType to type for compatibility
+    }
+
+    // Add form fields as they are (preserving original field names or using mappings)
     Object.keys(formData).forEach((key) => {
       const value = formData[key]
       if (value && value.trim() !== '') {
-        dynamicPayload[key] = value
+        // Use mapped field name if available, otherwise use original
+        const mappedKey = fieldNameMappings[key] || key
+        dynamicPayload[mappedKey] = value
       }
     })
 
@@ -89,14 +88,14 @@ export async function POST(request: NextRequest) {
       dynamicPayload.created_at = new Date().toISOString()
     }
 
-    console.log('[Contact Form API] Dynamic payload for', targetTable, ':', dynamicPayload)
+    console.log('[Contact Form API] Dynamic payload for email:', dynamicPayload)
 
     let result = null
     let n8nResult = null
 
-    // Either send to Supabase OR n8n, not both
+    // Send to n8n webhook if configured
     if (destination === 'n8n' && n8nWebhookUrl) {
-      console.log('[Contact Form API] Sending to n8n webhook instead of Supabase...')
+      console.log('[Contact Form API] Sending to n8n webhook...')
 
       // Prepare dynamic payload for n8n using actual form data
       const n8nPayload: Record<string, any> = {}
@@ -158,49 +157,26 @@ export async function POST(request: NextRequest) {
           { status: 500 },
         )
       }
-    } else if (destination === 'supabase' && destinationTable) {
-      console.log('[Contact Form API] Sending to Supabase database...')
-
-      // Use generic insertion for all tables - let Supabase handle field mapping
-      try {
-        result = await insertIntoTable(targetTable, dynamicPayload)
-      } catch (error) {
-        console.error('[Contact Form API] Database insertion failed:', error)
-        // Return more specific error information
-        return NextResponse.json(
-          {
-            error: 'Database insertion failed',
-            details: error instanceof Error ? error.message : 'Unknown error',
-          },
-          { status: 500 },
-        )
-      }
-
-      console.log('[Contact Form API] Database insertion result:', result)
-
-      // Check if Supabase submission was successful
-      if (!result.success) {
-        console.error('[Contact Form API] Supabase submission failed:', result.reason)
-        return NextResponse.json(
-          { error: 'Supabase submission failed', details: result.reason },
-          { status: 500 },
-        )
-      } else {
-        console.log('[Contact Form API] Supabase submission successful')
-      }
     } else {
-      console.error('[Contact Form API] No valid destination configured:', {
-        destination,
-        destinationTable,
-        n8nWebhookUrl: n8nWebhookUrl ? '***PROVIDED***' : 'undefined',
-      })
-      return NextResponse.json(
-        {
-          error:
-            'No valid destination configured. Please set either Supabase table or n8n webhook.',
-        },
-        { status: 400 },
-      )
+      // Default: Send via email only
+      console.log('[Contact Form API] Sending via email...')
+
+      // Send email asynchronously (don't wait for it to complete)
+      sendContactFormEmail(dynamicPayload, origin)
+        .then((emailResult) => {
+          console.log('[Contact Form API] Email sent successfully:', emailResult.messageId)
+        })
+        .catch((emailError) => {
+          console.error('[Contact Form API] Email sending failed:', emailError)
+        })
+
+      // Return success immediately without waiting for email
+      result = {
+        success: true,
+        method: 'email',
+        status: 'queued', // Indicates email is being sent in background
+      }
+      console.log('[Contact Form API] Email queued for sending')
     }
 
     console.log('[Contact Form API] Form submission completed successfully')

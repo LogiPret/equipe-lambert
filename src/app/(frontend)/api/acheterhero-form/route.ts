@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { insertContactSubmission, type ContactFormData } from '@/lib/supabase'
+import { sendContactFormEmail } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
   try {
@@ -28,27 +28,31 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Prepare data for Supabase
-    const supabaseData: ContactFormData = {
+    // Prepare email data
+    const emailData = {
       prenom: formData.prenom,
       nom: formData.nom,
       email: formData.email,
       phone: formData.phone,
       type: 'ACHETER',
-      acheter_propertyType: formData.acheter_propertyType || undefined,
-      acheter_city: formData.acheter_city || undefined,
+      'Type de propriété': formData.acheter_propertyType || 'Non spécifié',
+      'Ville recherchée': formData.acheter_city || 'Non spécifié',
     }
 
-    // Insert into Supabase
-    const result = await insertContactSubmission(supabaseData)
+    // Send email asynchronously
+    sendContactFormEmail(emailData, 'Formulaire Acheter')
+      .then(() => {
+        console.log('[Acheter Form API] Email sent successfully')
+      })
+      .catch((error) => {
+        console.error('[Acheter Form API] Email sending failed:', error)
+      })
 
-    // Check if Supabase submission was successful
-    if (!result.success) {
-      console.warn(`Supabase submission failed: ${result.reason}`)
-      // Still return success since form was processed, just log the issue
-    }
-
-    return NextResponse.json({ success: true, data: result }, { status: 200 })
+    // Return success immediately
+    return NextResponse.json(
+      { success: true, message: 'Form submitted successfully' },
+      { status: 200 },
+    )
   } catch (error) {
     console.error('AcheterHero form submission error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

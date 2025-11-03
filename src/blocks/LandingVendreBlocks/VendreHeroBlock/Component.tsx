@@ -147,7 +147,7 @@ export default function VendreHeroBlock({
         throw new Error('Veuillez remplir tous les champs obligatoires')
       }
 
-      // Send to Supabase via our custom API endpoint
+      // Send form data to API endpoint
       const payloadData = {
         submissionData: [
           { field: 'vendre_address', value: formData.vendre_address },

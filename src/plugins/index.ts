@@ -112,66 +112,11 @@ export const plugins: Plugin[] = [
                 doc.form === 'vendreHeroForm' ||
                 doc.form === 'acheterHeroForm' // Also check by form ID
               ) {
-                try {
-                  const { insertContactSubmission } = await import('../lib/supabase')
-
-                  // Extract form data from submission
-                  const formData: Record<string, unknown> = {}
-                  if (doc.submissionData && Array.isArray(doc.submissionData)) {
-                    doc.submissionData.forEach(
-                      (field: { field?: string; name?: string; value: unknown }) => {
-                        const fieldName = field.field || field.name
-                        const fieldValue = field.value
-
-                        if (fieldName && fieldValue !== undefined) {
-                          formData[fieldName] = fieldValue
-                        }
-                      },
-                    )
-                  }
-
-                  // Determine type based on form title or form ID
-                  let type = 'CONTACT'
-                  if (formTitle === 'Formulaire Vendre' || doc.form === 'vendreHeroForm') {
-                    type = 'VENDRE'
-                  } else if (formTitle === 'Formulaire Acheter' || doc.form === 'acheterHeroForm') {
-                    type = 'ACHETER'
-                  }
-
-                  // Map the form data to Supabase format
-                  const supabaseData = {
-                    prenom: String(formData.prenom || ''),
-                    nom: String(formData.nom || ''),
-                    email: String(formData.email || formData.Email || ''), // Handle both cases
-                    phone: String(formData.phone || ''),
-                    type: type,
-                    vendre_address: formData.vendre_address
-                      ? String(formData.vendre_address)
-                      : undefined, // Include property address for selling
-                    vendre_delais: formData.vendre_delais
-                      ? String(formData.vendre_delais)
-                      : undefined,
-                    acheter_propertyType: formData.acheter_propertyType
-                      ? String(formData.acheter_propertyType)
-                      : undefined,
-                    acheter_city: formData.acheter_city ? String(formData.acheter_city) : undefined,
-                  }
-
-                  // Only send to Supabase if we have the required fields
-                  if (supabaseData.prenom && supabaseData.nom && supabaseData.email) {
-                    const result = await insertContactSubmission(supabaseData)
-                    if (result.success) {
-                      req.payload.logger.info(
-                        `${type} form submission sent to Supabase successfully`,
-                      )
-                    } else {
-                      req.payload.logger.warn(`Supabase submission skipped: ${result.reason}`)
-                    }
-                  }
-                } catch (error: unknown) {
-                  req.payload.logger.error('Failed to send form submission to Supabase:', error)
-                  // Don't throw error to avoid breaking the main form submission
-                }
+                // Forms now send notifications via email/SMS through their respective API endpoints
+                // No need to process here
+                req.payload.logger.info(
+                  `${formTitle} submission processed - notifications handled by API endpoint`,
+                )
               }
             }
             return doc
