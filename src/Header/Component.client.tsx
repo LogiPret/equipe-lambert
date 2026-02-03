@@ -36,7 +36,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       <header className="container relative z-20 pt-4">
         <div className="py-8 flex justify-between items-center">
           <Link href="/">
-            <Logo loading="eager" priority="high" className="sm:invert dark:invert-0" />
+            <Logo loading="eager" priority="high" className="sm:invert dark:invert" />
           </Link>
           <HeaderNav data={data} variant="global" />
         </div>
@@ -54,7 +54,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             <Logo
               loading="eager"
               priority="high"
-              className="drop-shadow-lg filter brightness-100 invert dark:invert-0 sm:invert sm:dark:invert"
+              className="drop-shadow-lg filter brightness-100 invert sm:invert-0 sm:dark:invert-0"
             />
           </Link>
           <HeaderNav data={data} variant="homepage" />
