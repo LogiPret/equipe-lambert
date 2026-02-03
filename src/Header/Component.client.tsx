@@ -17,6 +17,8 @@ interface HeaderClientProps {
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const [mounted, setMounted] = useState(false)
   const pathname = usePathname()
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
 
   // Determine header type (only after mounting to avoid hydration mismatch)
   const isHomePage = mounted && pathname === '/'
@@ -36,7 +38,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       <header className="container relative z-20 pt-4">
         <div className="py-8 flex justify-between items-center">
           <Link href="/">
-            <Logo loading="eager" priority="high" className="sm:invert dark:invert" />
+            <Logo loading="eager" priority="high" className="invert-0 dark:invert sm:invert" />
           </Link>
           <HeaderNav data={data} variant="global" />
         </div>
@@ -54,7 +56,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             <Logo
               loading="eager"
               priority="high"
-              className="drop-shadow-lg filter brightness-100 invert sm:invert-0 sm:dark:invert-0"
+              className="drop-shadow-lg filter brightness-100 invert sm:invert-0 dark:invert-0"
             />
           </Link>
           <HeaderNav data={data} variant="homepage" />
@@ -74,7 +76,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         <div className="container relative pt-12 lg:grid lg:grid-cols-[1fr_64rem_1fr]">
           <div className="col-start-1 col-span-1 lg:col-start-2 lg:col-span-1 flex justify-between items-center">
             <Link href="/">
-              <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+              <Logo loading="eager" priority="high" className="invert" />
             </Link>
             <HeaderNav data={data} variant="posts" />
           </div>
@@ -84,11 +86,12 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   }
 
   // Render global header (default)
+  // Logo: mobile light = black, mobile dark = white, desktop = always white
   return (
     <header className="container relative z-20 pt-4">
       <div className="py-8 flex justify-between items-center">
         <Link href="/">
-          <Logo loading="eager" priority="high" className="sm:invert dark:invert-0" />
+          <Logo loading="eager" priority="high" className={isDark ? 'invert' : 'sm:invert'} />
         </Link>
         <HeaderNav data={data} variant="global" />
       </div>

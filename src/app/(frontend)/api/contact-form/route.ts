@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { after } from 'next/server'
 import { sendContactFormEmail } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
@@ -159,29 +160,29 @@ export async function POST(request: NextRequest) {
       }
     } else {
       // Default: Send via email only
-      console.log('[Contact Form API] Sending via email...')
+      console.log('[Contact Form API] Sending via email (using after() for quick response)...')
 
-      // Send email and wait for it to complete (required for Vercel serverless)
-      try {
-        const emailResult = await sendContactFormEmail(dynamicPayload, origin)
-        console.log('[Contact Form API] Email sent successfully:', emailResult.messageId)
-        result = {
-          success: true,
-          method: 'email',
-          status: 'sent',
+      // Use Next.js after() to send email after response is sent
+      // This gives instant UI feedback while email is sent reliably in background
+      // Works with Vercel serverless - the function stays alive until after() completes
+      after(async () => {
+        try {
+          const emailResult = await sendContactFormEmail(dynamicPayload, origin)
+          console.log('[Contact Form API] Email sent successfully:', emailResult.messageId)
+        } catch (emailError) {
+          console.error('[Contact Form API] Email sending failed:', emailError)
+          // Could add retry logic or dead letter queue here if needed
         }
-      } catch (emailError) {
-        console.error('[Contact Form API] Email sending failed:', emailError)
-        result = {
-          success: false,
-          method: 'email',
-          status: 'failed',
-          error: emailError instanceof Error ? emailError.message : 'Unknown error',
-        }
+      })
+
+      result = {
+        success: true,
+        method: 'email',
+        status: 'queued',
       }
     }
 
-    console.log('[Contact Form API] Form submission completed successfully')
+    console.log('[Contact Form API] Form submission accepted, responding immediately')
     return NextResponse.json(
       {
         success: true,
