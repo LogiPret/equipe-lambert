@@ -5,86 +5,57 @@ import { sendPopupFormSMS } from '@/lib/sms'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    console.log('[Popup Form API] Received body:', JSON.stringify(body, null, 2))
 
     // Support both direct object payloads and FormBuilder-like { submissionData: [] }
     let formData: any = {}
 
     if (body && body.submissionData && Array.isArray(body.submissionData)) {
-      // Handle FormBuilder format (like other forms)
       body.submissionData.forEach((field: any) => {
         const fieldName = field.field || field.name
         const fieldValue = field.value
-
         if (fieldName && fieldValue !== undefined) {
           formData[fieldName] = fieldValue
         }
       })
     } else if (body && typeof body === 'object') {
-      // Handle direct object format (from popup form)
       formData = body
     } else {
-      console.error('[Popup Form API] Invalid form data format received:', body)
-      return NextResponse.json(
-        { error: 'Invalid form data', details: 'Expected object or submissionData[]' },
-        { status: 400 },
-      )
+      return NextResponse.json({ error: 'Invalid form data' }, { status: 400 })
     }
 
-    console.log('[Popup Form API] Parsed form data:', formData)
-    console.log('[Popup Form API] Available fields:', Object.keys(formData))
-
-    // Extract all available fields
     const firstname = formData.firstname || formData.prenom || formData.firstName || ''
     const lastname = formData.lastname || formData.nom || formData.lastName || ''
     const email = formData.email || formData.Email || ''
     const phone = formData.phone || formData.telephone || ''
 
-    // Validate required fields
     if (!phone) {
-      console.error('[Popup Form API] Missing required phone number')
       return NextResponse.json({ error: 'Phone number is required' }, { status: 400 })
     }
 
-    // Build lead data with all available information
+    // Build lead data
     const leadData: Record<string, any> = {
       'Type de lead': 'Publicité Facebook',
       Téléphone: phone,
     }
-
-    // Only add fields that have values
     if (firstname) leadData['Prénom'] = firstname
     if (lastname) leadData['Nom'] = lastname
     if (email) leadData['Email'] = email
     if (formData.pageslug) leadData['Page'] = formData.pageslug
     if (formData.pdfname) leadData['PDF'] = formData.pdfname
 
-    console.log('[Popup Form API] Lead data being sent:', leadData)
-
-    // Send SMS and Email in parallel using Promise.allSettled to ensure both complete
-    console.log('[Popup Form API] Sending SMS to user:', phone)
-    console.log('[Popup Form API] Sending lead notification email to site owner')
-
+    // Send SMS and Email in parallel
     const [smsResult, emailResult] = await Promise.allSettled([
       sendPopupFormSMS(phone),
       sendContactFormEmail(leadData, 'Publicité Facebook'),
     ])
 
-    // Log results
-    if (smsResult.status === 'fulfilled') {
-      console.log('[Popup Form API] SMS sent to user successfully:', smsResult.value.sid)
-    } else {
-      console.error('[Popup Form API] SMS sending failed:', smsResult.reason)
+    if (smsResult.status === 'rejected') {
+      console.error('[Popup] SMS failed | Phone:', phone)
+    }
+    if (emailResult.status === 'rejected') {
+      console.error('[Popup] Email failed | Data:', JSON.stringify(leadData))
     }
 
-    if (emailResult.status === 'fulfilled') {
-      console.log('[Popup Form API] Lead notification email sent:', emailResult.value.messageId)
-    } else {
-      console.error('[Popup Form API] Lead notification email failed:', emailResult.reason)
-    }
-
-    // Return success immediately
-    console.log('[Popup Form API] Popup form processed successfully')
     return NextResponse.json(
       {
         success: true,
@@ -92,14 +63,8 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 },
     )
-  } catch (error) {
-    console.error('[Popup Form API] Error:', error)
-    return NextResponse.json(
-      {
-        error: 'Internal server error',
-        details: error instanceof Error ? error.message : 'Unknown error',
-      },
-      { status: 500 },
-    )
+  } catch (error: any) {
+    console.error('[Popup] Error:', error?.message)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

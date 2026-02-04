@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { sendContactFormEmail } from '@/lib/email'
 
 interface QuizSubmissionData {
   firstname: string | null
@@ -13,61 +14,46 @@ interface QuizSubmissionData {
 
 export async function POST(request: NextRequest) {
   try {
-    // Parse the incoming data
     const submissionData: QuizSubmissionData = await request.json()
 
-    console.log('[Quiz Webhook Proxy] Received data:', submissionData)
+    // Prepare email data
+    const emailData: Record<string, any> = {
+      prenom: submissionData.firstname || 'Non spécifié',
+      nom: submissionData.lastname || 'Non spécifié',
+      email: submissionData.email || 'Non spécifié',
+      phone: submissionData.phone || 'Non spécifié',
+      type: 'Quiz Lead',
+      Budget: submissionData.budget ? `$${submissionData.budget.toLocaleString()}` : 'Non spécifié',
+      'Délai souhaité': submissionData.when_interested || 'Non spécifié',
+      'Type de propriété': submissionData.type_property || 'Non spécifié',
+      'Secteur recherché': submissionData.area_wanted || 'Non spécifié',
+    }
+
+    // Send email notification
+    try {
+      await sendContactFormEmail(emailData, 'Quiz Meta Ads')
+    } catch (error: any) {
+      console.error('[Quiz] Email failed | Data:', JSON.stringify(emailData))
+    }
 
     // Forward to n8n webhook
     const n8nResponse = await fetch(
       'https://n8n-wwfb.onrender.com/webhook/equipe-lambert/meta-ads',
       {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submissionData),
       },
     )
 
-    console.log('[Quiz Webhook Proxy] n8n response status:', n8nResponse.status)
-
-    // Always try to get the response text for debugging
-    let responseText = ''
-    try {
-      responseText = await n8nResponse.text()
-    } catch (textError) {
-      console.error('[Quiz Webhook Proxy] Could not read response text:', textError)
-      responseText = 'Could not read response'
-    }
-
     if (!n8nResponse.ok) {
-      console.error('[Quiz Webhook Proxy] n8n error response:', responseText)
-      return NextResponse.json(
-        {
-          error: 'Failed to send to n8n webhook',
-          details: responseText,
-          status: n8nResponse.status,
-        },
-        { status: 200 }, // Return 200 to avoid blocking user, log the actual error
-      )
+      const responseText = await n8nResponse.text()
+      console.error('[Quiz] n8n failed:', responseText)
     }
 
-    console.log('[Quiz Webhook Proxy] n8n success:', responseText)
-
-    return NextResponse.json({
-      success: true,
-      message: 'Quiz submission sent to n8n successfully',
-      n8nResponse: responseText,
-    })
-  } catch (error) {
-    console.error('[Quiz Webhook Proxy] Error:', error)
-    return NextResponse.json(
-      {
-        error: 'Internal server error',
-        details: error instanceof Error ? error.message : 'Unknown error',
-      },
-      { status: 200 }, // Return 200 to avoid blocking user, log the actual error
-    )
+    return NextResponse.json({ success: true }, { status: 200 })
+  } catch (error: any) {
+    console.error('[Quiz] Error:', error?.message)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 200 })
   }
 }

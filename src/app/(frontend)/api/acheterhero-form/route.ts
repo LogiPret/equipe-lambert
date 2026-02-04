@@ -4,8 +4,6 @@ import { sendContactFormEmail } from '@/lib/email'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-
-    // Extract form data from the request
     const { submissionData } = body
 
     if (!submissionData || !Array.isArray(submissionData)) {
@@ -17,7 +15,6 @@ export async function POST(request: NextRequest) {
     submissionData.forEach((field: any) => {
       const fieldName = field.field || field.name
       const fieldValue = field.value
-
       if (fieldName && fieldValue !== undefined) {
         formData[fieldName] = fieldValue
       }
@@ -39,22 +36,16 @@ export async function POST(request: NextRequest) {
       'Ville recherchée': formData.acheter_city || 'Non spécifié',
     }
 
-    // Send email and wait for completion (required for Vercel serverless)
+    // Send email - await to ensure it completes before response
     try {
-      const emailResult = await sendContactFormEmail(emailData, 'Formulaire Acheter')
-      console.log('[Acheter Form API] Email sent successfully:', emailResult.messageId)
-    } catch (error) {
-      console.error('[Acheter Form API] Email sending failed:', error)
-      // Continue anyway - don't fail the user's request
+      await sendContactFormEmail(emailData, 'Formulaire Acheter')
+    } catch (error: any) {
+      console.error('[Acheter] Email failed | Data:', JSON.stringify(emailData))
     }
 
-    // Return success
-    return NextResponse.json(
-      { success: true, message: 'Form submitted successfully' },
-      { status: 200 },
-    )
-  } catch (error) {
-    console.error('AcheterHero form submission error:', error)
+    return NextResponse.json({ success: true }, { status: 200 })
+  } catch (error: any) {
+    console.error('[Acheter] Error:', error?.message)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

@@ -6,9 +6,7 @@ export function createEmailTransporter() {
   const gmailAppPassword = process.env.GMAIL_APP_PASSWORD
 
   if (!gmailUser || !gmailAppPassword) {
-    console.error(
-      'Gmail credentials not configured. Please set GMAIL_USER and GMAIL_APP_PASSWORD environment variables.',
-    )
+    console.error('[Email] Missing GMAIL_USER or GMAIL_APP_PASSWORD')
     return null
   }
 
@@ -26,13 +24,11 @@ export function formatFormDataForEmail(formData: Record<string, any>): string {
   const lines: string[] = []
 
   for (const [key, value] of Object.entries(formData)) {
-    // Skip internal fields
     if (key === 'created_at') continue
 
-    // Format the key to be more readable
     const formattedKey = key
-      .replace(/([A-Z])/g, ' $1') // Add space before capital letters
-      .replace(/_/g, ' ') // Replace underscores with spaces
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/_/g, ' ')
       .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ')
@@ -51,25 +47,19 @@ export async function sendContactFormEmail(formData: Record<string, any>, origin
     throw new Error('Email transporter not configured')
   }
 
-  // Site owner's email - where form submissions are sent TO
   const recipientEmail = process.env.CONTACT_FORM_RECIPIENT_EMAIL || process.env.GMAIL_USER
 
   if (!recipientEmail) {
-    throw new Error(
-      'No recipient email configured. Please set CONTACT_FORM_RECIPIENT_EMAIL environment variable.',
-    )
+    throw new Error('No recipient email configured')
   }
 
-  // Extract form submitter info for subject line and Reply-To
   const senderName =
     `${formData.prenom || formData.firstName || ''} ${formData.nom || formData.lastName || ''}`.trim()
   const senderEmail = formData.email || formData.Email || null
   const projectType = formData.type || formData.projectType || 'Ads'
 
-  // Build email subject
   const subject = `Nouveau message de contact: ${senderName} - ${projectType}`
 
-  // Build email body
   const formattedData = formatFormDataForEmail(formData)
   const originInfo = origin ? `<p><strong>Origine:</strong> ${origin}</p>` : ''
 
@@ -105,16 +95,28 @@ ${origin ? `Origine: ${origin}` : ''}
 Date: ${new Date().toLocaleString('fr-CA', { timeZone: 'America/Toronto' })}
   `
 
-  // Send email TO site owner, with form submitter's email in Reply-To
-  const info = await transporter.sendMail({
-    from: `"Formulaire de Contact" <${process.env.GMAIL_USER}>`,
-    to: recipientEmail, // Always send TO the site owner
-    subject: subject,
-    text: textBody,
-    html: htmlBody,
-    replyTo: senderEmail || undefined, // Reply-To is the form submitter (if provided)
-  })
+  try {
+    const info = await transporter.sendMail({
+      from: `"Formulaire de Contact" <${process.env.GMAIL_USER}>`,
+      to: recipientEmail,
+      subject: subject,
+      text: textBody,
+      html: htmlBody,
+      replyTo: senderEmail || undefined,
+    })
 
-  console.log('Email sent successfully:', info.messageId)
-  return info
+    console.log('[Email] Sent:', info.messageId)
+    return info
+  } catch (error: any) {
+    // Log form data for manual resend
+    console.error(
+      '[Email] FAILED:',
+      error?.message,
+      '| Data:',
+      JSON.stringify(formData),
+      '| Origin:',
+      origin,
+    )
+    throw error
+  }
 }
